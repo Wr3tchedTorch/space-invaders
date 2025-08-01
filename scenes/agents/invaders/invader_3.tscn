@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bgrsqr43rbemu"]
 
-[ext_resource type="Texture2D" uid="uid://cooli7patbik2" path="res://assets/sprites/invaders/invader2-1.png" id="1_um246"]
+[ext_resource type="Texture2D" uid="uid://cuqyns68k2xu8" path="res://assets/sprites/invaders/invader3-1.png" id="1_um246"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dx0ke"]
 radius = 6.08276

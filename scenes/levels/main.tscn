@@ -9,10 +9,12 @@
 [node name="GameWorld" type="Node2D" parent="."]
 
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
+Columns = 14
+Rows = 12
 EnemiesNavigator = NodePath("../EnemiesNavigator")
 
 [node name="EnemiesNavigator" parent="GameWorld" instance=ExtResource("2_j4d2a")]
-position = Vector2(128, 28)
+position = Vector2(128, 5)
 
 [node name="Player" parent="GameWorld" instance=ExtResource("1_72ix8")]
 position = Vector2(125, 212)
