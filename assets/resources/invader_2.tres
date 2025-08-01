@@ -6,5 +6,7 @@
 [resource]
 script = ExtResource("1_l6uhc")
 Sprite = ExtResource("1_560ek")
+ScenePath = "uid://b6s186pqpm1lh"
 Width = 11.0
+Height = 8.0
 metadata/_custom_type_script = "uid://ctvn4oudpq11e"
