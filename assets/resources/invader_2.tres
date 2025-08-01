@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InvaderResource" load_steps=3 format=3 uid="uid://bwnmpd4hbnvl0"]
+
+[ext_resource type="Texture2D" uid="uid://cooli7patbik2" path="res://assets/sprites/invaders/invader2-1.png" id="1_560ek"]
+[ext_resource type="Script" uid="uid://ctvn4oudpq11e" path="res://assets/resources/InvaderResource.cs" id="1_l6uhc"]
+
+[resource]
+script = ExtResource("1_l6uhc")
+Sprite = ExtResource("1_560ek")
+Width = 11.0
+metadata/_custom_type_script = "uid://ctvn4oudpq11e"
