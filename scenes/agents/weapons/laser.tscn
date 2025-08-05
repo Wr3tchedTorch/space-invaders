@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjdsuxvreubxx"]
+
+[ext_resource type="PackedScene" uid="uid://cjhy085jvr3k" path="res://scenes/components/off_screen_destroyer_component.tscn" id="1_fc0ma"]
+[ext_resource type="Texture2D" uid="uid://dcfjthoi6804y" path="res://assets/sprites/weapons/laser.png" id="2_pg8i1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qer"]
+size = Vector2(1, 7)
+
+[node name="Laser" type="Area2D"]
+
+[node name="OffScreenDestroyerComponent" parent="." node_paths=PackedStringArray("NodeToFree") instance=ExtResource("1_fc0ma")]
+position = Vector2(0, 1.19209e-07)
+scale = Vector2(0.05, 0.35)
+NodeToFree = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_pg8i1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r4qer")

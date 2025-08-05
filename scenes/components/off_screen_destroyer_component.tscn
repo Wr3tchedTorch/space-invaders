@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjhy085jvr3k"]
+
+[ext_resource type="Script" uid="uid://d3nn7xvy6c7a0" path="res://scenes/components/OffScreenDestroyComponent.cs" id="1_276a4"]
+
+[node name="OffScreenDestroyerComponent" type="VisibleOnScreenNotifier2D"]
+script = ExtResource("1_276a4")
