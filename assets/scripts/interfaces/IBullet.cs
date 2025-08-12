@@ -8,4 +8,6 @@ public interface IBullet
 {
     public BulletResource BulletResource { get; set; }
     public Vector2 GlobalPosition { get; set; }
+    public Callable GetRotation { get; set; }
+    public Callable GetDirection { get; set; }
 }

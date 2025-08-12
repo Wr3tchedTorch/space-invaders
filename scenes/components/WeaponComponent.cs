@@ -12,6 +12,7 @@ public partial class WeaponComponent : Node
 
     public Callable GetDirection { get; set; }
     public Callable GetGlobalPosition { get; set; }
+    public Callable GetRotation { get; set; }
 
     [ExportCategory("Dependencies")]
     [Export] private Timer FireRateTimer { get; set; }
@@ -51,6 +52,8 @@ public partial class WeaponComponent : Node
 
         var bulletPosition = (Vector2)GetGlobalPosition.Call();
         var bullet = BulletFactory.SpawnBullet(bulletPosition, WeaponResource.BulletResource);
+        bullet.GetRotation = GetRotation;
+        bullet.GetDirection = GetDirection;
 
         var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
         gameWorld.AddChild((Node2D)bullet);
