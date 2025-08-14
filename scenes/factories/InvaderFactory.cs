@@ -1,8 +1,8 @@
 using Godot;
-using SpaceInvaders.Assets.Resources;
+using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Navigators;
-using System;
 using System.Linq;
+using System;
 
 namespace SpaceInvaders.Scenes.Factories;
 

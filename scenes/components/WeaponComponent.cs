@@ -1,5 +1,5 @@
 using Godot;
-using SpaceInvaders.Assets.Resources;
+using SpaceInvaders.Assets.Resources.Weapon;
 using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Levels;
 using System;
@@ -22,6 +22,8 @@ public partial class WeaponComponent : Node
 
     public override void _Ready()
     {
+        FireRateTimer.Autostart = false;
+        FireRateTimer.OneShot = true;
         FireRateTimer.WaitTime = WeaponResource.FireRateDelay;
         FireRateTimer.Timeout += () => canShoot = false;
     }

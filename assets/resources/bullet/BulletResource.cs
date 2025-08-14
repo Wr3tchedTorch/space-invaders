@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace SpaceInvaders.Assets.Resources;
+namespace SpaceInvaders.Assets.Resources.Bullet;
 
 [GlobalClass]
 public partial class BulletResource : Resource

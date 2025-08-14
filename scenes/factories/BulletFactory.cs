@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using SpaceInvaders.Assets.Resources;
+using SpaceInvaders.Assets.Resources.Bullet;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 
 namespace SpaceInvaders.Scenes.Factories;

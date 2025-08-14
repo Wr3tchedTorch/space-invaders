@@ -1,6 +1,6 @@
 using System.Data;
 using Godot;
-using SpaceInvaders.Assets.Resources;
+using SpaceInvaders.Assets.Resources.Bullet;
 
 namespace SpaceInvaders.Assets.Scripts.Interfaces;
 
