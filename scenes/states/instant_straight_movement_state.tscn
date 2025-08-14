@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgdmgvrbvdbk3"]
+
+[ext_resource type="Script" uid="uid://dp8ytv0hhb2vr" path="res://scenes/states/InstantStraightMovementState.cs" id="1_sqjwo"]
+
+[node name="InstantStraightMovementState" type="Node"]
+script = ExtResource("1_sqjwo")

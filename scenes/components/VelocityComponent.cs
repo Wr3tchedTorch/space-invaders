@@ -6,6 +6,7 @@ namespace SpaceInvaders.Scenes.Components;
 public partial class VelocityComponent : Node
 {
     public Vector2 Velocity { get; private set; }
+
     public Callable GetDirection { get; set; }
     public float Speed { get; set; }
 

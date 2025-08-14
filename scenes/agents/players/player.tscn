@@ -8,14 +8,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y3jks"]
 size = Vector2(13, 5)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CollisionShape2D")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CollisionShape2D", "WeaponComponent")]
 script = ExtResource("1_y3jks")
 Speed = 300.0
 CollisionShape2D = NodePath("CollisionShape2D")
+WeaponComponent = NodePath("WeaponComponent")
 
-[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer") instance=ExtResource("2_ok5fs")]
+[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarker") instance=ExtResource("2_ok5fs")]
 WeaponResource = ExtResource("3_ok5fs")
 FireRateTimer = NodePath("Timer")
+BulletSpawnMarker = NodePath("../Marker2D")
 
 [node name="Timer" type="Timer" parent="WeaponComponent"]
 
@@ -26,3 +28,6 @@ texture = ExtResource("2_fovvg")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_y3jks")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -9)

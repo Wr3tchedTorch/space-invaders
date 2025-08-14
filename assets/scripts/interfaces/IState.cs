@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace SpaceInvaders.Assets.scripts.interfaces;
+namespace SpaceInvaders.Assets.Scripts.Interfaces;
 
 public interface IState
 {

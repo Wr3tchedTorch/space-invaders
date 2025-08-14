@@ -1,8 +1,8 @@
 using Godot;
-using SpaceInvaders.Assets.scripts.interfaces;
-using System;
+using SpaceInvaders.Assets.Scripts.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace SpaceInvaders.Scenes.Components;
 
@@ -16,16 +16,23 @@ public partial class StateMachine : Node
 
     public override void _Ready()
     {
+        Parent = GetOwner<Node2D>();
+
         var children = GetChildren().OfType<IState>();
         foreach (var child in children)
         {
             if (child is Node node)
             {
                 child.Exit();
+                child.Parent = Parent;
                 RemoveChild(node);
-                States.Add(node.Name, child);
+                States.Add(node.Name, child);                
             }
-        }
+        }        
+    }
+
+    public void Enter()
+    {
         CurrentState = States.FirstOrDefault().Value;
         CurrentState.Enter();
         AddChild((Node)CurrentState);
@@ -33,6 +40,8 @@ public partial class StateMachine : Node
 
     public override void _PhysicsProcess(double delta)
     {
+        GD.Print(((Node)CurrentState).Name);
+
         CurrentState.PhysicsUpdate((float)delta);
     }
 

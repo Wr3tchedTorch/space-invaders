@@ -11,11 +11,10 @@ public partial class WeaponComponent : Node
     [Export] public WeaponResource WeaponResource { get; private set; }
 
     public Callable GetDirection { get; set; }
-    public Callable GetGlobalPosition { get; set; }
-    public Callable GetRotation { get; set; }
 
     [ExportCategory("Dependencies")]
     [Export] private Timer FireRateTimer { get; set; }
+    [Export] private Marker2D BulletSpawnMarker { get; set; }
 
     private bool canShoot = true;
     private bool isShooting = true;
@@ -25,7 +24,7 @@ public partial class WeaponComponent : Node
         FireRateTimer.Autostart = false;
         FireRateTimer.OneShot = true;
         FireRateTimer.WaitTime = WeaponResource.FireRateDelay;
-        FireRateTimer.Timeout += () => canShoot = false;
+        FireRateTimer.Timeout += () => canShoot = true;
     }
 
     public override void _Process(double delta)
@@ -52,9 +51,8 @@ public partial class WeaponComponent : Node
         canShoot = false;
         FireRateTimer.Start();
 
-        var bulletPosition = (Vector2)GetGlobalPosition.Call();
+        var bulletPosition = BulletSpawnMarker.GlobalPosition;
         var bullet = BulletFactory.SpawnBullet(bulletPosition, WeaponResource.BulletResource);
-        bullet.GetRotation = GetRotation;
         bullet.GetDirection = GetDirection;
 
         var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
