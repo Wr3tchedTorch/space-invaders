@@ -39,4 +39,9 @@ public partial class Laser : Area2D, IBullet, IMover
     {
         return Vector2.Up;
     }
+
+    public void OnTurning(Vector2 dir)
+    {
+        LookAt(GlobalPosition + dir);
+    }
 }

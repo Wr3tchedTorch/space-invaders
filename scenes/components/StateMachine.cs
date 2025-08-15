@@ -40,8 +40,6 @@ public partial class StateMachine : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        GD.Print(((Node)CurrentState).Name);
-
         CurrentState.PhysicsUpdate((float)delta);
     }
 

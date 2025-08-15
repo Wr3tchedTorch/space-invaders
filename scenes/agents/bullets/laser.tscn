@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://30hopxxrw7qb"]
+[gd_scene load_steps=10 format=3 uid="uid://30hopxxrw7qb"]
 
 [ext_resource type="PackedScene" uid="uid://cjhy085jvr3k" path="res://scenes/components/off_screen_destroyer_component.tscn" id="1_lpvit"]
 [ext_resource type="Script" uid="uid://b0atpghjms1i0" path="res://scenes/agents/bullets/Laser.cs" id="1_ya5qr"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://0ce50c3g0yfv" path="res://scenes/components/velocity_component.tscn" id="2_mw4me"]
 [ext_resource type="Texture2D" uid="uid://dcfjthoi6804y" path="res://assets/sprites/weapons/laser.png" id="2_ya5qr"]
 [ext_resource type="PackedScene" uid="uid://dhfeipetgqtjc" path="res://scenes/states/straight_movement_state.tscn" id="3_7st8c"]
+[ext_resource type="PackedScene" uid="uid://b3dm4onxrrbum" path="res://scenes/states/instant_zig_zag_movement_state.tscn" id="3_43htc"]
 [ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_eawdp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qer"]
@@ -17,6 +18,10 @@ VelocityComponent = NodePath("VelocityComponent")
 StateMachine = NodePath("StateMachine")
 
 [node name="StateMachine" parent="." instance=ExtResource("2_c0uft")]
+
+[node name="InstantZigZagMovementState" parent="StateMachine" node_paths=PackedStringArray("TurnTimer") instance=ExtResource("3_43htc")]
+TurnTimer = NodePath("../../Timer")
+TurnAmountDegs = 45.0
 
 [node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_eawdp")]
 
@@ -34,3 +39,6 @@ texture = ExtResource("2_ya5qr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_r4qer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
