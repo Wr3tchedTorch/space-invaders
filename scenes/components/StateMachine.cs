@@ -25,7 +25,6 @@ public partial class StateMachine : Node
             {
                 child.Exit();
                 child.Parent = Parent;
-                RemoveChild(node);
                 States.Add(node.Name, child);                
             }
         }        
@@ -35,7 +34,6 @@ public partial class StateMachine : Node
     {
         CurrentState = States.FirstOrDefault().Value;
         CurrentState.Enter();
-        AddChild((Node)CurrentState);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -60,7 +58,6 @@ public partial class StateMachine : Node
 
         CurrentState = newState;
         CurrentState.Enter();
-        AddChild((Node)CurrentState);
     }
 
     public void Exit()
@@ -71,7 +68,6 @@ public partial class StateMachine : Node
             return;
         }
         CurrentState.Exit();
-        RemoveChild((Node)CurrentState);
         CurrentState = null;
     }
 }

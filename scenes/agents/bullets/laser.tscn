@@ -19,8 +19,8 @@ StateMachine = NodePath("StateMachine")
 
 [node name="StateMachine" parent="." instance=ExtResource("2_c0uft")]
 
-[node name="InstantZigZagMovementState" parent="StateMachine" node_paths=PackedStringArray("TurnTimer") instance=ExtResource("3_43htc")]
-TurnTimer = NodePath("../../Timer")
+[node name="InstantZigZagMovementState" parent="StateMachine" instance=ExtResource("3_43htc")]
+TurnDelay = 0.1
 TurnAmountDegs = 45.0
 
 [node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_eawdp")]
@@ -39,6 +39,3 @@ texture = ExtResource("2_ya5qr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_r4qer")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.1

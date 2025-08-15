@@ -1,27 +1,24 @@
 using Godot;
 using SpaceInvaders.Assets.Scripts.Interfaces;
+using SpaceInvaders.Scenes.Levels;
 using System;
 
 namespace SpaceInvaders.Scenes.States;
 
 public partial class InstantZigZagMovementState : Node, IState
 {
-    [Signal] public delegate void TurningEventHandler(Vector2 dir);
-
-    [ExportGroup("Dependencies")]
-    [Export] private Timer TurnTimer { get; set; }
+    [ExportGroup("Zig Zag Properties")]
+    [Export] private float TurnDelay { get; set; }
     [Export] private float TurnAmountDegs { get; set; }
 
     public Node2D Parent { get; set; }
 
-    private IMover ParentMover { get; set; } = null;    
-    private Vector2 Direction { get; set; }
+    private IMover ParentMover { get; set; } = null;
 
     private Vector2 direction;
     private bool firstTimeTurning = true;
 
-    private double currentTimerDelay;
-    private double initialTimerDelay;
+    private Timer TurnTimer;
 
     public void Enter()
     {
@@ -31,18 +28,7 @@ public partial class InstantZigZagMovementState : Node, IState
         }
         ParentMover = (IMover)Parent;
 
-        initialTimerDelay = TurnTimer.WaitTime;
-        TurnTimer.OneShot = true;
-        TurnTimer.Timeout += () =>
-        {
-            GD.Print($"{nameof(currentTimerDelay)} {currentTimerDelay}");
-
-            TurnAmountDegs *= -1;
-            EmitSignal(SignalName.Turning, direction);
-        
-            TurnTimer.Start(initialTimerDelay * 2);
-        };
-        TurnTimer.Start();
+        CreateTurnTimer();
     }
 
     public void Exit()
@@ -51,6 +37,8 @@ public partial class InstantZigZagMovementState : Node, IState
 
     public void PhysicsUpdate(float delta)
     {
+        GD.Print($"{TurnTimer.IsStopped()} {TurnTimer.WaitTime} {TurnTimer.TimeLeft}");
+
         direction = (Vector2)ParentMover.GetDirection.Call();
         var angle = direction.Angle() + Mathf.DegToRad(TurnAmountDegs);
         direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).Normalized();
@@ -61,5 +49,34 @@ public partial class InstantZigZagMovementState : Node, IState
 
     public void Update(float delta)
     {
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationPredelete)
+        {
+            TurnTimer.QueueFree();
+        }
+    }
+
+    private void CreateTurnTimer()
+    {
+        TurnTimer = new Timer
+        {
+            WaitTime = TurnDelay,
+            OneShot = true,
+            Autostart = false
+        };
+
+        var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
+        gameWorld.AddChild(TurnTimer);
+
+        TurnTimer.Timeout += () =>
+        {
+            TurnAmountDegs *= -1;
+
+            TurnTimer.Start(TurnTimer.WaitTime = TurnDelay * 2);
+        };
+        TurnTimer.Start();
     }
 }

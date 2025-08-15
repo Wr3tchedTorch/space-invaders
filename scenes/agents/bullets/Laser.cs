@@ -33,15 +33,14 @@ public partial class Laser : Area2D, IBullet, IMover
     public void Move()
     {
         GlobalPosition += Velocity;
+
+        var dir = GlobalPosition.DirectionTo(GlobalPosition + Velocity);
+
+        Rotation = -dir.Angle();
     }
 
     public static Vector2 GetMovementDirection()
     {
         return Vector2.Up;
-    }
-
-    public void OnTurning(Vector2 dir)
-    {
-        LookAt(GlobalPosition + dir);
     }
 }
