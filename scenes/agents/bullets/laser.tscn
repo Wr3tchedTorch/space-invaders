@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://30hopxxrw7qb"]
+[gd_scene load_steps=9 format=3 uid="uid://30hopxxrw7qb"]
 
 [ext_resource type="PackedScene" uid="uid://cjhy085jvr3k" path="res://scenes/components/off_screen_destroyer_component.tscn" id="1_lpvit"]
 [ext_resource type="Script" uid="uid://b0atpghjms1i0" path="res://scenes/agents/bullets/Laser.cs" id="1_ya5qr"]
 [ext_resource type="PackedScene" uid="uid://uv67f8df5g3x" path="res://scenes/components/state_machine.tscn" id="2_c0uft"]
 [ext_resource type="PackedScene" uid="uid://0ce50c3g0yfv" path="res://scenes/components/velocity_component.tscn" id="2_mw4me"]
 [ext_resource type="Texture2D" uid="uid://dcfjthoi6804y" path="res://assets/sprites/weapons/laser.png" id="2_ya5qr"]
-[ext_resource type="PackedScene" uid="uid://dhfeipetgqtjc" path="res://scenes/states/straight_movement_state.tscn" id="3_7st8c"]
 [ext_resource type="PackedScene" uid="uid://b3dm4onxrrbum" path="res://scenes/states/instant_zig_zag_movement_state.tscn" id="3_43htc"]
 [ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_eawdp"]
 
@@ -19,13 +18,11 @@ StateMachine = NodePath("StateMachine")
 
 [node name="StateMachine" parent="." instance=ExtResource("2_c0uft")]
 
-[node name="InstantZigZagMovementState" parent="StateMachine" instance=ExtResource("3_43htc")]
-TurnDelay = 0.1
-TurnAmountDegs = 45.0
-
 [node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_eawdp")]
 
-[node name="StraightMovementState" parent="StateMachine" instance=ExtResource("3_7st8c")]
+[node name="InstantZigZagMovementState" parent="StateMachine" instance=ExtResource("3_43htc")]
+TurnDelay = 0.3
+TurnAmountDegs = 45.0
 
 [node name="VelocityComponent" parent="." instance=ExtResource("2_mw4me")]
 

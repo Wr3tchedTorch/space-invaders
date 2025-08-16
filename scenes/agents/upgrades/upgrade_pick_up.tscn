@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b16sfwkqddj0f"]
+
+[ext_resource type="Script" uid="uid://vlbf2vc2psdd" path="res://scenes/agents/upgrades/UpgradePickUp.cs" id="1_8glfo"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wo6cp"]
+size = Vector2(4, 4)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2kyiu"]
+radius = 3.0
+
+[node name="UpgradePickUp" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_8glfo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_wo6cp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2kyiu")

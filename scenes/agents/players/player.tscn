@@ -9,6 +9,7 @@
 size = Vector2(13, 5)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CollisionShape2D", "WeaponComponent")]
+collision_mask = 0
 script = ExtResource("1_y3jks")
 Speed = 300.0
 CollisionShape2D = NodePath("CollisionShape2D")

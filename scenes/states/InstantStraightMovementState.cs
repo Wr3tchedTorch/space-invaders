@@ -27,6 +27,7 @@ public partial class InstantStraightMovementState : Node, IState
     public void PhysicsUpdate(float delta)
     {
         ParentMover.Velocity = (Vector2)ParentMover.GetDirection.Call() * ParentMover.Speed * delta;
+
         ParentMover.Move();
     }
 

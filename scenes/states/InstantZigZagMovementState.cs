@@ -6,7 +6,7 @@ using System;
 namespace SpaceInvaders.Scenes.States;
 
 public partial class InstantZigZagMovementState : Node, IState
-{
+{    
     [ExportGroup("Zig Zag Properties")]
     [Export] private float TurnDelay { get; set; }
     [Export] private float TurnAmountDegs { get; set; }
@@ -16,9 +16,8 @@ public partial class InstantZigZagMovementState : Node, IState
     private IMover ParentMover { get; set; } = null;
 
     private Vector2 direction;
-    private bool firstTimeTurning = true;
 
-    private Timer TurnTimer;
+    private Timer turnTimer;
 
     public void Enter()
     {
@@ -37,11 +36,8 @@ public partial class InstantZigZagMovementState : Node, IState
 
     public void PhysicsUpdate(float delta)
     {
-        GD.Print($"{TurnTimer.IsStopped()} {TurnTimer.WaitTime} {TurnTimer.TimeLeft}");
-
         direction = (Vector2)ParentMover.GetDirection.Call();
-        var angle = direction.Angle() + Mathf.DegToRad(TurnAmountDegs);
-        direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).Normalized();
+        direction = GetRotatedDirection();
 
         ParentMover.Velocity = direction * ParentMover.Speed * delta;
         ParentMover.Move();
@@ -53,15 +49,22 @@ public partial class InstantZigZagMovementState : Node, IState
 
     public override void _Notification(int what)
     {
-        if (what == NotificationPredelete)
+        if (what == NotificationPredelete && IsInstanceValid(turnTimer))
         {
-            TurnTimer.QueueFree();
+            turnTimer.QueueFree();
         }
+    }
+
+    private Vector2 GetRotatedDirection()
+    {
+        var angle = direction.Angle() + Mathf.DegToRad(TurnAmountDegs);
+
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).Normalized();
     }
 
     private void CreateTurnTimer()
     {
-        TurnTimer = new Timer
+        turnTimer = new Timer
         {
             WaitTime = TurnDelay,
             OneShot = true,
@@ -69,14 +72,14 @@ public partial class InstantZigZagMovementState : Node, IState
         };
 
         var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
-        gameWorld.AddChild(TurnTimer);
+        gameWorld.AddChild(turnTimer);
 
-        TurnTimer.Timeout += () =>
+        turnTimer.Timeout += () =>
         {
             TurnAmountDegs *= -1;
 
-            TurnTimer.Start(TurnTimer.WaitTime = TurnDelay * 2);
+            turnTimer.Start(turnTimer.WaitTime = TurnDelay * 2);
         };
-        TurnTimer.Start();
+        turnTimer.Start();
     }
 }

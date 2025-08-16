@@ -38,6 +38,7 @@ public partial class StraightMovementState : Node, IState
     public void PhysicsUpdate(float delta)
     {
         ParentMover.Velocity = VelocityComponent.GetVelocity(delta);
+
         ParentMover.Move();
     }
 

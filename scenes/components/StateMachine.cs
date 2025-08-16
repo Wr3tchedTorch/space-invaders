@@ -13,6 +13,9 @@ public partial class StateMachine : Node
     public Dictionary<string, IState> States { get; private set; } = [];
 
     public IState CurrentState { get; private set; }
+    public string CurrentStateName { get; private set; }
+
+    public string PreviousStateName { get; private set; }
 
     public override void _Ready()
     {
@@ -25,14 +28,18 @@ public partial class StateMachine : Node
             {
                 child.Exit();
                 child.Parent = Parent;
-                States.Add(node.Name, child);                
+                States.Add(node.Name, child);
+
+                GD.Print($"state name: {node.Name}");
             }
-        }        
+        }
     }
 
     public void Enter()
     {
-        CurrentState = States.FirstOrDefault().Value;
+        var first = States.FirstOrDefault();
+        CurrentStateName = first.Key;
+        CurrentState = first.Value;
         CurrentState.Enter();
     }
 
@@ -56,6 +63,7 @@ public partial class StateMachine : Node
 
         Exit();
 
+        CurrentStateName = stateName;
         CurrentState = newState;
         CurrentState.Enter();
     }
@@ -67,6 +75,7 @@ public partial class StateMachine : Node
             GD.PrintErr("No state is selected.");
             return;
         }
+        PreviousStateName = CurrentStateName;
         CurrentState.Exit();
         CurrentState = null;
     }

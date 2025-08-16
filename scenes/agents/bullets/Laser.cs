@@ -28,6 +28,8 @@ public partial class Laser : Area2D, IBullet, IMover
         GetDirection = new Callable(this, MethodName.GetMovementDirection);
 
         StateMachine.Enter();
+
+        GD.Print($"{nameof(BulletResource.Damage)} : {BulletResource.Damage}");
     }
 
     public void Move()

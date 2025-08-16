@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=8 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://6vpmrsmbifqk" path="res://scenes/factories/invader_factory.tscn" id="1_y0acb"]
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
+[ext_resource type="PackedScene" uid="uid://b16sfwkqddj0f" path="res://scenes/agents/upgrades/upgrade_pick_up.tscn" id="5_b6bv0"]
+[ext_resource type="Resource" uid="uid://cacl6vfk5v61s" path="res://assets/resources/bullet/upgrade/damage_upgrade.tres" id="6_ubwgw"]
+[ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/bullet/upgrade/zigzag_upgrade.tres" id="6_vkq25"]
 
 [node name="Main" type="Node"]
 
@@ -23,3 +26,11 @@ Speed = 120.0
 
 [node name="Camera2D" type="Camera2D" parent="GameWorld"]
 anchor_mode = 0
+
+[node name="UpgradePickUp2" parent="GameWorld" instance=ExtResource("5_b6bv0")]
+position = Vector2(69, 209)
+UpgradeResource = ExtResource("6_vkq25")
+
+[node name="UpgradePickUp" parent="GameWorld" instance=ExtResource("5_b6bv0")]
+position = Vector2(194, 209)
+UpgradeResource = ExtResource("6_ubwgw")
