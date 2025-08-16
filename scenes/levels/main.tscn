@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://6vpmrsmbifqk" path="res://scenes/factories/invader_factory.tscn" id="1_y0acb"]
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://b16sfwkqddj0f" path="res://scenes/agents/upgrades/upgrade_pick_up.tscn" id="5_b6bv0"]
-[ext_resource type="Resource" uid="uid://cacl6vfk5v61s" path="res://assets/resources/bullet/upgrade/damage_upgrade.tres" id="6_ubwgw"]
-[ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/bullet/upgrade/zigzag_upgrade.tres" id="6_vkq25"]
+[ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/bullet/upgrade/bullet_zigzag_upgrade.tres" id="6_vkq25"]
+[ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/weapon/upgrade/weapon_fire_rate_upgrade.tres" id="7_ubwgw"]
 
 [node name="Main" type="Node"]
 
@@ -33,4 +33,15 @@ UpgradeResource = ExtResource("6_vkq25")
 
 [node name="UpgradePickUp" parent="GameWorld" instance=ExtResource("5_b6bv0")]
 position = Vector2(194, 209)
-UpgradeResource = ExtResource("6_ubwgw")
+UpgradeResource = ExtResource("7_ubwgw")
+upgradeType = 1
+
+[node name="UpgradePickUp3" parent="GameWorld" instance=ExtResource("5_b6bv0")]
+position = Vector2(222, 209)
+UpgradeResource = ExtResource("7_ubwgw")
+upgradeType = 1
+
+[node name="UpgradePickUp4" parent="GameWorld" instance=ExtResource("5_b6bv0")]
+position = Vector2(239, 209)
+UpgradeResource = ExtResource("7_ubwgw")
+upgradeType = 1

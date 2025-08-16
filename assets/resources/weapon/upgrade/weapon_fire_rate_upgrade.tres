@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeaponFireRateUpgradeResource" load_steps=2 format=3 uid="uid://b7eiwe4k0rel"]
+
+[ext_resource type="Script" uid="uid://c83e30227cwru" path="res://assets/resources/weapon/upgrade/WeaponFireRateUpgradeResource.cs" id="1_8eno6"]
+
+[resource]
+script = ExtResource("1_8eno6")
+FireRateUpgradeInSec = 0.5
+metadata/_custom_type_script = "uid://c83e30227cwru"

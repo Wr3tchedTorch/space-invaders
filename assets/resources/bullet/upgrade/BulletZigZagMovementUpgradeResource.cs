@@ -6,9 +6,8 @@ using System;
 namespace SpaceInvaders.Assets.Resources.Bullet.Upgrade;
 
 [GlobalClass]
-public partial class ZigZagMovementUpgradeResource : Resource, IBulletTemporaryUpgrade
+public partial class BulletZigZagMovementUpgradeResource : Resource, IBulletTemporaryUpgrade
 {
-    [Export] public float UpgradeDuration { get; set; }
     [Export] public float Duration { get; set; }
 
     public void ApplyUpgrade(IBullet bullet)

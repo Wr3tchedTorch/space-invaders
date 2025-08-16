@@ -2,8 +2,6 @@ using Godot;
 using SpaceInvaders.Assets.Resources.Bullet;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.Components;
-using SpaceInvaders.Scenes.States;
-using System;
 
 namespace SpaceInvaders.Scenes.Agents.Bullets;
 
@@ -28,8 +26,6 @@ public partial class Laser : Area2D, IBullet, IMover
         GetDirection = new Callable(this, MethodName.GetMovementDirection);
 
         StateMachine.Enter();
-
-        GD.Print($"{nameof(BulletResource.Damage)} : {BulletResource.Damage}");
     }
 
     public void Move(float angle)
@@ -37,8 +33,6 @@ public partial class Laser : Area2D, IBullet, IMover
         GlobalPosition += Velocity;
 
         Rotation = angle - Mathf.Pi/2;
-
-        GD.Print(Rotation);
     }
 
     public static Vector2 GetMovementDirection()

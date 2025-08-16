@@ -7,14 +7,13 @@ using SpaceInvaders.Scenes.Autoloads;
 using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Levels;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
 
 namespace SpaceInvaders.Scenes.Agents.Weapons;
 
-public partial class WeaponComponent : Node
+public partial class WeaponComponent : Node, IWeapon
 {    
-    [Export] public WeaponResource WeaponResource { get; private set; }
+    [Export] public WeaponResource WeaponResource { get; set; }
 
     public Callable GetDirection { get; set; }
 
@@ -34,14 +33,27 @@ public partial class WeaponComponent : Node
         FireRateTimer.WaitTime = WeaponResource.FireRateDelay;
         FireRateTimer.Timeout += () => canShoot = true;
 
-        GameEvents.Instance.UpgradePickedUp += OnUpgradePickedUp;
+        WeaponResource.FireRateDelayChanged += () => { FireRateTimer.WaitTime = WeaponResource.FireRateDelay; };
+
+        GameEvents.Instance.BulletUpgradePickedUp += OnBulletUpgradePickedUp;
+        GameEvents.Instance.WeaponUpgradePickedUp += OnWeaponUpgradePickedUp;
     }
 
-    private void OnUpgradePickedUp(Resource upgrade)
+    private void OnWeaponUpgradePickedUp(Resource upgrade)
+    {
+        if (upgrade is not IWeaponUpgrade)
+        {
+            throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IWeaponUpgrade));
+        }
+        ((IWeaponUpgrade)upgrade).ApplyUpgrade(this);
+        GD.Print($"upgrade picked up: {upgrade.ResourcePath}");
+    }
+
+    private void OnBulletUpgradePickedUp(Resource upgrade)
     {
         if (upgrade is not IBulletUpgrade)
         {
-            throw new InvalidBulletUpgradeException(upgrade.ResourcePath);
+            throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IBulletUpgrade));
         }
         BulletUpgrades.Add((IBulletUpgrade) upgrade);
     }

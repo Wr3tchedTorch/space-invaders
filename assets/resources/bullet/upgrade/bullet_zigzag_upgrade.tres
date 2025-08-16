@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="ZigZagMovementUpgradeResource" load_steps=2 format=3 uid="uid://bog4j1rf72s5x"]
 
-[ext_resource type="Script" uid="uid://cq5drjrbcdwyr" path="res://assets/resources/bullet/upgrade/ZigZagMovementUpgradeResource.cs" id="1_8cgne"]
+[ext_resource type="Script" uid="uid://cq5drjrbcdwyr" path="res://assets/resources/bullet/upgrade/BulletZigZagMovementUpgradeResource.cs" id="1_8cgne"]
 
 [resource]
 script = ExtResource("1_8cgne")
-UpgradeDuration = 10.0
-Duration = 0.0
+UpgradeDuration = 0.0
+Duration = 5.0
 metadata/_custom_type_script = "uid://cq5drjrbcdwyr"
