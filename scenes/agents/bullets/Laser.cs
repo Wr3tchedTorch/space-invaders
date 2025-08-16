@@ -32,13 +32,13 @@ public partial class Laser : Area2D, IBullet, IMover
         GD.Print($"{nameof(BulletResource.Damage)} : {BulletResource.Damage}");
     }
 
-    public void Move()
+    public void Move(float angle)
     {
         GlobalPosition += Velocity;
 
-        var dir = GlobalPosition.DirectionTo(GlobalPosition + Velocity);
+        Rotation = angle - Mathf.Pi/2;
 
-        Rotation = -dir.Angle();
+        GD.Print(Rotation);
     }
 
     public static Vector2 GetMovementDirection()

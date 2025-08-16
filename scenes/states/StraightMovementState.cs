@@ -39,7 +39,7 @@ public partial class StraightMovementState : Node, IState
     {
         ParentMover.Velocity = VelocityComponent.GetVelocity(delta);
 
-        ParentMover.Move();
+        ParentMover.Move(ParentMover.Velocity.Normalized().Angle());
     }
 
     public void Update(float delta)

@@ -17,6 +17,8 @@ public partial class InstantZigZagMovementState : Node, IState
 
     private Vector2 direction;
 
+    private float angle;
+
     private Timer turnTimer;
 
     public void Enter()
@@ -40,7 +42,7 @@ public partial class InstantZigZagMovementState : Node, IState
         direction = GetRotatedDirection();
 
         ParentMover.Velocity = direction * ParentMover.Speed * delta;
-        ParentMover.Move();
+        ParentMover.Move(angle);
     }
 
     public void Update(float delta)
@@ -57,7 +59,7 @@ public partial class InstantZigZagMovementState : Node, IState
 
     private Vector2 GetRotatedDirection()
     {
-        var angle = direction.Angle() + Mathf.DegToRad(TurnAmountDegs);
+        angle = direction.Angle() + Mathf.DegToRad(TurnAmountDegs);
 
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).Normalized();
     }
