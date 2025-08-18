@@ -5,7 +5,7 @@ using SpaceInvaders.Scenes.Components;
 
 namespace SpaceInvaders.Scenes.Agents.Bullets;
 
-public partial class Laser : Area2D, IBullet, IMover
+public partial class Laser : Area2D, IBullet, IMover, IAttacker
 {
     [ExportGroup("Dependencies")]
     [Export] public VelocityComponent VelocityComponent { get; set; }
@@ -20,6 +20,8 @@ public partial class Laser : Area2D, IBullet, IMover
         get => BulletResource.Speed;
         set => BulletResource.Speed = value;
     }
+
+    public float Damage { get => BulletResource.Damage; }
 
     public override void _Ready()
     {

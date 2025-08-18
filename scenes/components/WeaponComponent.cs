@@ -9,7 +9,7 @@ using SpaceInvaders.Scenes.Levels;
 using System.Collections.Generic;
 using System;
 
-namespace SpaceInvaders.Scenes.Agents.Weapons;
+namespace SpaceInvaders.Scenes.Components;
 
 public partial class WeaponComponent : Node, IWeapon
 {    

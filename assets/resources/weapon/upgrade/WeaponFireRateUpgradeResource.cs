@@ -13,6 +13,6 @@ public partial class WeaponFireRateUpgradeResource : Resource, IWeaponUpgrade
     {
         weapon.WeaponResource.FireRateDelay -= FireRateUpgradeInSec;
 
-        weapon.WeaponResource.FireRateDelay = Mathf.Max(weapon.WeaponResource.FireRateDelay, 0.01f);
+        weapon.WeaponResource.FireRateDelay = Mathf.Max(weapon.WeaponResource.FireRateDelay, 0.001f);
     }
 }

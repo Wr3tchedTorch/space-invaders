@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://vlbf2vc2psdd" path="res://scenes/agents/upgrades/UpgradePickUp.cs" id="1_8glfo"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wo6cp"]
-size = Vector2(4, 4)
+size = Vector2(8, 8)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2kyiu"]
 radius = 3.0
