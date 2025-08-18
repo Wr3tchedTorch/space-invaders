@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using SpaceInvaders.Assets.Resources.Bullet;
 using SpaceInvaders.Assets.Scripts.Interfaces;
@@ -5,13 +6,13 @@ using SpaceInvaders.Scenes.Components;
 
 namespace SpaceInvaders.Scenes.Agents.Bullets;
 
-public partial class Laser : Area2D, IBullet, IMover, IAttacker
+public partial class Laser : Area2D, IBullet, IMover
 {
     [ExportGroup("Dependencies")]
-    [Export] public VelocityComponent VelocityComponent { get; set; }
-    [Export] public StateMachine StateMachine { get; set; }
+    [Export] public VelocityComponent VelocityComponent { get; set; } = null!;
+    [Export] public StateMachine StateMachine { get; set; } = null!;
 
-    public BulletResource BulletResource { get; set; }
+    public BulletResource BulletResource { get; set; } = null!;
 
     public Callable GetDirection { get; set; }
     public Vector2 Velocity { get; set; }
@@ -28,6 +29,19 @@ public partial class Laser : Area2D, IBullet, IMover, IAttacker
         GetDirection = new Callable(this, MethodName.GetMovementDirection);
 
         StateMachine.Enter();
+
+        AreaEntered += OnAreaEntered;
+        BodyEntered += OnBodyEntered;
+    }
+
+    private void OnBodyEntered(Node2D body)
+    {
+        QueueFree();
+    }
+
+    private void OnAreaEntered(Area2D area)
+    {
+        QueueFree();
     }
 
     public void Move(float angle)

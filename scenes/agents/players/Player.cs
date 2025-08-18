@@ -1,6 +1,6 @@
 using Godot;
 using SpaceInvaders.Assets.Scripts.Extensions;
-using SpaceInvaders.Scenes.Agents.Weapons;
+using SpaceInvaders.Scenes.Components;
 using System;
 
 namespace SpaceInvaders.Scenes.Agents.Players;

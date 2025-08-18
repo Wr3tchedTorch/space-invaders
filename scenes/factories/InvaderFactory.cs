@@ -3,6 +3,7 @@ using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Navigators;
 using System.Linq;
 using System;
+using SpaceInvaders.assets.scripts.interfaces;
 
 namespace SpaceInvaders.Scenes.Factories;
 
@@ -12,7 +13,7 @@ public partial class InvaderFactory : Node
     [Export] private int Rows { get; set; } = 5;
     [Export] private float HGap { get; set; } = 10;
     [Export] private float VGap { get; set; } = 10;
-    [Export] private EnemiesNavigator EnemiesNavigator { get; set; }
+    [Export] private EnemiesNavigator EnemiesNavigator { get; set; } = null!;
 
     [Export] private Godot.Collections.Array<InvaderResource> invaders = [];
 
@@ -35,7 +36,9 @@ public partial class InvaderFactory : Node
                 var enemyResource = GetEnemyResource(row);
                 var enemyPosition = GetGridPosition(initialPosition, row, col, cellWidth, cellHeight);
 
-                var enemy = SpawnEnemy(enemyResource.ScenePath, enemyPosition);
+                var enemy = (IEnemy)SpawnEnemy(enemyResource.ScenePath, enemyPosition);
+
+                enemy.InvaderResource = enemyResource;
             }
         }
         PositionEnemiesNavigator(cellWidth);

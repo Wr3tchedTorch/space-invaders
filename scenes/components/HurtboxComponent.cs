@@ -1,5 +1,5 @@
 using Godot;
-using SpaceInvaders.assets.scripts.exceptions;
+using SpaceInvaders.Assets.Scripts.Exceptions;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using System;
 
@@ -11,6 +11,9 @@ public partial class HurtboxComponent : Area2D
 
     public override void _Ready()
     {
+        Monitoring = true;
+        Monitorable = true;
+
         AreaEntered += OnAreaEntered;
         BodyEntered += OnBodyEntered;
     }

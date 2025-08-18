@@ -12,6 +12,8 @@
 size = Vector2(1, 7)
 
 [node name="Laser" type="Area2D" node_paths=PackedStringArray("VelocityComponent", "StateMachine")]
+collision_layer = 4
+collision_mask = 16
 script = ExtResource("1_ya5qr")
 VelocityComponent = NodePath("VelocityComponent")
 StateMachine = NodePath("StateMachine")

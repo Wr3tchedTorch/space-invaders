@@ -4,7 +4,7 @@ using SpaceInvaders.Scenes.Components;
 
 namespace SpaceInvaders.Assets.Scripts.Interfaces;
 
-public interface IBullet
+public interface IBullet : IAttacker
 {
     public BulletResource BulletResource { get; set; }
     public StateMachine StateMachine { get; set; }

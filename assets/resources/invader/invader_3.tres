@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("1_sc5hn")
-Sprite = ExtResource("1_o2hyq")
+Health = 200.0
 ScenePath = "uid://bgrsqr43rbemu"
+Sprite = ExtResource("1_o2hyq")
 Width = 12.0
 Height = 8.0
 metadata/_custom_type_script = "uid://ctvn4oudpq11e"

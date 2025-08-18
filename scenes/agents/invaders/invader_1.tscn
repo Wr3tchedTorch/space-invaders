@@ -1,14 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://wwsrngddnnvl"]
+[gd_scene load_steps=7 format=3 uid="uid://wwsrngddnnvl"]
 
 [ext_resource type="Texture2D" uid="uid://82e1rsen24j1" path="res://assets/sprites/invaders/invader1-1.png" id="1_6jb7b"]
+[ext_resource type="Script" uid="uid://c16ryohfwyoks" path="res://scenes/agents/invaders/Invader.cs" id="1_gs3gc"]
+[ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="1_w1rl3"]
+[ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_gs3gc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l3dlf"]
+radius = 6.08276
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6jb7b"]
 radius = 4.47214
 
-[node name="Invader1" type="Area2D"]
+[node name="Invader1" type="Area2D" node_paths=PackedStringArray("HealthComponent")]
+script = ExtResource("1_gs3gc")
+HealthComponent = NodePath("HealthComponent")
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_w1rl3")]
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("2_gs3gc")]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_l3dlf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_6jb7b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6jb7b")
+
+[connection signal="Died" from="HealthComponent" to="." method="OnDied"]
+[connection signal="Attacked" from="HurtboxComponent" to="HealthComponent" method="TakeDamage"]

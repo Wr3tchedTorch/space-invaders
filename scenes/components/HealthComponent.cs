@@ -1,34 +1,62 @@
 using Godot;
+using SpaceInvaders.assets.scripts.exceptions;
 using System;
 
 namespace SpaceInvaders.Scenes.Components;
 
 public partial class HealthComponent : Node
 {
-    [ExportGroup("Dependencies")]
-    [Export] private ProgressBar progressBar;
+    [Signal] public delegate void DiedEventHandler();
 
-    public float InitialHealth { get; set; }
+    [ExportGroup("Dependencies")]
+    [Export] private ProgressBar? progressBar = null;
+
+    public float? InitialHealth
+    {
+        get => _initialHealth;
+        set
+        {
+            _initialHealth = value;
+
+            if (InitialHealth == null)
+            {
+                throw new InitialHealthNullException();
+            }
+
+            if (progressBar != null)
+            {
+                progressBar.MaxValue = InitialHealth.Value;
+                progressBar.Value = progressBar.MaxValue;
+            }
+            CurrentHealth = InitialHealth.Value;
+        }
+    }
     public float CurrentHealth
     {
         get => _currentHealth;
         private set
         {
             _currentHealth = value;
-            progressBar.Value = _currentHealth;
+
+            if (progressBar != null)
+                progressBar.Value = CurrentHealth;
+
+            if (CurrentHealth <= 0)
+            {
+                EmitSignal(SignalName.Died);
+            }
         }
     }
 
     private float _currentHealth;
-
-    public override void _Ready()
-    {
-        progressBar.MaxValue = InitialHealth;
-        CurrentHealth = InitialHealth;
-    }
+    private float? _initialHealth = null;
 
     public void TakeDamage(float Damage)
     {
+        if (InitialHealth == null)
+        {
+            throw new InitialHealthNullException();
+        }
         CurrentHealth -= Mathf.Max(Damage, 0);
     }
 }

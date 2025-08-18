@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("2_qetji")
-Sprite = ExtResource("1_b84dj")
+Health = 100.0
 ScenePath = "uid://wwsrngddnnvl"
+Sprite = ExtResource("1_b84dj")
 Width = 8.0
 Height = 8.0
 metadata/_custom_type_script = "uid://ctvn4oudpq11e"
