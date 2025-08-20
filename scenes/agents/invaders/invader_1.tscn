@@ -31,6 +31,7 @@ BulletSpawnMarker = NodePath("../BulletSpawnMarker")
 position = Vector2(0, 6)
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("2_gs3gc")]
+collision_layer = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_l3dlf")

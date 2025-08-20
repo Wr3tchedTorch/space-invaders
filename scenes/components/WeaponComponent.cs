@@ -13,6 +13,8 @@ namespace SpaceInvaders.Scenes.Components;
 
 public partial class WeaponComponent : Node, IWeapon
 {
+    [Signal] public delegate void ShootedEventHandler();
+
     [ExportGroup("Configuration")]
     [Export] public WeaponResource WeaponResource
     {
@@ -135,7 +137,7 @@ public partial class WeaponComponent : Node, IWeapon
         FireRateTimer.Start();
 
         var bulletPosition = BulletSpawnMarker.GlobalPosition;
-        var bullet = BulletFactory.SpawnBullet(bulletPosition, (BulletResource) WeaponResource.BulletResource.Duplicate());
+        var bullet = BulletFactory.SpawnBullet(bulletPosition, (BulletResource)WeaponResource.BulletResource.Duplicate());
         bullet.GetDirection = GetDirection;
 
         bullet.SetPhysicsLayer(BulletPhysicsLayer);
@@ -152,6 +154,8 @@ public partial class WeaponComponent : Node, IWeapon
 
         var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
         gameWorld.AddChild((Node2D)bullet);
+
+        EmitSignal(SignalName.Shooted);
     }
 
     private async void WaitAndRemove(IBulletTemporaryUpgrade temporaryUpgrade)

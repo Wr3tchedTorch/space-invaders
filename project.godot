@@ -55,8 +55,9 @@ attack={
 2d_physics/layer_2="invaders"
 2d_physics/layer_3="player_bullets"
 2d_physics/layer_4="upgrades"
-2d_physics/layer_5="hurtbox"
+2d_physics/layer_5="player_hurtbox"
 2d_physics/layer_6="enemy_bullets"
+2d_physics/layer_7="enemy_hurtbox"
 
 [rendering]
 

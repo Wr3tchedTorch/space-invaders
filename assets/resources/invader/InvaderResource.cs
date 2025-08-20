@@ -9,6 +9,7 @@ public partial class InvaderResource : Resource
 {
     [ExportGroup("Attributes")]
     [Export] public float Health;
+    [Export] public float AttackDelay;
     [Export] public int ScoreValue;
 
     [ExportGroup("Configuration")]

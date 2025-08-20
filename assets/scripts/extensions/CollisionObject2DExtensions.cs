@@ -9,7 +9,7 @@ public static class CollisionObject2DExtensions
 
     public static void ClearPhysicsLayers(this CollisionObject2D collisionObject)
     {
-        for (int i = 0; i <= NumberOfLayers; i++)
+        for (int i = 1; i <= NumberOfLayers; i++)
         {
             collisionObject.SetCollisionLayerValue(i, false);
         }
@@ -17,7 +17,7 @@ public static class CollisionObject2DExtensions
 
     public static void ClearPhysicsMasks(this CollisionObject2D collisionObject)
     {
-        for (int i = 0; i <= NumberOfLayers; i++)
+        for (int i = 1; i <= NumberOfLayers; i++)
         {
             collisionObject.SetCollisionMaskValue(i, false);
         }

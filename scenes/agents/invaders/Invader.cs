@@ -19,8 +19,11 @@ public partial class Invader : Area2D, IEnemy
         HealthComponent.InitialHealth = InvaderResource.Health;
         HealthComponent.Died += OnDied;
 
+        WeaponComponent.Shooted += OnShooted;
         WeaponComponent.WeaponResource = InvaderResource.WeaponResource;
         WeaponComponent.GetDirection = new Callable(this, MethodName.GetDirection);
+
+        WaitAndAttack();
     }
 
     private void OnDied()
@@ -31,5 +34,20 @@ public partial class Invader : Area2D, IEnemy
     private Vector2 GetDirection()
     {
         return Vector2.Down;
+    }
+
+    private async void WaitAndAttack()
+    {
+        var randomOffset = GD.Randf() * InvaderResource.AttackDelay;
+        var randomSign = Mathf.Round(GD.RandRange(0, 1)) * 2 - 1;
+
+        await ToSignal(GetTree().CreateTimer(InvaderResource.AttackDelay + randomOffset * randomSign), "timeout");
+        WeaponComponent.StartShooting();
+    }
+    
+    private void OnShooted()
+    {
+        WeaponComponent.StopShooting();
+        WaitAndAttack();
     }
 }
