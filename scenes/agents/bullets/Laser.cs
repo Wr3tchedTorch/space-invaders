@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using SpaceInvaders.Assets.Resources.Bullet;
+using SpaceInvaders.Assets.Scripts.Extensions;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.Components;
 
@@ -54,5 +55,19 @@ public partial class Laser : Area2D, IBullet, IMover
     public static Vector2 GetMovementDirection()
     {
         return Vector2.Up;
+    }
+
+    public void SetPhysicsLayer(uint layer)
+    {
+        this.ClearPhysicsLayers();
+
+        SetCollisionLayerValue((int) layer, true);
+    }
+
+    public void SetPhysicsMask(uint mask)
+    {
+        this.ClearPhysicsMasks();
+                
+        SetCollisionMaskValue((int) mask, true);
     }
 }

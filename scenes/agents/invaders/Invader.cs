@@ -1,5 +1,5 @@
 using Godot;
-using SpaceInvaders.assets.scripts.interfaces;
+using SpaceInvaders.Assets.Scripts.interfaces;
 using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Components;
 using System;
@@ -10,6 +10,7 @@ public partial class Invader : Area2D, IEnemy
 {
     [ExportGroup("Dependencies")]
     [Export] public HealthComponent HealthComponent { get; private set; } = null!;
+    [Export] public WeaponComponent WeaponComponent { get; private set; } = null!;
 
     public InvaderResource InvaderResource { get; set; } = null!;
 
@@ -17,10 +18,18 @@ public partial class Invader : Area2D, IEnemy
     {
         HealthComponent.InitialHealth = InvaderResource.Health;
         HealthComponent.Died += OnDied;
+
+        WeaponComponent.WeaponResource = InvaderResource.WeaponResource;
+        WeaponComponent.GetDirection = new Callable(this, MethodName.GetDirection);
     }
 
     private void OnDied()
     {
         QueueFree();
+    }
+
+    private Vector2 GetDirection()
+    {
+        return Vector2.Down;
     }
 }

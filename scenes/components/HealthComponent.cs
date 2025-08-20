@@ -1,5 +1,5 @@
 using Godot;
-using SpaceInvaders.assets.scripts.exceptions;
+using SpaceInvaders.Assets.Scripts.Exceptions;
 using System;
 
 namespace SpaceInvaders.Scenes.Components;

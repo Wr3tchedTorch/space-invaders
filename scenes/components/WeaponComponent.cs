@@ -12,31 +12,102 @@ using System;
 namespace SpaceInvaders.Scenes.Components;
 
 public partial class WeaponComponent : Node, IWeapon
-{    
-    [Export] public WeaponResource WeaponResource { get; set; }
+{
+    [ExportGroup("Configuration")]
+    [Export] public WeaponResource WeaponResource
+    {
+        get => _weaponResource;
+        set
+        {
+            _weaponResource = value;
+
+            if (WeaponResource != null)
+            {
+                UpdateAttributes();
+            }
+        }
+    }
+    [Export]
+    private uint BulletPhysicsLayer
+    {
+        get;
+        set;
+    }
+    [Export] 
+    private uint BulletPhysicsMask
+    {
+        get;
+        set;
+    }
 
     public Callable GetDirection { get; set; }
 
     [ExportCategory("Dependencies")]
-    [Export] private Timer FireRateTimer { get; set; }
-    [Export] private Marker2D BulletSpawnMarker { get; set; }
+    [Export] private Timer FireRateTimer { get; set; } = null!;
+    [Export] private Marker2D BulletSpawnMarker { get; set; } = null!;
 
     private List<IBulletUpgrade> BulletUpgrades { get; set; } = [];
 
     private bool canShoot = true;
-    private bool isShooting = true;
+    private bool isShooting = false;
+
+    private WeaponResource _weaponResource = null!;
 
     public override void _Ready()
     {
         FireRateTimer.Autostart = false;
         FireRateTimer.OneShot = true;
-        FireRateTimer.WaitTime = WeaponResource.FireRateDelay;
         FireRateTimer.Timeout += () => canShoot = true;
 
-        WeaponResource.FireRateDelayChanged += () => { FireRateTimer.WaitTime = WeaponResource.FireRateDelay; };
+        if (WeaponResource != null)
+        {
+            UpdateAttributes();
+        }
+
+        if (BulletPhysicsLayer <= 0)
+        {
+            throw new InvalidPhysicsLayerException((int)BulletPhysicsLayer);
+        }
+        if (BulletPhysicsMask <= 0)
+        {
+            throw new InvalidPhysicsMaskException((int)BulletPhysicsMask);
+        }        
 
         GameEvents.Instance.BulletUpgradePickedUp += OnBulletUpgradePickedUp;
         GameEvents.Instance.WeaponUpgradePickedUp += OnWeaponUpgradePickedUp;
+    }
+    
+    public override void _Process(double delta)
+    {
+        if (!isShooting || !canShoot)
+        {
+            return;
+        }
+        Shoot();
+    }
+
+    public void StartShooting()
+    {
+        isShooting = true;
+    }
+
+    public void StopShooting()
+    {
+        isShooting = false;
+    }
+
+    private void UpdateAttributes()
+    {
+        if (WeaponResource == null)
+        {
+            throw new ResourceNullException(nameof(WeaponResource));
+        }
+        if (FireRateTimer == null)
+        {
+            return;
+        }
+        FireRateTimer.WaitTime = WeaponResource.FireRateDelay;
+        WeaponResource.FireRateDelayChanged += () => { FireRateTimer.WaitTime = WeaponResource.FireRateDelay; };
     }
 
     private void OnWeaponUpgradePickedUp(Resource upgrade)
@@ -58,25 +129,6 @@ public partial class WeaponComponent : Node, IWeapon
         BulletUpgrades.Add((IBulletUpgrade) upgrade);
     }
 
-    public override void _Process(double delta)
-    {
-        if (!isShooting || !canShoot)
-        {
-            return;
-        }
-        Shoot();
-    }
-
-    public void StartShooting()
-    {
-        isShooting = true;
-    }
-
-    public void StopShooting()
-    {
-        isShooting = false;
-    }
-
     private void Shoot()
     {
         canShoot = false;
@@ -85,6 +137,9 @@ public partial class WeaponComponent : Node, IWeapon
         var bulletPosition = BulletSpawnMarker.GlobalPosition;
         var bullet = BulletFactory.SpawnBullet(bulletPosition, (BulletResource) WeaponResource.BulletResource.Duplicate());
         bullet.GetDirection = GetDirection;
+
+        bullet.SetPhysicsLayer(BulletPhysicsLayer);
+        bullet.SetPhysicsMask(BulletPhysicsMask);
 
         foreach (var upgrade in BulletUpgrades)
         {

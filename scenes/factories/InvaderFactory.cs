@@ -3,7 +3,7 @@ using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Navigators;
 using System.Linq;
 using System;
-using SpaceInvaders.assets.scripts.interfaces;
+using SpaceInvaders.Assets.Scripts.interfaces;
 
 namespace SpaceInvaders.Scenes.Factories;
 
@@ -66,11 +66,24 @@ public partial class InvaderFactory : Node
 
     private InvaderResource GetEnemyResource(int row)
     {
-        if (row == 0)
+        if (invaders.Count == 0)
+        {
+            throw new InvalidOperationException("No invader resources available.");
+        }
+        if (invaders.Count == 1)
         {
             return invaders[0];
         }
-        if (row < 3)
+        if (invaders.Count == 2)
+        {
+            return row < Rows/2 ? invaders[0] : invaders[1];
+        }
+
+        if (row < Rows * 20/100)
+        {
+            return invaders[0];
+        }
+        if (row < Rows * 40/100)
         {
             return invaders[1];
         }

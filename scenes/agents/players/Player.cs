@@ -14,8 +14,8 @@ public partial class Player : CharacterBody2D
     [Export] public float Speed { get; set; }
 
     [ExportGroup("Dependencies")]    
-    [Export] private CollisionShape2D CollisionShape2D { get; set; }
-    [Export] private WeaponComponent WeaponComponent { get; set; }
+    [Export] private CollisionShape2D CollisionShape2D { get; set; } = null!;
+    [Export] private WeaponComponent WeaponComponent { get; set; } = null!;
 
     private float endBorder;
     private float startBorder;

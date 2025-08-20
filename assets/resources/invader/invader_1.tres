@@ -1,13 +1,14 @@
 [gd_resource type="Resource" script_class="InvaderResource" load_steps=3 format=3 uid="uid://c1hncsflge1qb"]
 
-[ext_resource type="Texture2D" uid="uid://82e1rsen24j1" path="res://assets/sprites/invaders/invader1-1.png" id="1_b84dj"]
+[ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/blaster_gun.tres" id="1_24a8m"]
 [ext_resource type="Script" uid="uid://ctvn4oudpq11e" path="res://assets/resources/invader/InvaderResource.cs" id="2_qetji"]
 
 [resource]
 script = ExtResource("2_qetji")
 Health = 100.0
+ScoreValue = 20
 ScenePath = "uid://wwsrngddnnvl"
-Sprite = ExtResource("1_b84dj")
+WeaponResource = ExtResource("1_24a8m")
 Width = 8.0
 Height = 8.0
 metadata/_custom_type_script = "uid://ctvn4oudpq11e"

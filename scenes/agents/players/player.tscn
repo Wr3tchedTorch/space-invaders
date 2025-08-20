@@ -17,6 +17,8 @@ WeaponComponent = NodePath("WeaponComponent")
 
 [node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarker") instance=ExtResource("2_ok5fs")]
 WeaponResource = ExtResource("3_ok5fs")
+BulletPhysicsLayer = 3
+BulletPhysicsMask = 5
 FireRateTimer = NodePath("Timer")
 BulletSpawnMarker = NodePath("../Marker2D")
 

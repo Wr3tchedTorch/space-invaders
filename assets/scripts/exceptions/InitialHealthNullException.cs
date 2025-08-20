@@ -1,7 +1,7 @@
 using System;
 using SpaceInvaders.Scenes.Components;
 
-namespace SpaceInvaders.assets.scripts.exceptions;
+namespace SpaceInvaders.Assets.Scripts.Exceptions;
 
 public class InitialHealthNullException : Exception
 {

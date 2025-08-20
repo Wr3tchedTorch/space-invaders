@@ -20,7 +20,7 @@ public partial class WeaponResource : Resource
             EmitSignal(SignalName.FireRateDelayChanged);
         }
     }
-    [Export] public BulletResource BulletResource { get; set; }
+    [Export] public BulletResource BulletResource { get; set; } = null!;
 
     private float _fireRateDelay;
 }

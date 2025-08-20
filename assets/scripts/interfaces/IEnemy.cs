@@ -1,7 +1,7 @@
 using System;
 using SpaceInvaders.Assets.Resources.Invader;
 
-namespace SpaceInvaders.assets.scripts.interfaces;
+namespace SpaceInvaders.Assets.Scripts.interfaces;
 
 public interface IEnemy
 {
