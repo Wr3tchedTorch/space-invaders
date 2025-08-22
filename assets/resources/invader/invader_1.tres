@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_qetji")
 Health = 100.0
+AttackDelay = 3.0
 ScoreValue = 20
 ScenePath = "uid://wwsrngddnnvl"
 WeaponResource = ExtResource("1_24a8m")

@@ -3,6 +3,7 @@ using SpaceInvaders.Assets.Scripts.interfaces;
 using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Components;
 using System;
+using SpaceInvaders.Scenes.Autoloads;
 
 namespace SpaceInvaders.Scenes.Agents.Invaders;
 
@@ -38,8 +39,8 @@ public partial class Invader : Area2D, IEnemy
 
     private async void WaitAndAttack()
     {
-        var randomOffset = GD.Randf() * InvaderResource.AttackDelay;
-        var randomSign = Mathf.Round(GD.RandRange(0, 1)) * 2 - 1;
+        var randomOffset = GameEvents.Rng.NextDouble() * InvaderResource.AttackDelay;
+        var randomSign = GameEvents.Rng.Next(0, 1) * 2 - 1;
 
         await ToSignal(GetTree().CreateTimer(InvaderResource.AttackDelay + randomOffset * randomSign), "timeout");
         WeaponComponent.StartShooting();

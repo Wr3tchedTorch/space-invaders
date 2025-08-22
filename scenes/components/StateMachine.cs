@@ -8,14 +8,14 @@ namespace SpaceInvaders.Scenes.Components;
 
 public partial class StateMachine : Node
 {
-    public Node2D Parent { get; set; }
+    public Node2D Parent { get; set; } = null!;
 
     public Dictionary<string, IState> States { get; private set; } = [];
 
-    public IState CurrentState { get; private set; }
-    public string CurrentStateName { get; private set; }
+    public IState? CurrentState { get; private set; }
+    public string CurrentStateName { get; private set; } = null!;
 
-    public string PreviousStateName { get; private set; }
+    public string PreviousStateName { get; private set; } = null!;
 
     public override void _Ready()
     {
@@ -29,8 +29,6 @@ public partial class StateMachine : Node
                 child.Exit();
                 child.Parent = Parent;
                 States.Add(node.Name, child);
-
-                GD.Print($"state name: {node.Name}");
             }
         }
     }
@@ -45,17 +43,21 @@ public partial class StateMachine : Node
 
     public override void _PhysicsProcess(double delta)
     {
+        if (CurrentState == null) return;
+
         CurrentState.PhysicsUpdate((float)delta);
     }
 
     public override void _Process(double delta)
     {
+        if (CurrentState == null) return;
+
         CurrentState.Update((float)delta);
     }
 
     public void SwitchTo(string stateName)
     {
-        if (!States.TryGetValue(stateName, out IState newState))
+        if (!States.TryGetValue(stateName, out IState? newState))
         {
             GD.PrintErr($"The state {stateName} does not exist.");
             return;
