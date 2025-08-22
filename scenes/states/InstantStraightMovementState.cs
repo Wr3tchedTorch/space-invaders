@@ -7,9 +7,9 @@ namespace SpaceInvaders.Scenes.States;
 
 public partial class InstantStraightMovementState : Node, IState
 {
-    public Node2D Parent { get; set; }
+    public Node2D Parent { get; set; } = null!;
 
-    private IMover ParentMover { get; set; } = null;    
+    private IMover? ParentMover { get; set; } = null;
 
     public void Enter()
     {
@@ -26,10 +26,22 @@ public partial class InstantStraightMovementState : Node, IState
 
     public void PhysicsUpdate(float delta)
     {
-        var dir = (Vector2)ParentMover.GetDirection.Call();
-        ParentMover.Velocity = dir * ParentMover.Speed * delta;
+        if (Parent == null || !IsInstanceValid(Parent) || ParentMover == null)
+        {
+            return;
+        }
+        try
+        {
+            var dir = (Vector2)ParentMover.GetDirection.Call();
+            ParentMover.Velocity = dir * ParentMover.Speed * delta;
 
-        ParentMover.Move(ParentMover.Velocity.Normalized().Angle());
+            ParentMover.Move(ParentMover.Velocity.Normalized().Angle());
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"{nameof(InstantStraightMovementState)}: {e.Message}. {Parent.Name} | {IsInstanceValid(Parent)} | {Parent.IsQueuedForDeletion()}");
+            throw;
+        }
     }
 
     public void Update(float delta)

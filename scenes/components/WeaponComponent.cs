@@ -44,11 +44,11 @@ public partial class WeaponComponent : Node, IWeapon
 
     public Callable GetDirection { get; set; }
 
+    public List<IBulletUpgrade> BulletUpgrades { get; private set; } = [];
+
     [ExportCategory("Dependencies")]
     [Export] private Timer FireRateTimer { get; set; } = null!;
     [Export] private Marker2D BulletSpawnMarker { get; set; } = null!;
-
-    private List<IBulletUpgrade> BulletUpgrades { get; set; } = [];
 
     private bool canShoot = true;
     private bool isShooting = false;
@@ -73,10 +73,7 @@ public partial class WeaponComponent : Node, IWeapon
         if (BulletPhysicsMask <= 0)
         {
             throw new InvalidPhysicsMaskException((int)BulletPhysicsMask);
-        }        
-
-        GameEvents.Instance.BulletUpgradePickedUp += OnBulletUpgradePickedUp;
-        GameEvents.Instance.WeaponUpgradePickedUp += OnWeaponUpgradePickedUp;
+        }
     }
     
     public override void _Process(double delta)
@@ -104,31 +101,12 @@ public partial class WeaponComponent : Node, IWeapon
         {
             throw new ResourceNullException(nameof(WeaponResource));
         }
-        if (FireRateTimer == null)
+        if (!IsInstanceValid(FireRateTimer))
         {
             return;
         }
         FireRateTimer.WaitTime = WeaponResource.FireRateDelay;
         WeaponResource.FireRateDelayChanged += () => { FireRateTimer.WaitTime = WeaponResource.FireRateDelay; };
-    }
-
-    private void OnWeaponUpgradePickedUp(Resource upgrade)
-    {
-        if (upgrade is not IWeaponUpgrade)
-        {
-            throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IWeaponUpgrade));
-        }
-        ((IWeaponUpgrade)upgrade).ApplyUpgrade(this);
-        GD.Print($"upgrade picked up: {upgrade.ResourcePath}");
-    }
-
-    private void OnBulletUpgradePickedUp(Resource upgrade)
-    {
-        if (upgrade is not IBulletUpgrade)
-        {
-            throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IBulletUpgrade));
-        }
-        BulletUpgrades.Add((IBulletUpgrade) upgrade);
     }
 
     private void Shoot()

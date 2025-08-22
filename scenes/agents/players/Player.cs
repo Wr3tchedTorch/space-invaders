@@ -1,5 +1,8 @@
 using Godot;
+using SpaceInvaders.Assets.Scripts.Exceptions;
 using SpaceInvaders.Assets.Scripts.Extensions;
+using SpaceInvaders.Assets.Scripts.Interfaces;
+using SpaceInvaders.Scenes.Autoloads;
 using SpaceInvaders.Scenes.Components;
 using System;
 
@@ -10,10 +13,10 @@ public partial class Player : CharacterBody2D
     public static readonly StringName LeftArrowAction = "left";
     public static readonly StringName RightArrowAction = "right";
     public static readonly StringName AttackAction = "attack";
-    
+
     [Export] public float Speed { get; set; }
 
-    [ExportGroup("Dependencies")]    
+    [ExportGroup("Dependencies")]
     [Export] private CollisionShape2D CollisionShape2D { get; set; } = null!;
     [Export] private WeaponComponent WeaponComponent { get; set; } = null!;
 
@@ -25,11 +28,14 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
-        WeaponComponent.GetDirection = new Callable(this, MethodName.GetDirection);        
+        WeaponComponent.GetDirection = new Callable(this, MethodName.GetDirection);
 
         spriteWidth = CollisionShape2D.Shape.GetRect().Size.X;
 
         CalculateScreenBounds();
+
+        GameEvents.Instance.BulletUpgradePickedUp += OnBulletUpgradePickedUp;
+        GameEvents.Instance.WeaponUpgradePickedUp += OnWeaponUpgradePickedUp;
     }
 
     public override void _Process(double delta)
@@ -81,6 +87,25 @@ public partial class Player : CharacterBody2D
 
     private Vector2 GetDirection()
     {
-        return _direction;
+        return Vector2.Up;
+    }
+    
+    private void OnWeaponUpgradePickedUp(Resource upgrade)
+    {
+        if (upgrade is not IWeaponUpgrade)
+        {
+            throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IWeaponUpgrade));
+        }
+        ((IWeaponUpgrade)upgrade).ApplyUpgrade(WeaponComponent);
+        GD.Print($"upgrade picked up: {upgrade.ResourcePath}");
+    }
+
+    private void OnBulletUpgradePickedUp(Resource upgrade)
+    {
+        if (upgrade is not IBulletUpgrade)
+        {
+            throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IBulletUpgrade));
+        }
+        WeaponComponent.BulletUpgrades.Add((IBulletUpgrade) upgrade);
     }
 }

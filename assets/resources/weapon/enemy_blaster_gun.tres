@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://73a51ueu2vuv"]
+
+[ext_resource type="Resource" uid="uid://7hyk5mge1yfh" path="res://assets/resources/bullet/enemy_laser.tres" id="1_ibpda"]
+[ext_resource type="Script" uid="uid://ckmtrt45a67gu" path="res://assets/resources/weapon/WeaponResource.cs" id="2_4w7ug"]
+
+[resource]
+script = ExtResource("2_4w7ug")
+FireRateDelay = 2.0
+BulletResource = ExtResource("1_ibpda")
+metadata/_custom_type_script = "uid://ckmtrt45a67gu"

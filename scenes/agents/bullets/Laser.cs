@@ -15,7 +15,19 @@ public partial class Laser : Area2D, IBullet, IMover
 
     public BulletResource BulletResource { get; set; } = null!;
 
-    public Callable GetDirection { get; set; }
+    public Callable GetDirection
+    {
+        get => _getDirection;
+        set
+        {
+            _getDirection = value;
+
+            direction = (Vector2)GetDirection.Call();
+
+            _getDirection = new Callable(this, MethodName.GetBulletDirection);
+        }
+    }
+
     public Vector2 Velocity { get; set; }
     public float Speed
     {
@@ -25,14 +37,20 @@ public partial class Laser : Area2D, IBullet, IMover
 
     public float Damage { get => BulletResource.Damage; }
 
+    private Vector2 direction;    
+    private Callable _getDirection;
+
     public override void _Ready()
     {
-        GetDirection = new Callable(this, MethodName.GetMovementDirection);
-
         StateMachine.Enter();
 
         AreaEntered += OnAreaEntered;
         BodyEntered += OnBodyEntered;
+    }
+
+    private Vector2 GetBulletDirection()
+    {
+        return direction;
     }
 
     private void OnBodyEntered(Node2D body)
@@ -50,11 +68,6 @@ public partial class Laser : Area2D, IBullet, IMover
         GlobalPosition += Velocity;
 
         Rotation = angle - Mathf.Pi/2;
-    }
-
-    public static Vector2 GetMovementDirection()
-    {
-        return Vector2.Up;
     }
 
     public void SetPhysicsLayer(uint layer)

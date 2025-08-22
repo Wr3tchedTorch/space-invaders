@@ -10,8 +10,6 @@ public partial class GameEvents : Node
 
     public static GameEvents Instance { get; private set; } = null!;
 
-    public static Random Rng { get; } = new Random(DateTime.UtcNow.Millisecond);
-
     public override void _Ready()
     {
         Instance = this;

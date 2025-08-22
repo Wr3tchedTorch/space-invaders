@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://bjx1im0wiiuvl"]
+
+[ext_resource type="Script" uid="uid://b0atpghjms1i0" path="res://scenes/agents/bullets/Laser.cs" id="1_2gjj7"]
+[ext_resource type="PackedScene" uid="uid://uv67f8df5g3x" path="res://scenes/components/state_machine.tscn" id="2_jc334"]
+[ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_4htry"]
+[ext_resource type="PackedScene" uid="uid://b3dm4onxrrbum" path="res://scenes/states/instant_zig_zag_movement_state.tscn" id="4_sj843"]
+[ext_resource type="PackedScene" uid="uid://0ce50c3g0yfv" path="res://scenes/components/velocity_component.tscn" id="5_wg8kr"]
+[ext_resource type="PackedScene" uid="uid://cjhy085jvr3k" path="res://scenes/components/off_screen_destroyer_component.tscn" id="6_wthf2"]
+[ext_resource type="Texture2D" uid="uid://dcfjthoi6804y" path="res://assets/sprites/weapons/laser.png" id="7_d7cr2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qer"]
+size = Vector2(1, 7)
+
+[node name="EnemyLaser" type="Area2D" node_paths=PackedStringArray("VelocityComponent", "StateMachine")]
+collision_layer = 4
+collision_mask = 16
+script = ExtResource("1_2gjj7")
+VelocityComponent = NodePath("VelocityComponent")
+StateMachine = NodePath("StateMachine")
+
+[node name="StateMachine" parent="." instance=ExtResource("2_jc334")]
+
+[node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_4htry")]
+
+[node name="InstantZigZagMovementState" parent="StateMachine" instance=ExtResource("4_sj843")]
+TurnDelay = 0.3
+TurnAmountDegs = 45.0
+
+[node name="VelocityComponent" parent="." instance=ExtResource("5_wg8kr")]
+
+[node name="OffScreenDestroyerComponent" parent="." node_paths=PackedStringArray("NodeToFree") instance=ExtResource("6_wthf2")]
+position = Vector2(0, 1.19209e-07)
+scale = Vector2(0.05, 0.35)
+NodeToFree = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.784562, 0.182169, 1.92523e-07, 1)
+scale = Vector2(0.981057, 0.946679)
+texture = ExtResource("7_d7cr2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_r4qer")
