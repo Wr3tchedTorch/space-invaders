@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_eawdp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qer"]
-size = Vector2(1, 7)
+size = Vector2(4, 8)
 
 [node name="Laser" type="Area2D" node_paths=PackedStringArray("VelocityComponent", "StateMachine")]
 collision_layer = 4

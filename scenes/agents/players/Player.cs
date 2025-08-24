@@ -106,6 +106,11 @@ public partial class Player : CharacterBody2D
         {
             throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IBulletUpgrade));
         }
+        if (upgrade is IBulletTemporaryUpgrade temporaryUpgrade)
+        {
+            WeaponComponent.AddUpgradeWaitAndRemove(temporaryUpgrade);
+            return;
+        }
         WeaponComponent.BulletUpgrades.Add((IBulletUpgrade) upgrade);
     }
 }

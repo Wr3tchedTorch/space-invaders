@@ -1,0 +1,64 @@
+[gd_scene load_steps=13 format=3 uid="uid://2yeql2xgpeh6"]
+
+[ext_resource type="Script" uid="uid://b0atpghjms1i0" path="res://scenes/agents/bullets/Laser.cs" id="1_xx55y"]
+[ext_resource type="PackedScene" uid="uid://uv67f8df5g3x" path="res://scenes/components/state_machine.tscn" id="2_3wlwo"]
+[ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_owboj"]
+[ext_resource type="PackedScene" uid="uid://b3dm4onxrrbum" path="res://scenes/states/instant_zig_zag_movement_state.tscn" id="4_3pcei"]
+[ext_resource type="PackedScene" uid="uid://0ce50c3g0yfv" path="res://scenes/components/velocity_component.tscn" id="5_e14h6"]
+[ext_resource type="PackedScene" uid="uid://cjhy085jvr3k" path="res://scenes/components/off_screen_destroyer_component.tscn" id="6_jg78p"]
+[ext_resource type="Texture2D" uid="uid://dppskxahw5mav" path="res://assets/sprites/weapons/special_shot-1.png" id="7_mgy57"]
+[ext_resource type="Texture2D" uid="uid://drqxdcpk1ll80" path="res://assets/sprites/weapons/special_shot-2.png" id="8_ummnk"]
+[ext_resource type="Texture2D" uid="uid://tbfebaefolma" path="res://assets/sprites/weapons/special_shot-3.png" id="9_f7tyy"]
+[ext_resource type="Texture2D" uid="uid://db20730qhmj2v" path="res://assets/sprites/weapons/special_shot-4.png" id="10_64f1f"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6elno"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_mgy57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ummnk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_f7tyy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_64f1f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qer"]
+size = Vector2(4, 8)
+
+[node name="SpecialLaser" type="Area2D" node_paths=PackedStringArray("VelocityComponent", "StateMachine")]
+collision_layer = 4
+collision_mask = 16
+script = ExtResource("1_xx55y")
+VelocityComponent = NodePath("VelocityComponent")
+StateMachine = NodePath("StateMachine")
+
+[node name="StateMachine" parent="." instance=ExtResource("2_3wlwo")]
+
+[node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_owboj")]
+
+[node name="InstantZigZagMovementState" parent="StateMachine" instance=ExtResource("4_3pcei")]
+TurnDelay = 0.3
+TurnAmountDegs = 45.0
+
+[node name="VelocityComponent" parent="." instance=ExtResource("5_e14h6")]
+
+[node name="OffScreenDestroyerComponent" parent="." node_paths=PackedStringArray("NodeToFree") instance=ExtResource("6_jg78p")]
+position = Vector2(0, 1.19209e-07)
+scale = Vector2(0.05, 0.35)
+NodeToFree = NodePath("..")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6elno")
+frame_progress = 0.703205
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r4qer")

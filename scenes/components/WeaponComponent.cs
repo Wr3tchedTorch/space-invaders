@@ -3,7 +3,6 @@ using SpaceInvaders.Assets.Resources.Bullet;
 using SpaceInvaders.Assets.Resources.Weapon;
 using SpaceInvaders.Assets.Scripts.Exceptions;
 using SpaceInvaders.Assets.Scripts.Interfaces;
-using SpaceInvaders.Scenes.Autoloads;
 using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Levels;
 using System.Collections.Generic;
@@ -16,7 +15,8 @@ public partial class WeaponComponent : Node, IWeapon
     [Signal] public delegate void ShootedEventHandler();
 
     [ExportGroup("Configuration")]
-    [Export] public WeaponResource WeaponResource
+    [Export]
+    public WeaponResource WeaponResource
     {
         get => _weaponResource;
         set
@@ -35,7 +35,7 @@ public partial class WeaponComponent : Node, IWeapon
         get;
         set;
     }
-    [Export] 
+    [Export]
     private uint BulletPhysicsMask
     {
         get;
@@ -75,7 +75,7 @@ public partial class WeaponComponent : Node, IWeapon
             throw new InvalidPhysicsMaskException((int)BulletPhysicsMask);
         }
     }
-    
+
     public override void _Process(double delta)
     {
         if (!isShooting || !canShoot)
@@ -93,6 +93,12 @@ public partial class WeaponComponent : Node, IWeapon
     public void StopShooting()
     {
         isShooting = false;
+    }
+
+    public void AddUpgradeWaitAndRemove(IBulletTemporaryUpgrade temporaryUpgrade)
+    {
+        BulletUpgrades.Add(temporaryUpgrade);
+        WaitAndRemove(temporaryUpgrade);
     }
 
     private void UpdateAttributes()
@@ -122,11 +128,7 @@ public partial class WeaponComponent : Node, IWeapon
         bullet.SetPhysicsMask(BulletPhysicsMask);
 
         foreach (var upgrade in BulletUpgrades)
-        {
-            if (upgrade is IBulletTemporaryUpgrade temporaryUpgrade)
-            {
-                WaitAndRemove(temporaryUpgrade);
-            }
+        {            
             upgrade.ApplyUpgrade(bullet);
         }
 
@@ -141,5 +143,5 @@ public partial class WeaponComponent : Node, IWeapon
         await ToSignal(GetTree().CreateTimer(temporaryUpgrade.Duration), "timeout");
 
         BulletUpgrades.Remove(temporaryUpgrade);
-    }
+    }    
 }
