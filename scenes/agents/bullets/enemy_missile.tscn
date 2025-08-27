@@ -1,0 +1,61 @@
+[gd_scene load_steps=10 format=3 uid="uid://dvp5jfiba87e4"]
+
+[ext_resource type="Script" uid="uid://c710eq45hs3q6" path="res://scenes/agents/bullets/Missile.cs" id="1_tsdrv"]
+[ext_resource type="PackedScene" uid="uid://uv67f8df5g3x" path="res://scenes/components/state_machine.tscn" id="2_tsdrv"]
+[ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_uujo7"]
+[ext_resource type="PackedScene" uid="uid://0ce50c3g0yfv" path="res://scenes/components/velocity_component.tscn" id="4_dm2in"]
+[ext_resource type="PackedScene" uid="uid://cjhy085jvr3k" path="res://scenes/components/off_screen_destroyer_component.tscn" id="5_a5ec6"]
+[ext_resource type="PackedScene" uid="uid://brc43l3heouke" path="res://scenes/components/explosion_component.tscn" id="5_tsdrv"]
+[ext_resource type="Texture2D" uid="uid://baiu5mjl8rwyt" path="res://assets/sprites/weapons/rocket.png" id="7_tsdrv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qer"]
+size = Vector2(4, 6)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tsdrv"]
+radius = 15.0
+
+[node name="EnemyMissile" type="Area2D" node_paths=PackedStringArray("ExplosionComponent", "VelocityComponent", "StateMachine")]
+collision_layer = 32
+collision_mask = 16
+monitorable = false
+script = ExtResource("1_tsdrv")
+ExplosionComponent = NodePath("ExplosionComponent")
+VelocityComponent = NodePath("VelocityComponent")
+StateMachine = NodePath("StateMachine")
+
+[node name="StateMachine" parent="." instance=ExtResource("2_tsdrv")]
+
+[node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_uujo7")]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("4_dm2in")]
+
+[node name="ExplosionComponent" parent="." node_paths=PackedStringArray("ExplosionArea") instance=ExtResource("5_tsdrv")]
+Duration = 0.3
+ExplosionArea = NodePath("../ExplosionArea2D")
+
+[node name="OffScreenDestroyerComponent" parent="." node_paths=PackedStringArray("NodeToFree") instance=ExtResource("5_a5ec6")]
+position = Vector2(0, 1.49012e-07)
+scale = Vector2(0.2, 0.3)
+NodeToFree = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.662477, 0.60643, 1)
+scale = Vector2(0.981057, 0.946679)
+texture = ExtResource("7_tsdrv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r4qer")
+
+[node name="ExplosionMarker2D" type="Marker2D" parent="."]
+position = Vector2(0, -4)
+
+[node name="ExplosionArea2D" type="Area2D" parent="."]
+visible = false
+collision_layer = 32
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea2D"]
+shape = SubResource("CircleShape2D_tsdrv")
+
+[connection signal="EnemyHit" from="." to="ExplosionComponent" method="TriggerExplosion"]

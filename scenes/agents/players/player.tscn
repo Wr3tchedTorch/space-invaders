@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://4oqb4vuw77as"]
+[gd_scene load_steps=8 format=3 uid="uid://4oqb4vuw77as"]
 
 [ext_resource type="Script" uid="uid://bi4t7f2cuoenm" path="res://scenes/agents/players/Player.cs" id="1_y3jks"]
 [ext_resource type="Texture2D" uid="uid://bmxl3pgpljhj0" path="res://assets/sprites/player/player.png" id="2_fovvg"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="2_ok5fs"]
 [ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/blaster_gun.tres" id="3_ok5fs"]
+[ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="5_uoiam"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y3jks"]
+size = Vector2(13, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vjyvw"]
 size = Vector2(13, 5)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CollisionShape2D", "WeaponComponent")]
@@ -34,3 +38,12 @@ shape = SubResource("RectangleShape2D_y3jks")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(0, -9)
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("5_uoiam")]
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_vjyvw")
+
+[connection signal="Attacked" from="HurtboxComponent" to="." method="OnAttacked"]

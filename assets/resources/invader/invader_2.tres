@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="InvaderResource" load_steps=3 format=3 uid="uid://bwnmpd4hbnvl0"]
 
-[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy_blaster_gun.tres" id="1_krnhd"]
+[ext_resource type="Resource" uid="uid://keui42hn5pop" path="res://assets/resources/weapon/enemy_rocket_launcher.tres" id="1_krnhd"]
 [ext_resource type="Script" uid="uid://ctvn4oudpq11e" path="res://assets/resources/invader/InvaderResource.cs" id="1_l6uhc"]
 
 [resource]

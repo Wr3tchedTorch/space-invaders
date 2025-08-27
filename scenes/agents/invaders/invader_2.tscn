@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6s186pqpm1lh"]
+[gd_scene load_steps=8 format=3 uid="uid://b6s186pqpm1lh"]
 
 [ext_resource type="Texture2D" uid="uid://cooli7patbik2" path="res://assets/sprites/invaders/invader2-1.png" id="1_3i4rc"]
 [ext_resource type="Script" uid="uid://c16ryohfwyoks" path="res://scenes/agents/invaders/Invader.cs" id="1_c6t25"]
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="2_4h2o5"]
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_uxcem"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_fp0of"]
-[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy_blaster_gun.tres" id="4_6erdc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uxcem"]
 radius = 7.0
@@ -14,6 +13,8 @@ radius = 7.0
 radius = 6.08276
 
 [node name="Invader2" type="Area2D" node_paths=PackedStringArray("HealthComponent", "WeaponComponent")]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_c6t25")
 HealthComponent = NodePath("HealthComponent")
 WeaponComponent = NodePath("WeaponComponent")
@@ -21,7 +22,6 @@ WeaponComponent = NodePath("WeaponComponent")
 [node name="HealthComponent" parent="." instance=ExtResource("2_4h2o5")]
 
 [node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarker") instance=ExtResource("3_fp0of")]
-WeaponResource = ExtResource("4_6erdc")
 BulletPhysicsLayer = 6
 BulletPhysicsMask = 5
 FireRateTimer = NodePath("Timer")
@@ -33,6 +33,7 @@ BulletSpawnMarker = NodePath("../BulletSpawnMarker")
 position = Vector2(0, 6)
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("2_uxcem")]
+collision_layer = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_uxcem")

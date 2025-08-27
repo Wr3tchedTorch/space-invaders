@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brc43l3heouke"]
+
+[ext_resource type="Script" uid="uid://bpgqv5d0vmjdn" path="res://scenes/components/ExplosionComponent.cs" id="1_u4s4h"]
+
+[node name="ExplosionComponent" type="Node"]
+script = ExtResource("1_u4s4h")

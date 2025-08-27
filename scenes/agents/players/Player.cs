@@ -89,7 +89,7 @@ public partial class Player : CharacterBody2D
     {
         return Vector2.Up;
     }
-    
+
     private void OnWeaponUpgradePickedUp(Resource upgrade)
     {
         if (upgrade is not IWeaponUpgrade)
@@ -111,6 +111,11 @@ public partial class Player : CharacterBody2D
             WeaponComponent.AddUpgradeWaitAndRemove(temporaryUpgrade);
             return;
         }
-        WeaponComponent.BulletUpgrades.Add((IBulletUpgrade) upgrade);
+        WeaponComponent.BulletUpgrades.Add((IBulletUpgrade)upgrade);
+    }
+
+    private void OnAttacked(float damage)
+    {
+        GD.Print($"Player attacked with {damage} damage.");
     }
 }

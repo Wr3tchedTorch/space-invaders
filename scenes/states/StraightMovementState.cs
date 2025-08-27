@@ -6,13 +6,13 @@ using System;
 namespace SpaceInvaders.Scenes.States;
 
 public partial class StraightMovementState : Node, IState
-{    
-    public Node2D Parent { get; set; }
+{
+    public Node2D Parent { get; set; } = null!;
 
-    private IMover ParentMover { get; set; } = null;
+    private IMover? ParentMover { get; set; } = null;
 
     [ExportGroup("Dependencies")]
-    [Export] public VelocityComponent VelocityComponent { get; set; }
+    [Export] public VelocityComponent VelocityComponent { get; set; } = null!;
 
     public void Enter()
     {
@@ -37,6 +37,10 @@ public partial class StraightMovementState : Node, IState
 
     public void PhysicsUpdate(float delta)
     {
+        if (ParentMover == null)
+        {
+            return;
+        }
         ParentMover.Velocity = VelocityComponent.GetVelocity(delta);
 
         ParentMover.Move(ParentMover.Velocity.Normalized().Angle());

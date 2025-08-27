@@ -4,10 +4,7 @@ using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Components;
 using SpaceInvaders.Scenes.Levels;
 using System;
-using SpaceInvaders.Assets.Resources.Weapon;
-using System.Collections.Generic;
 using SpaceInvaders.Assets.Scripts.Interfaces;
-using SpaceInvaders.Assets.Resources.Bullet;
 using SpaceInvaders.Assets.Scripts.Exceptions;
 
 namespace SpaceInvaders.Scenes.Agents.Invaders;

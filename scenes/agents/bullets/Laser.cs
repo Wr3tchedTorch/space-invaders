@@ -11,9 +11,9 @@ public partial class Laser : Area2D, IBullet, IMover
 {
     [ExportGroup("Dependencies")]
     [Export] public VelocityComponent VelocityComponent { get; set; } = null!;
-    [Export] public StateMachine StateMachine { get; set; } = null!;
+    [Export] public StateMachine StateMachine { get; set; } = null!;    
 
-    public BulletResource BulletResource { get; set; } = null!;
+    public BulletResource BulletResource { get; set; } = null!;    
 
     public Callable GetDirection
     {
@@ -53,14 +53,14 @@ public partial class Laser : Area2D, IBullet, IMover
         return direction;
     }
 
-    private void OnBodyEntered(Node2D body)
+    protected virtual void OnBodyEntered(Node2D body)
     {
-        QueueFree();
+        Callable.From(QueueFree).CallDeferred();
     }
 
-    private void OnAreaEntered(Area2D area)
+    protected virtual void OnAreaEntered(Area2D area)
     {
-        QueueFree();
+        Callable.From(QueueFree).CallDeferred();
     }
 
     public void Move(float angle)
