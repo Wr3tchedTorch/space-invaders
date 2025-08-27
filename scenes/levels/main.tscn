@@ -20,6 +20,8 @@ metadata/_custom_type_script = "uid://c83e30227cwru"
 script = ExtResource("1_j4d2a")
 
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
+Columns = 1
+Rows = 3
 EnemiesNavigator = NodePath("../EnemiesNavigator")
 
 [node name="EnemiesNavigator" parent="GameWorld" instance=ExtResource("2_j4d2a")]

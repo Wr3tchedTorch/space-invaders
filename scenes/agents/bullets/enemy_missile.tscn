@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dvp5jfiba87e4"]
+[gd_scene load_steps=11 format=3 uid="uid://dvp5jfiba87e4"]
 
 [ext_resource type="Script" uid="uid://c710eq45hs3q6" path="res://scenes/agents/bullets/Missile.cs" id="1_tsdrv"]
 [ext_resource type="PackedScene" uid="uid://uv67f8df5g3x" path="res://scenes/components/state_machine.tscn" id="2_tsdrv"]
@@ -7,19 +7,21 @@
 [ext_resource type="PackedScene" uid="uid://cjhy085jvr3k" path="res://scenes/components/off_screen_destroyer_component.tscn" id="5_a5ec6"]
 [ext_resource type="PackedScene" uid="uid://brc43l3heouke" path="res://scenes/components/explosion_component.tscn" id="5_tsdrv"]
 [ext_resource type="Texture2D" uid="uid://baiu5mjl8rwyt" path="res://assets/sprites/weapons/rocket.png" id="7_tsdrv"]
+[ext_resource type="PackedScene" uid="uid://dupuevgffirdp" path="res://scenes/agents/bullets/explosion_area.tscn" id="8_uujo7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qer"]
 size = Vector2(4, 6)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tsdrv"]
-radius = 15.0
+radius = 30.0
 
-[node name="EnemyMissile" type="Area2D" node_paths=PackedStringArray("ExplosionComponent", "VelocityComponent", "StateMachine")]
+[node name="EnemyMissile" type="Area2D" node_paths=PackedStringArray("ExplosionComponent", "ExplosionArea", "VelocityComponent", "StateMachine")]
 collision_layer = 32
 collision_mask = 16
 monitorable = false
 script = ExtResource("1_tsdrv")
 ExplosionComponent = NodePath("ExplosionComponent")
+ExplosionArea = NodePath("ExplosionArea")
 VelocityComponent = NodePath("VelocityComponent")
 StateMachine = NodePath("StateMachine")
 
@@ -29,9 +31,9 @@ StateMachine = NodePath("StateMachine")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("4_dm2in")]
 
-[node name="ExplosionComponent" parent="." node_paths=PackedStringArray("ExplosionArea") instance=ExtResource("5_tsdrv")]
-Duration = 0.3
-ExplosionArea = NodePath("../ExplosionArea2D")
+[node name="ExplosionComponent" parent="." node_paths=PackedStringArray("ExplosionArea", "ExplosionShape") instance=ExtResource("5_tsdrv")]
+ExplosionArea = NodePath("../ExplosionArea")
+ExplosionShape = NodePath("../ExplosionArea/CollisionShape2D2")
 
 [node name="OffScreenDestroyerComponent" parent="." node_paths=PackedStringArray("NodeToFree") instance=ExtResource("5_a5ec6")]
 position = Vector2(0, 1.49012e-07)
@@ -49,13 +51,12 @@ shape = SubResource("RectangleShape2D_r4qer")
 [node name="ExplosionMarker2D" type="Marker2D" parent="."]
 position = Vector2(0, -4)
 
-[node name="ExplosionArea2D" type="Area2D" parent="."]
-visible = false
+[node name="ExplosionArea" parent="." instance=ExtResource("8_uujo7")]
 collision_layer = 32
 collision_mask = 16
-monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ExplosionArea"]
 shape = SubResource("CircleShape2D_tsdrv")
+disabled = true
 
 [connection signal="EnemyHit" from="." to="ExplosionComponent" method="TriggerExplosion"]

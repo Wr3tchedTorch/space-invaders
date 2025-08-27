@@ -10,12 +10,15 @@ public partial class Missile : Laser
 
     [ExportGroup("Dependencies")]
     [Export] public ExplosionComponent ExplosionComponent { get; set; } = null!;
+    [Export] public ExplosionArea ExplosionArea { get; set; } = null!;
 
     public override void _Ready()
     {
         base._Ready();
 
         ExplosionComponent.ExplosionFinished += OnExplosionFinished;
+
+        ExplosionArea.Damage = BulletResource.Damage;
     }
 
     protected override void OnBodyEntered(Node2D body)

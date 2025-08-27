@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dupuevgffirdp"]
+
+[ext_resource type="Script" uid="uid://3j6te76yyo3p" path="res://scenes/agents/bullets/ExplosionArea.cs" id="1_ajcuq"]
+
+[node name="ExplosionArea" type="Area2D"]
+script = ExtResource("1_ajcuq")

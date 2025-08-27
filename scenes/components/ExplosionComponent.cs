@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 namespace SpaceInvaders.Scenes.Components;
 
@@ -12,6 +13,7 @@ public partial class ExplosionComponent : Node
 
     [ExportGroup("Explosion Configuration")]
     [Export] private Area2D ExplosionArea { get; set; } = null!;
+    [Export] private CollisionShape2D ExplosionShape { get; set; } = null!;
 
     public void TriggerExplosion()
     {
@@ -20,12 +22,10 @@ public partial class ExplosionComponent : Node
 
     private async void CreateExplosionCollision()
     {
-        ExplosionArea.SetDeferred("monitorable", true);
-        ExplosionArea.Visible = true;
+        ExplosionShape.SetDeferred("disabled", false);
 
         await ToSignal(GetTree().CreateTimer(Duration), "timeout");
-        ExplosionArea.SetDeferred("monitorable", false);
-
-        EmitSignal(SignalName.ExplosionFinished);
+        ExplosionShape.SetDeferred("disabled", true);
+        EmitSignal(SignalName.ExplosionFinished);        
     }
 }
