@@ -11,15 +11,15 @@ public partial class InstantZigZagMovementState : Node, IState
     [Export] private float TurnDelay { get; set; }
     [Export] private float TurnAmountDegs { get; set; }
 
-    public Node2D Parent { get; set; }
+    public Node2D Parent { get; set; } = null!;
 
-    private IMover ParentMover { get; set; } = null;
+    private IMover? ParentMover { get; set; } = null;
 
     private Vector2 direction;
 
     private float angle;
 
-    private Timer turnTimer;
+    private Timer turnTimer = null!;
 
     public void Enter()
     {
@@ -28,6 +28,11 @@ public partial class InstantZigZagMovementState : Node, IState
             throw new ArgumentException($"{nameof(InstantStraightMovementState)}: {nameof(Parent)} must be of type {nameof(IMover)}.");
         }
         ParentMover = (IMover)Parent;
+
+        var randomSign = GameWorld.Rng.Next(0, 2) * 2 - 1;
+        TurnAmountDegs *= randomSign;
+
+        GD.Print($"Zig Zag Turn Amount Degs: {TurnAmountDegs} {randomSign}");
 
         CreateTurnTimer();
     }
@@ -38,6 +43,10 @@ public partial class InstantZigZagMovementState : Node, IState
 
     public void PhysicsUpdate(float delta)
     {
+        if (ParentMover == null)
+        {
+            return;
+        }        
         direction = (Vector2)ParentMover.GetDirection.Call();
         direction = GetRotatedDirection();
 

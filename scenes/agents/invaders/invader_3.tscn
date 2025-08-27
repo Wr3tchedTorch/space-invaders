@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bgrsqr43rbemu"]
+[gd_scene load_steps=9 format=3 uid="uid://bgrsqr43rbemu"]
 
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="1_dx0ke"]
 [ext_resource type="Script" uid="uid://c16ryohfwyoks" path="res://scenes/agents/invaders/Invader.cs" id="1_u2t08"]
 [ext_resource type="Texture2D" uid="uid://cuqyns68k2xu8" path="res://assets/sprites/invaders/invader3-1.png" id="1_um246"]
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="2_3fxjn"]
+[ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_se71y"]
+[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy_blaster_gun.tres" id="4_n5qwy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2t08"]
 radius = 8.0
@@ -11,13 +13,27 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_dx0ke"]
 radius = 6.08276
 
-[node name="Invader3" type="Area2D" node_paths=PackedStringArray("HealthComponent")]
+[node name="Invader3" type="Area2D" node_paths=PackedStringArray("HealthComponent", "WeaponComponent")]
 script = ExtResource("1_u2t08")
 HealthComponent = NodePath("HealthComponent")
+WeaponComponent = NodePath("WeaponComponent")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_3fxjn")]
 
+[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarker") instance=ExtResource("3_se71y")]
+WeaponResource = ExtResource("4_n5qwy")
+BulletPhysicsLayer = 6
+BulletPhysicsMask = 5
+FireRateTimer = NodePath("Timer")
+BulletSpawnMarker = NodePath("../BulletSpawnMarker")
+
+[node name="Timer" type="Timer" parent="WeaponComponent"]
+
+[node name="BulletSpawnMarker" type="Marker2D" parent="."]
+position = Vector2(0, 6)
+
 [node name="HurtboxComponent" parent="." instance=ExtResource("1_dx0ke")]
+collision_layer = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CircleShape2D_u2t08")

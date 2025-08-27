@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_l6uhc")
-Health = 150.0
+Health = 1.0
 ScoreValue = 20
 ScenePath = "uid://b6s186pqpm1lh"
 WeaponResource = ExtResource("1_krnhd")

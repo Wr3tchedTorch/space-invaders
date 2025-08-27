@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=13 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ctvn4oudpq11e" path="res://assets/resources/invader/InvaderResource.cs" id="3_rssyh"]
 [ext_resource type="Resource" uid="uid://c1hncsflge1qb" path="res://assets/resources/invader/invader_1.tres" id="4_hwp66"]
 [ext_resource type="PackedScene" uid="uid://b16sfwkqddj0f" path="res://scenes/agents/upgrades/upgrade_pick_up.tscn" id="5_b6bv0"]
+[ext_resource type="Resource" uid="uid://def0xaxf61xkv" path="res://assets/resources/invader/invader_3.tres" id="5_hwp66"]
 [ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/bullet/upgrade/bullet_zigzag_upgrade.tres" id="6_vkq25"]
 [ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/weapon/upgrade/weapon_fire_rate_upgrade.tres" id="7_ubwgw"]
 [ext_resource type="Script" uid="uid://c83e30227cwru" path="res://assets/resources/weapon/upgrade/WeaponFireRateUpgradeResource.cs" id="8_vkq25"]
@@ -23,7 +24,7 @@ script = ExtResource("1_j4d2a")
 
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
 EnemiesNavigator = NodePath("../EnemiesNavigator")
-invaders = Array[ExtResource("3_rssyh")]([ExtResource("4_hwp66")])
+invaders = Array[ExtResource("3_rssyh")]([ExtResource("4_hwp66"), ExtResource("5_hwp66")])
 
 [node name="EnemiesNavigator" parent="GameWorld" instance=ExtResource("2_j4d2a")]
 position = Vector2(128, 10)

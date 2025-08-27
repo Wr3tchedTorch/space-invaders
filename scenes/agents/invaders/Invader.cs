@@ -58,7 +58,6 @@ public partial class Invader : Area2D, IEnemy
     private async void StartShooting()
     {
         InvaderResource.WeaponResource.FireRateDelay = GetRandomFireRateDelay();
-        GD.Print($"Invader Fire Rate Delay: {InvaderResource.WeaponResource.FireRateDelay}");
 
         await ToSignal(GetTree().CreateTimer(InvaderResource.WeaponResource.FireRateDelay), "timeout");
         WeaponComponent.StartShooting();
@@ -69,7 +68,7 @@ public partial class Invader : Area2D, IEnemy
         var halfFireRate = InvaderResource.WeaponResource.FireRateDelay * 0.95f;
 
         var randomOffset = (float)(GameWorld.Rng.NextDouble() * halfFireRate);
-        var randomSign = GameWorld.Rng.Next(0, 1) * 2 - 1;
+        var randomSign = GameWorld.Rng.Next(0, 2) * 2 - 1;
 
         return InvaderResource.WeaponResource.FireRateDelay + randomOffset * randomSign;
     }
