@@ -59,7 +59,7 @@ shape = SubResource("RectangleShape2D_rssyh")
 position = Vector2(128, 10)
 HorizontalMovementIncrement = 4.0
 VerticalMovementIncrement = 6.0
-DelayBetweenMovements = 0.5
+MaxDelayBetweenMovements = 1.0
 MovementTimer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="GameWorld/EnemiesNavigator"]

@@ -87,6 +87,11 @@ public partial class Invader : Area2D, IEnemy
 
     private void OnFlockMoved()
     {
+        if (!IsInstanceValid(AnimatedSprite2D))
+        {
+            return;
+        }
+
         if (AnimatedSprite2D.Frame == 1)
         {
             AnimatedSprite2D.Frame = 0;

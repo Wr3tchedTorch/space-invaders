@@ -10,8 +10,20 @@ public partial class EnemiesNavigator : Node2D
     [Export] public float HorizontalMovementIncrement { get; set; }
     [Export] public float VerticalMovementIncrement { get; set; }
 
-    [Export] public float DelayBetweenMovements { get; set; }
+    [Export] public float MaxDelayBetweenMovements { get; set; }
     [Export] public Timer MovementTimer { get; set; } = null!;
+
+    private float CurrentDelayBetweenMovements
+    {
+        get => _currentDelayBetweenMovements;
+        set
+        {
+            _currentDelayBetweenMovements = value;
+
+            MovementTimer.WaitTime = Mathf.Max(value, 0.05f);
+        }
+    }
+    private float _currentDelayBetweenMovements;
 
     private Vector2 Direction = Vector2.Right;
 
@@ -19,19 +31,22 @@ public partial class EnemiesNavigator : Node2D
 
     public override void _Ready()
     {
-        MovementTimer.WaitTime = DelayBetweenMovements;
+        CurrentDelayBetweenMovements = MaxDelayBetweenMovements;
+
+        MovementTimer.WaitTime = MaxDelayBetweenMovements;
         MovementTimer.Timeout += () =>
+        
         {
             Move();
 
             EmitSignal(SignalName.Moved);
         };
-        MovementTimer.Start();        
+        MovementTimer.Start();
     }
 
     private void Move()
     {
-        GlobalPosition += Direction * HorizontalMovementIncrement;
+        GlobalPosition += Direction * (HorizontalMovementIncrement + HorizontalMovementIncrement);
     }
 
     public void OnRightWallEntered(Area2D _)
@@ -40,7 +55,8 @@ public partial class EnemiesNavigator : Node2D
         if (Mathf.Sign(Direction.X) == 1)
         {
             Direction = new Vector2(-Mathf.Abs(Direction.X), Direction.Y);
-            GlobalPosition += new Vector2(0, VerticalMovementIncrement);
+
+            GoDown();
         }
     }
 
@@ -50,7 +66,14 @@ public partial class EnemiesNavigator : Node2D
         if (Mathf.Sign(Direction.X) == -1)
         {
             Direction = new Vector2(Mathf.Abs(Direction.X), Direction.Y);
-            GlobalPosition += new Vector2(0, VerticalMovementIncrement);
+
+            GoDown();
         }
+    }
+
+    private void GoDown()
+    {
+        CurrentDelayBetweenMovements -= 0.2f;
+        GlobalPosition += new Vector2(0, VerticalMovementIncrement);
     }
 }
