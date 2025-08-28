@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgrsqr43rbemu"]
+[gd_scene load_steps=11 format=3 uid="uid://bgrsqr43rbemu"]
 
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="1_dx0ke"]
 [ext_resource type="Script" uid="uid://c16ryohfwyoks" path="res://scenes/agents/invaders/Invader.cs" id="1_u2t08"]
@@ -6,17 +6,35 @@
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="2_3fxjn"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_se71y"]
 [ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy_blaster_gun.tres" id="4_n5qwy"]
+[ext_resource type="Texture2D" uid="uid://e2ys6g12wjoj" path="res://assets/sprites/invaders/invader3-2.png" id="7_n5qwy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2t08"]
 radius = 8.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_01ef0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_um246")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_n5qwy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_dx0ke"]
 radius = 6.08276
 
-[node name="Invader3" type="Area2D" node_paths=PackedStringArray("HealthComponent", "WeaponComponent")]
+[node name="Invader3" type="Area2D" node_paths=PackedStringArray("HealthComponent", "WeaponComponent", "AnimatedSprite2D")]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_u2t08")
 HealthComponent = NodePath("HealthComponent")
 WeaponComponent = NodePath("WeaponComponent")
+AnimatedSprite2D = NodePath("AnimatedSprite2D")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_3fxjn")]
 
@@ -39,8 +57,8 @@ collision_layer = 64
 shape = SubResource("CircleShape2D_u2t08")
 debug_color = Color(0.819608, 0.4, 0.0901961, 0.188235)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_um246")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_01ef0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_dx0ke")

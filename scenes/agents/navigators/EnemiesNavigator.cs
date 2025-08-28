@@ -1,75 +1,56 @@
 using Godot;
-using SpaceInvaders.Assets.Scripts.interfaces;
-using SpaceInvaders.Scenes.Agents.Invaders;
 using System;
-using System.Linq;
 
 namespace SpaceInvaders.Scenes.Navigators;
 
 public partial class EnemiesNavigator : Node2D
 {
-    [Export] public float MovementPixelIncrement { get; set; }
+    [Signal] public delegate void MovedEventHandler();
+
+    [Export] public float HorizontalMovementIncrement { get; set; }
+    [Export] public float VerticalMovementIncrement { get; set; }
+
     [Export] public float DelayBetweenMovements { get; set; }
     [Export] public Timer MovementTimer { get; set; } = null!;
 
     private Vector2 Direction = Vector2.Right;
 
-    private float _timeSinceLastSwitch = float.MaxValue;
-
-    private bool _moved = false;
     private bool _moving = true;
 
     public override void _Ready()
     {
-        var enemies = GetChildren().OfType<Invader>();
-
-        foreach (var enemy in enemies)
-        {
-            enemy.ReachedScreenBorder += SwitchDirection;
-        }
-
+        MovementTimer.WaitTime = DelayBetweenMovements;
         MovementTimer.Timeout += () =>
         {
-            if (!_moving)
-            {
-                return;
-            }
             Move();
+
+            EmitSignal(SignalName.Moved);
         };
-        MovementTimer.OneShot = false;
-        MovementTimer.Start(DelayBetweenMovements);
+        MovementTimer.Start();        
     }
 
     private void Move()
     {
-        if (_moved) return;
-        GD.Print("Moving enemies");
-
-        GlobalPosition += Direction * MovementPixelIncrement;
+        GlobalPosition += Direction * HorizontalMovementIncrement;
     }
 
-    public override void _PhysicsProcess(double delta)
+    public void OnRightWallEntered(Area2D _)
     {
-        if (_moved)
+        GD.Print($"Right wall hit. Direction: {Direction}");
+        if (Mathf.Sign(Direction.X) == 1)
         {
-            _timeSinceLastSwitch = 0f;
-            _moved = false;
+            Direction = new Vector2(-Mathf.Abs(Direction.X), Direction.Y);
+            GlobalPosition += new Vector2(0, VerticalMovementIncrement);
         }
-        _timeSinceLastSwitch += (float)delta;
     }
 
-    public void SwitchDirection()
+    public void OnLeftWallEntered(Area2D _)
     {
-        if (_timeSinceLastSwitch < 0.1f) return;
-
-        _moving = false;
-
-        GlobalPosition += new Vector2(0, MovementPixelIncrement);
-
-        Direction = new Vector2(-Direction.X, Direction.Y);
-        _moved = true;
-
-        MovementTimer.Start(DelayBetweenMovements);
-        _moving = true;
+        GD.Print($"Left wall hit. Direction: {Direction}");
+        if (Mathf.Sign(Direction.X) == -1)
+        {
+            Direction = new Vector2(Mathf.Abs(Direction.X), Direction.Y);
+            GlobalPosition += new Vector2(0, VerticalMovementIncrement);
+        }
     }
 }

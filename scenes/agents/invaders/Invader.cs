@@ -6,16 +6,17 @@ using SpaceInvaders.Scenes.Levels;
 using System;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Assets.Scripts.Exceptions;
+using SpaceInvaders.Scenes.Factories;
+using SpaceInvaders.Scenes.Navigators;
 
 namespace SpaceInvaders.Scenes.Agents.Invaders;
 
 public partial class Invader : Area2D, IEnemy
 {
-    [Signal] public delegate void ReachedScreenBorderEventHandler();
-
     [ExportGroup("Dependencies")]
     [Export] public HealthComponent HealthComponent { get; private set; } = null!;
     [Export] public WeaponComponent WeaponComponent { get; private set; } = null!;
+    [Export] public AnimatedSprite2D AnimatedSprite2D { get; set; } = null!;
 
     [ExportGroup("Configuration")]
     [Export] public Resource[] BulletUpgradeResources { get; set; } = [];
@@ -42,11 +43,9 @@ public partial class Invader : Area2D, IEnemy
         }
 
         Callable.From(StartShooting).CallDeferred();
-    }
 
-    private void ScreenBorderHit()
-    {
-        EmitSignal(SignalName.ReachedScreenBorder);
+        var parent = GetParent<EnemiesNavigator>();
+        parent.Moved += OnFlockMoved;
     }
 
     private void OnDied()
@@ -83,6 +82,16 @@ public partial class Invader : Area2D, IEnemy
         {
             throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IBulletUpgrade));
         }
-        WeaponComponent.BulletUpgrades.Add((IBulletUpgrade) upgrade);
-    }    
+        WeaponComponent.BulletUpgrades.Add((IBulletUpgrade)upgrade);
+    }
+
+    private void OnFlockMoved()
+    {
+        if (AnimatedSprite2D.Frame == 1)
+        {
+            AnimatedSprite2D.Frame = 0;
+            return;
+        }
+        AnimatedSprite2D.Frame = 1;
+    }
 }

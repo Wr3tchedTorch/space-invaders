@@ -32,8 +32,6 @@ public partial class InstantZigZagMovementState : Node, IState
         var randomSign = GameWorld.Rng.Next(0, 2) * 2 - 1;
         TurnAmountDegs *= randomSign;
 
-        GD.Print($"Zig Zag Turn Amount Degs: {TurnAmountDegs} {randomSign}");
-
         CreateTurnTimer();
     }
 

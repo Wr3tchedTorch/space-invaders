@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=13 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -8,6 +8,15 @@
 [ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/bullet/upgrade/bullet_zigzag_upgrade.tres" id="6_vkq25"]
 [ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/weapon/upgrade/weapon_fire_rate_upgrade.tres" id="7_ubwgw"]
 [ext_resource type="Script" uid="uid://c83e30227cwru" path="res://assets/resources/weapon/upgrade/WeaponFireRateUpgradeResource.cs" id="8_vkq25"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkq25"]
+size = Vector2(8, 224)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7lrji"]
+size = Vector2(8, 224)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rssyh"]
+size = Vector2(256, 8)
 
 [sub_resource type="Resource" id="Resource_7lrji"]
 script = ExtResource("8_vkq25")
@@ -22,10 +31,35 @@ script = ExtResource("1_j4d2a")
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
 EnemiesNavigator = NodePath("../EnemiesNavigator")
 
+[node name="Walls" type="Node" parent="GameWorld"]
+
+[node name="RightWall" type="Area2D" parent="GameWorld/Walls"]
+position = Vector2(256, 88)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/RightWall"]
+shape = SubResource("RectangleShape2D_vkq25")
+
+[node name="LeftWall" type="Area2D" parent="GameWorld/Walls"]
+position = Vector2(0, 88)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/LeftWall"]
+shape = SubResource("RectangleShape2D_7lrji")
+
+[node name="BottomWall" type="Area2D" parent="GameWorld/Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/BottomWall"]
+position = Vector2(128, 204)
+shape = SubResource("RectangleShape2D_rssyh")
+
 [node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]
 position = Vector2(128, 10)
-MovementPixelIncrement = 12.0
-DelayBetweenMovements = 2.0
+HorizontalMovementIncrement = 4.0
+VerticalMovementIncrement = 6.0
+DelayBetweenMovements = 0.5
 MovementTimer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="GameWorld/EnemiesNavigator"]
@@ -55,3 +89,6 @@ upgradeType = 1
 position = Vector2(239, 209)
 UpgradeResource = SubResource("Resource_7lrji")
 upgradeType = 1
+
+[connection signal="area_entered" from="GameWorld/Walls/RightWall" to="GameWorld/EnemiesNavigator" method="OnRightWallEntered"]
+[connection signal="area_entered" from="GameWorld/Walls/LeftWall" to="GameWorld/EnemiesNavigator" method="OnLeftWallEntered"]
