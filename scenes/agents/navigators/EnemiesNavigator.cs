@@ -11,6 +11,7 @@ public partial class EnemiesNavigator : Node2D
     [Export] public float VerticalMovementIncrement { get; set; }
 
     [Export] public float MaxDelayBetweenMovements { get; set; }
+    [Export] public float DelayDecreaseBetweenRows { get; set; }
     [Export] public Timer MovementTimer { get; set; } = null!;
 
     private float CurrentDelayBetweenMovements
@@ -46,12 +47,11 @@ public partial class EnemiesNavigator : Node2D
 
     private void Move()
     {
-        GlobalPosition += Direction * (HorizontalMovementIncrement + HorizontalMovementIncrement);
+        GlobalPosition += Direction * HorizontalMovementIncrement;
     }
 
     public void OnRightWallEntered(Area2D _)
     {
-        GD.Print($"Right wall hit. Direction: {Direction}");
         if (Mathf.Sign(Direction.X) == 1)
         {
             Direction = new Vector2(-Mathf.Abs(Direction.X), Direction.Y);
@@ -73,7 +73,7 @@ public partial class EnemiesNavigator : Node2D
 
     private void GoDown()
     {
-        CurrentDelayBetweenMovements -= 0.2f;
+        CurrentDelayBetweenMovements -= DelayDecreaseBetweenRows;
         GlobalPosition += new Vector2(0, VerticalMovementIncrement);
     }
 }
