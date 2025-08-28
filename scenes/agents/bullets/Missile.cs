@@ -39,4 +39,11 @@ public partial class Missile : Laser
     {
         QueueFree();
     }
+
+    private void OnScreenExited()
+    {
+        StateMachine.Exit();
+
+        EmitSignal(SignalName.EnemyHit);
+    }
 }

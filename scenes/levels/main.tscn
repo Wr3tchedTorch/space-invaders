@@ -20,12 +20,15 @@ metadata/_custom_type_script = "uid://c83e30227cwru"
 script = ExtResource("1_j4d2a")
 
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
-Columns = 1
-Rows = 3
 EnemiesNavigator = NodePath("../EnemiesNavigator")
 
-[node name="EnemiesNavigator" parent="GameWorld" instance=ExtResource("2_j4d2a")]
+[node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]
 position = Vector2(128, 10)
+MovementPixelIncrement = 12.0
+DelayBetweenMovements = 2.0
+MovementTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="GameWorld/EnemiesNavigator"]
 
 [node name="Player" parent="GameWorld" instance=ExtResource("1_72ix8")]
 position = Vector2(125, 212)

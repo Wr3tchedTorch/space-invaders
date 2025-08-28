@@ -17,6 +17,9 @@ public partial class InvaderFactory : Node
 
     [Export] private Godot.Collections.Array<InvaderResource> invaders = [];
 
+    private float CellWidth => invaders.Max(i => i.Width);
+    private float CellHeight => invaders.Max(i => i.Height);
+
     private Vector2 CurrentPosition { get; set; }
 
     public override void _Ready()
@@ -26,22 +29,20 @@ public partial class InvaderFactory : Node
 
     private void SpawnInvaders()
     {
-        var cellWidth = invaders.Max(i => i.Width);
-        var cellHeight = invaders.Max(i => i.Height);
         for (int row = 0; row < Rows; row++)
         {
             for (int col = 0; col < Columns; col++)
             {
                 var initialPosition = EnemiesNavigator.GlobalPosition;
                 var enemyResource = GetEnemyResource(row);
-                var enemyPosition = GetGridPosition(initialPosition, row, col, cellWidth, cellHeight);
+                var enemyPosition = GetGridPosition(initialPosition, row, col, CellWidth, CellHeight);
 
                 var enemy = (IEnemy)SpawnEnemy(enemyResource.ScenePath, enemyPosition);
 
                 enemy.InvaderResource = enemyResource;
             }
         }
-        PositionEnemiesNavigator(cellWidth);
+        PositionEnemiesNavigator(CellWidth);
     }
 
     private void PositionEnemiesNavigator(float cellWidth)

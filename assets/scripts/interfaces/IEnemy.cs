@@ -1,4 +1,5 @@
 using System;
+using Godot;
 using SpaceInvaders.Assets.Resources.Invader;
 
 namespace SpaceInvaders.Assets.Scripts.interfaces;

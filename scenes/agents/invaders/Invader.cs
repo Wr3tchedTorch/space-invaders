@@ -11,6 +11,8 @@ namespace SpaceInvaders.Scenes.Agents.Invaders;
 
 public partial class Invader : Area2D, IEnemy
 {
+    [Signal] public delegate void ReachedScreenBorderEventHandler();
+
     [ExportGroup("Dependencies")]
     [Export] public HealthComponent HealthComponent { get; private set; } = null!;
     [Export] public WeaponComponent WeaponComponent { get; private set; } = null!;
@@ -40,6 +42,11 @@ public partial class Invader : Area2D, IEnemy
         }
 
         Callable.From(StartShooting).CallDeferred();
+    }
+
+    private void ScreenBorderHit()
+    {
+        EmitSignal(SignalName.ReachedScreenBorder);
     }
 
     private void OnDied()
