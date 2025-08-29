@@ -9,7 +9,7 @@ public partial class HealthComponent : Node
     [Signal] public delegate void DiedEventHandler();
 
     [ExportGroup("Dependencies")]
-    [Export] private ProgressBar? progressBar = null;
+    [Export] public ProgressBar? HealthBar { get; set; } = null;
 
     public float? InitialHealth
     {
@@ -23,10 +23,10 @@ public partial class HealthComponent : Node
                 throw new InitialHealthNullException();
             }
 
-            if (progressBar != null)
+            if (HealthBar != null)
             {
-                progressBar.MaxValue = InitialHealth.Value;
-                progressBar.Value = progressBar.MaxValue;
+                HealthBar.MaxValue = InitialHealth.Value;
+                HealthBar.Value = HealthBar.MaxValue;
             }
             CurrentHealth = InitialHealth.Value;
         }
@@ -38,8 +38,8 @@ public partial class HealthComponent : Node
         {
             _currentHealth = value;
 
-            if (progressBar != null)
-                progressBar.Value = CurrentHealth;
+            if (HealthBar != null)
+                HealthBar.Value = CurrentHealth;
 
             if (CurrentHealth <= 0)
             {

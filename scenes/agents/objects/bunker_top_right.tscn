@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://yce2m8nq0p4r"]
+
+[ext_resource type="Script" uid="uid://b7onoripq3uu" path="res://scenes/agents/objects/Bunker.cs" id="1_h2tm0"]
+[ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_nfm5g"]
+[ext_resource type="Texture2D" uid="uid://jfnow2qt11cc" path="res://assets/sprites/bunker/bunker_top_right_1.png" id="3_ryqak"]
+[ext_resource type="Texture2D" uid="uid://dxrt2phno022k" path="res://assets/sprites/bunker/bunker_top_right_2.png" id="4_ii6td"]
+[ext_resource type="Texture2D" uid="uid://cwd20exfk3h5l" path="res://assets/sprites/bunker/bunker_top_right_3.png" id="5_vxpkm"]
+[ext_resource type="Texture2D" uid="uid://cab7xwnpg7bwo" path="res://assets/sprites/bunker/bunker_top_right_4.png" id="6_i74bh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gobxr"]
+size = Vector2(4, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_loijx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ryqak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ii6td")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vxpkm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_i74bh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BunkerTopRight" type="Node2D" node_paths=PackedStringArray("AnimatedSprite2D", "HitDelayTimer")]
+script = ExtResource("1_h2tm0")
+AnimatedSprite2D = NodePath("AnimatedSprite2D")
+HitDelayTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("2_nfm5g")]
+collision_layer = 80
+collision_mask = 36
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("RectangleShape2D_gobxr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_loijx")
+
+[connection signal="Attacked" from="HurtboxComponent" to="." method="TakeHit"]

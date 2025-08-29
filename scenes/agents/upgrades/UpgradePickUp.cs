@@ -6,7 +6,7 @@ namespace SpaceInvaders.Scenes.Agents.Upgrades;
 
 public partial class UpgradePickUp : Area2D
 {
-    [Export] private Resource UpgradeResource;
+    [Export] private Resource upgradeResource;
     [Export] private UpgradeType upgradeType;
 
     private bool pickedUp = false;
@@ -28,10 +28,10 @@ public partial class UpgradePickUp : Area2D
         switch (upgradeType)
         {
             case UpgradeType.Bullet:
-                GameEvents.Instance.EmitSignal(GameEvents.SignalName.BulletUpgradePickedUp, UpgradeResource);
+                GameEvents.Instance.EmitSignal(GameEvents.SignalName.BulletUpgradePickedUp, upgradeResource);
                 break;
             case UpgradeType.Weapon:
-                GameEvents.Instance.EmitSignal(GameEvents.SignalName.WeaponUpgradePickedUp, UpgradeResource);
+                GameEvents.Instance.EmitSignal(GameEvents.SignalName.WeaponUpgradePickedUp, upgradeResource);
                 break;
         }
 

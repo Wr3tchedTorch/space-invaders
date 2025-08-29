@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://da7p205cm2hbk"]
+
+[ext_resource type="Script" uid="uid://b7onoripq3uu" path="res://scenes/agents/objects/Bunker.cs" id="1_40iof"]
+[ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_dfnch"]
+[ext_resource type="Texture2D" uid="uid://baykoplphp6e5" path="res://assets/sprites/bunker/bunker_top_left_1.png" id="3_6l24f"]
+[ext_resource type="Texture2D" uid="uid://b00gqnx172rxv" path="res://assets/sprites/bunker/bunker_top_left_2.png" id="4_ud37m"]
+[ext_resource type="Texture2D" uid="uid://c3tup07jg7xx5" path="res://assets/sprites/bunker/bunker_top_left_3.png" id="5_m4nwr"]
+[ext_resource type="Texture2D" uid="uid://56oh5iilbb6v" path="res://assets/sprites/bunker/bunker_top_left_4.png" id="6_feiwb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gobxr"]
+size = Vector2(4, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fuqi6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_6l24f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ud37m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m4nwr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_feiwb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BunkerTopLeft" type="Node2D" node_paths=PackedStringArray("AnimatedSprite2D", "HitDelayTimer")]
+script = ExtResource("1_40iof")
+AnimatedSprite2D = NodePath("AnimatedSprite2D")
+HitDelayTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("2_dfnch")]
+collision_layer = 80
+collision_mask = 36
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("RectangleShape2D_gobxr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fuqi6")
+
+[connection signal="Attacked" from="HurtboxComponent" to="." method="TakeHit"]

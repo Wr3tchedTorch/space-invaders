@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dlnihpx8ewbtj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3dybv"]
+bg_color = Color(0.066529, 0.00423945, 0.00715077, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xx3rh"]
+bg_color = Color(0.963069, 0.185891, 0.195599, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fw6af"]
+bg_color = Color(0, 0, 0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebcsm"]
+bg_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[resource]
+PlayerHealthBar/base_type = &"ProgressBar"
+PlayerHealthBar/styles/background = SubResource("StyleBoxFlat_3dybv")
+PlayerHealthBar/styles/fill = SubResource("StyleBoxFlat_xx3rh")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_fw6af")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_ebcsm")

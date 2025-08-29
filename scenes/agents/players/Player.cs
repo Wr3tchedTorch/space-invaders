@@ -14,11 +14,15 @@ public partial class Player : CharacterBody2D
     public static readonly StringName RightArrowAction = "right";
     public static readonly StringName AttackAction = "attack";
 
+    [ExportGroup("Attributes")]
     [Export] public float Speed { get; set; }
+    [Export] public float MaxHealth { get; set; }
 
     [ExportGroup("Dependencies")]
     [Export] private CollisionShape2D CollisionShape2D { get; set; } = null!;
     [Export] private WeaponComponent WeaponComponent { get; set; } = null!;
+    [Export] private HealthComponent HealthComponent { get; set; } = null!;
+    [Export] private ProgressBar HealthBar { get; set; } = null!;
 
     private float endBorder;
     private float startBorder;
@@ -28,6 +32,9 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
+        HealthComponent.HealthBar = HealthBar;
+        HealthComponent.InitialHealth = 100;
+
         WeaponComponent.GetDirection = new Callable(this, MethodName.GetDirection);
 
         spriteWidth = CollisionShape2D.Shape.GetRect().Size.X;
@@ -61,7 +68,7 @@ public partial class Player : CharacterBody2D
             return;
         }
 
-        var velocity = Vector2.Right * (dir * Speed);
+        var velocity = Vector2.Right * dir * Speed;
         Velocity = velocity;
         MoveAndSlide();
     }

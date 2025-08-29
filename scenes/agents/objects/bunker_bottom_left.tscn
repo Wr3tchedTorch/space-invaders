@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://dy4ux8ad3pt0y"]
+
+[ext_resource type="Script" uid="uid://b7onoripq3uu" path="res://scenes/agents/objects/Bunker.cs" id="1_dbtow"]
+[ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_i0i6s"]
+[ext_resource type="Texture2D" uid="uid://b44x30n0ykymy" path="res://assets/sprites/bunker/bunker_bottom_left_1.png" id="3_kkjas"]
+[ext_resource type="Texture2D" uid="uid://ce2jda7o5twjr" path="res://assets/sprites/bunker/bunker_bottom_left_2.png" id="4_s1413"]
+[ext_resource type="Texture2D" uid="uid://cvrqv2vslkj1v" path="res://assets/sprites/bunker/bunker_bottom_left_3.png" id="5_d4l63"]
+[ext_resource type="Texture2D" uid="uid://7htr1qu5waqa" path="res://assets/sprites/bunker/bunker_bottom_left_4.png" id="6_n4jip"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gobxr"]
+size = Vector2(4, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vjyk7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_kkjas")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_s1413")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_d4l63")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_n4jip")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BunkerBottomLeft" type="Node2D" node_paths=PackedStringArray("AnimatedSprite2D", "HitDelayTimer")]
+script = ExtResource("1_dbtow")
+AnimatedSprite2D = NodePath("AnimatedSprite2D")
+HitDelayTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("2_i0i6s")]
+collision_layer = 80
+collision_mask = 36
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("RectangleShape2D_gobxr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vjyk7")
+
+[connection signal="Attacked" from="HurtboxComponent" to="." method="TakeHit"]

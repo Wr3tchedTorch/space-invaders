@@ -4,10 +4,11 @@
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://6vpmrsmbifqk" path="res://scenes/factories/invader_factory.tscn" id="1_y0acb"]
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
+[ext_resource type="PackedScene" uid="uid://dy4ux8ad3pt0y" path="res://scenes/agents/objects/bunker_bottom_left.tscn" id="3_ubwgw"]
 [ext_resource type="PackedScene" uid="uid://b16sfwkqddj0f" path="res://scenes/agents/upgrades/upgrade_pick_up.tscn" id="5_b6bv0"]
 [ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/bullet/upgrade/bullet_zigzag_upgrade.tres" id="6_vkq25"]
 [ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/weapon/upgrade/weapon_fire_rate_upgrade.tres" id="7_ubwgw"]
-[ext_resource type="Script" uid="uid://c83e30227cwru" path="res://assets/resources/weapon/upgrade/WeaponFireRateUpgradeResource.cs" id="8_vkq25"]
+[ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkq25"]
 size = Vector2(8, 224)
@@ -16,12 +17,7 @@ size = Vector2(8, 224)
 size = Vector2(8, 224)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rssyh"]
-size = Vector2(256, 8)
-
-[sub_resource type="Resource" id="Resource_7lrji"]
-script = ExtResource("8_vkq25")
-FireRateUpgradeInSec = 0.9
-metadata/_custom_type_script = "uid://c83e30227cwru"
+size = Vector2(256, 29)
 
 [node name="Main" type="Node"]
 
@@ -52,44 +48,84 @@ shape = SubResource("RectangleShape2D_7lrji")
 [node name="BottomWall" type="Area2D" parent="GameWorld/Walls"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/BottomWall"]
-position = Vector2(128, 204)
+position = Vector2(128, 193.5)
 shape = SubResource("RectangleShape2D_rssyh")
+
+[node name="Bunkers" type="Node" parent="GameWorld"]
+
+[node name="BunkerBottomLeft" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
+position = Vector2(131, 181)
+
+[node name="BunkerBottomLeft2" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
+position = Vector2(127, 181)
+
+[node name="BunkerBottomLeft3" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
+position = Vector2(123, 181)
+
+[node name="BunkerBottomLeft4" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
+position = Vector2(119, 181)
+
+[node name="BunkerBottomLeft5" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
+position = Vector2(115, 181)
 
 [node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]
 position = Vector2(128, 10)
-HorizontalMovementIncrement = 4.0
-VerticalMovementIncrement = 6.0
+HorizontalMovementIncrement = 6.0
+VerticalMovementIncrement = 8.0
 MaxDelayBetweenMovements = 0.5
 DelayDecreaseBetweenRows = 0.05
 MovementTimer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="GameWorld/EnemiesNavigator"]
 
-[node name="Player" parent="GameWorld" instance=ExtResource("1_72ix8")]
-position = Vector2(125, 212)
+[node name="Player" parent="GameWorld" node_paths=PackedStringArray("HealthBar") instance=ExtResource("1_72ix8")]
+position = Vector2(125, 199)
 Speed = 120.0
+HealthBar = NodePath("../../Gui/CanvasLayer/ProgressBar")
 
 [node name="Camera2D" type="Camera2D" parent="GameWorld"]
 anchor_mode = 0
 
 [node name="UpgradePickUp2" parent="GameWorld" instance=ExtResource("5_b6bv0")]
-position = Vector2(69, 209)
-UpgradeResource = ExtResource("6_vkq25")
+position = Vector2(69, 196)
+upgradeResource = ExtResource("6_vkq25")
 
 [node name="UpgradePickUp" parent="GameWorld" instance=ExtResource("5_b6bv0")]
-position = Vector2(194, 209)
-UpgradeResource = ExtResource("7_ubwgw")
+position = Vector2(194, 196)
+upgradeResource = ExtResource("7_ubwgw")
 upgradeType = 1
 
 [node name="UpgradePickUp3" parent="GameWorld" instance=ExtResource("5_b6bv0")]
-position = Vector2(222, 209)
-UpgradeResource = ExtResource("7_ubwgw")
+position = Vector2(222, 196)
+upgradeResource = ExtResource("7_ubwgw")
 upgradeType = 1
 
 [node name="UpgradePickUp4" parent="GameWorld" instance=ExtResource("5_b6bv0")]
-position = Vector2(239, 209)
-UpgradeResource = SubResource("Resource_7lrji")
+position = Vector2(239, 196)
+upgradeResource = ExtResource("7_ubwgw")
 upgradeType = 1
+
+[node name="Gui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Gui"]
+
+[node name="ProgressBar" type="ProgressBar" parent="Gui/CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -9.0
+offset_right = 75.0
+offset_bottom = -3.0
+grow_vertical = 0
+theme = ExtResource("9_7lrji")
+theme_type_variation = &"PlayerHealthBar"
+value = 50.0
+show_percentage = false
 
 [connection signal="area_entered" from="GameWorld/Walls/RightWall" to="GameWorld/EnemiesNavigator" method="OnRightWallEntered"]
 [connection signal="area_entered" from="GameWorld/Walls/LeftWall" to="GameWorld/EnemiesNavigator" method="OnLeftWallEntered"]
