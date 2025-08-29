@@ -1,4 +1,5 @@
 using Godot;
+using SpaceInvaders.Scenes.Autoloads;
 using System;
 
 namespace SpaceInvaders.Scenes.Navigators;
@@ -28,10 +29,14 @@ public partial class EnemiesNavigator : Node2D
 
     private Vector2 Direction = Vector2.Right;
 
-    private bool _moving = true;
 
     public override void _Ready()
     {
+        GameEvents.Instance.GameOver += () =>
+        {
+            MovementTimer.Stop();
+        };
+
         CurrentDelayBetweenMovements = MaxDelayBetweenMovements;
 
         MovementTimer.WaitTime = MaxDelayBetweenMovements;

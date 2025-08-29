@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=14 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://6vpmrsmbifqk" path="res://scenes/factories/invader_factory.tscn" id="1_y0acb"]
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://dxttnhn22lr0x" path="res://scenes/agents/objects/bunker.tscn" id="3_7lrji"]
+[ext_resource type="Script" uid="uid://b182rcwbya5gj" path="res://scenes/agents/objects/BottomWall.cs" id="3_rssyh"]
 [ext_resource type="PackedScene" uid="uid://b16sfwkqddj0f" path="res://scenes/agents/upgrades/upgrade_pick_up.tscn" id="5_b6bv0"]
 [ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/bullet/upgrade/bullet_zigzag_upgrade.tres" id="6_vkq25"]
 [ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/weapon/upgrade/weapon_fire_rate_upgrade.tres" id="7_ubwgw"]
@@ -17,7 +18,7 @@ size = Vector2(8, 224)
 size = Vector2(8, 224)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rssyh"]
-size = Vector2(256, 29)
+size = Vector2(256, 21)
 
 [node name="Main" type="Node"]
 
@@ -46,9 +47,13 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_7lrji")
 
 [node name="BottomWall" type="Area2D" parent="GameWorld/Walls"]
+position = Vector2(0, -32)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_rssyh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/BottomWall"]
-position = Vector2(128, 193.5)
+position = Vector2(128, 200.5)
 shape = SubResource("RectangleShape2D_rssyh")
 
 [node name="Bunkers" type="Node" parent="GameWorld"]

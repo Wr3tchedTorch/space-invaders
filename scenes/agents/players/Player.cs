@@ -32,6 +32,9 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
+        GameEvents.Instance.GameOver += Die;
+
+        HealthComponent.Died += OnDied;
         HealthComponent.HealthBar = HealthBar;
         HealthComponent.InitialHealth = 100;
 
@@ -124,5 +127,17 @@ public partial class Player : CharacterBody2D
     private void OnAttacked(float damage)
     {
         GD.Print($"Player attacked with {damage} damage.");
+    }
+
+    private void OnDied()
+    {
+        GameEvents.Instance.EmitSignal(GameEvents.SignalName.GameOver);
+
+        Die();
+    }
+
+    private void Die()
+    {
+        QueueFree();
     }
 }
