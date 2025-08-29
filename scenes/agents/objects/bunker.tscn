@@ -1,47 +1,38 @@
-[gd_scene load_steps=9 format=3 uid="uid://dxttnhn22lr0x"]
+[gd_scene load_steps=5 format=3 uid="uid://dxttnhn22lr0x"]
 
-[ext_resource type="Script" uid="uid://b7onoripq3uu" path="res://scenes/agents/objects/Bunker.cs" id="1_5rek6"]
-[ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_rjtok"]
-[ext_resource type="Texture2D" uid="uid://b44x30n0ykymy" path="res://assets/sprites/bunker/bunker_bottom_left_1.png" id="3_fqapd"]
-[ext_resource type="Texture2D" uid="uid://ce2jda7o5twjr" path="res://assets/sprites/bunker/bunker_bottom_left_2.png" id="4_a2xwr"]
-[ext_resource type="Texture2D" uid="uid://cvrqv2vslkj1v" path="res://assets/sprites/bunker/bunker_bottom_left_3.png" id="5_f4gx4"]
-[ext_resource type="Texture2D" uid="uid://7htr1qu5waqa" path="res://assets/sprites/bunker/bunker_bottom_left_4.png" id="6_u5npe"]
+[ext_resource type="PackedScene" uid="uid://da7p205cm2hbk" path="res://scenes/agents/objects/bunker_top_left.tscn" id="1_syolp"]
+[ext_resource type="PackedScene" uid="uid://yce2m8nq0p4r" path="res://scenes/agents/objects/bunker_top_right.tscn" id="2_mdrfe"]
+[ext_resource type="PackedScene" uid="uid://dy4ux8ad3pt0y" path="res://scenes/agents/objects/bunker_bottom_left.tscn" id="3_fqapd"]
+[ext_resource type="PackedScene" uid="uid://dd5lokycpnt5y" path="res://scenes/agents/objects/bunker_bottom_right.tscn" id="4_a2xwr"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gobxr"]
-size = Vector2(4, 7)
+[node name="Bunker" type="Node2D"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_vjyk7"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_fqapd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_a2xwr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_f4gx4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_u5npe")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[node name="LeftSide" type="Node2D" parent="."]
+position = Vector2(-18, -1)
+scale = Vector2(-1, 1)
 
-[node name="BunkerBottomLeft" type="Area2D" node_paths=PackedStringArray("AnimatedSprite2D", "HitDelayTimer")]
-script = ExtResource("1_5rek6")
-AnimatedSprite2D = NodePath("AnimatedSprite2D")
-HitDelayTimer = NodePath("Timer")
+[node name="BunkerTopLeft" parent="LeftSide" instance=ExtResource("1_syolp")]
+position = Vector2(-14, 5)
 
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
+[node name="BunkerTopRight" parent="LeftSide" instance=ExtResource("2_mdrfe")]
+position = Vector2(-6, 6)
 
-[node name="HurtboxComponent" parent="." instance=ExtResource("2_rjtok")]
+[node name="BunkerBottomLeft" parent="LeftSide" instance=ExtResource("3_fqapd")]
+position = Vector2(-12, 12.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-shape = SubResource("RectangleShape2D_gobxr")
+[node name="BunkerBottomRight" parent="LeftSide" instance=ExtResource("4_a2xwr")]
+position = Vector2(-6, 13)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_vjyk7")
+[node name="RightSide" type="Node2D" parent="."]
+
+[node name="BunkerTopLeft" parent="RightSide" instance=ExtResource("1_syolp")]
+position = Vector2(4, 4)
+
+[node name="BunkerTopRight" parent="RightSide" instance=ExtResource("2_mdrfe")]
+position = Vector2(12, 5)
+
+[node name="BunkerBottomLeft" parent="RightSide" instance=ExtResource("3_fqapd")]
+position = Vector2(6, 11.5)
+
+[node name="BunkerBottomRight" parent="RightSide" instance=ExtResource("4_a2xwr")]
+position = Vector2(12, 12)

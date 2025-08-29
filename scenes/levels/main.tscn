@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://6vpmrsmbifqk" path="res://scenes/factories/invader_factory.tscn" id="1_y0acb"]
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
-[ext_resource type="PackedScene" uid="uid://dy4ux8ad3pt0y" path="res://scenes/agents/objects/bunker_bottom_left.tscn" id="3_ubwgw"]
+[ext_resource type="PackedScene" uid="uid://dxttnhn22lr0x" path="res://scenes/agents/objects/bunker.tscn" id="3_7lrji"]
 [ext_resource type="PackedScene" uid="uid://b16sfwkqddj0f" path="res://scenes/agents/upgrades/upgrade_pick_up.tscn" id="5_b6bv0"]
 [ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/bullet/upgrade/bullet_zigzag_upgrade.tres" id="6_vkq25"]
 [ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/weapon/upgrade/weapon_fire_rate_upgrade.tres" id="7_ubwgw"]
@@ -53,20 +53,17 @@ shape = SubResource("RectangleShape2D_rssyh")
 
 [node name="Bunkers" type="Node" parent="GameWorld"]
 
-[node name="BunkerBottomLeft" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
-position = Vector2(131, 181)
+[node name="Bunker" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
+position = Vector2(96, 158)
 
-[node name="BunkerBottomLeft2" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
-position = Vector2(127, 181)
+[node name="Bunker2" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
+position = Vector2(32, 158)
 
-[node name="BunkerBottomLeft3" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
-position = Vector2(123, 181)
+[node name="Bunker4" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
+position = Vector2(160, 158)
 
-[node name="BunkerBottomLeft4" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
-position = Vector2(119, 181)
-
-[node name="BunkerBottomLeft5" parent="GameWorld/Bunkers" instance=ExtResource("3_ubwgw")]
-position = Vector2(115, 181)
+[node name="Bunker5" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
+position = Vector2(224, 158)
 
 [node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]
 position = Vector2(128, 10)
