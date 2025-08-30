@@ -9,7 +9,7 @@ namespace SpaceInvaders.Assets.Resources.Upgrades.Weapons;
 public partial class WeaponFireRateUpgradeResource : Resource, IWeaponUpgrade, IDrop
 {
     [Export] public float FireRateUpgradeInSec { get; set; }
-    [Export] public string ScenePath { get; set; } = null!;
+    [Export(PropertyHint.File, ".tscn")] public string ScenePath { get; set; } = null!;
 
     public void ApplyUpgrade(IWeapon weapon)
     {

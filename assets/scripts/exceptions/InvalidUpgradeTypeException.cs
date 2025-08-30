@@ -7,4 +7,8 @@ public class InvalidUpgradeTypeException : ArgumentException
     public InvalidUpgradeTypeException(string resourceName, string upgradeType) : base($"The resource `{resourceName}` is not a valid {upgradeType}.")
     {
     }
+
+        public InvalidUpgradeTypeException(string resourceName) : base($"The resource `{resourceName}` is not a valid upgrade.")
+    {
+    }
 }

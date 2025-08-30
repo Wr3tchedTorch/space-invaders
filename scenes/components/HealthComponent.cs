@@ -41,15 +41,17 @@ public partial class HealthComponent : Node
             if (HealthBar != null)
                 HealthBar.Value = CurrentHealth;
 
-            if (CurrentHealth <= 0)
+            if (CurrentHealth <= 0 && !isDead)
             {
                 EmitSignal(SignalName.Died);
+                isDead = true;
             }
         }
     }
 
     private float _currentHealth;
     private float? _initialHealth = null;
+    private bool isDead = false;
 
     public void TakeDamage(float Damage)
     {

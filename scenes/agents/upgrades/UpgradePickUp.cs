@@ -1,4 +1,6 @@
 using Godot;
+using SpaceInvaders.Assets.Scripts.Exceptions;
+using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.Autoloads;
 using System;
 
@@ -6,14 +8,13 @@ namespace SpaceInvaders.Scenes.Agents.Upgrades;
 
 public partial class UpgradePickUp : Area2D
 {
-    [Export] private Resource upgradeResource;
-    [Export] private UpgradeType upgradeType;
+    [Export] public Resource UpgradeResource { get; set; } = null!;
 
     private bool pickedUp = false;
 
     public override void _Ready()
     {
-        BodyEntered += OnBodyEntered;
+        BodyEntered += OnBodyEntered;        
     }
 
     private void OnBodyEntered(Node2D body)
@@ -25,16 +26,18 @@ public partial class UpgradePickUp : Area2D
 
         pickedUp = true;
 
-        switch (upgradeType)
+        if (UpgradeResource is IWeapon)
         {
-            case UpgradeType.Bullet:
-                GameEvents.Instance.EmitSignal(GameEvents.SignalName.BulletUpgradePickedUp, upgradeResource);
-                break;
-            case UpgradeType.Weapon:
-                GameEvents.Instance.EmitSignal(GameEvents.SignalName.WeaponUpgradePickedUp, upgradeResource);
-                break;
+            GameEvents.Instance.EmitSignal(GameEvents.SignalName.WeaponUpgradePickedUp, UpgradeResource);
         }
-
+        else if (UpgradeResource is IBullet)
+        {
+            GameEvents.Instance.EmitSignal(GameEvents.SignalName.BulletUpgradePickedUp, UpgradeResource);
+        }
+        else
+        {
+            throw new InvalidUpgradeTypeException(UpgradeResource.ResourceName);
+        }
         QueueFree();
     }
 }

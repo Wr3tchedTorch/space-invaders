@@ -10,7 +10,7 @@ namespace SpaceInvaders.Assets.Resources.Upgrades.Bullets;
 public partial class BulletZigZagMovementUpgradeResource : Resource, IBulletTemporaryUpgrade, IDrop
 {
     [Export] public float Duration { get; set; }
-    [Export] public string ScenePath { get; set; } = null!;
+    [Export(PropertyHint.File, ".tscn")] public string ScenePath { get; set; } = null!;
 
     public void ApplyUpgrade(IBullet bullet)
     {

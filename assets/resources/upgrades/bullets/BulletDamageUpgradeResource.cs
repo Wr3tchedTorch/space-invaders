@@ -9,7 +9,7 @@ namespace SpaceInvaders.Assets.Resources.Upgrades.Bullets;
 public partial class BulletDamageUpgradeResource : Resource, IBulletUpgrade, IDrop
 {
     [Export] public float DamageUpgradeAmount { get; set; }
-    [Export] public string ScenePath { get; set; } = null!;
+    [Export(PropertyHint.File, ".tscn")] public string ScenePath { get; set; } = null!;
 
     public void ApplyUpgrade(IBullet bullet)
     {

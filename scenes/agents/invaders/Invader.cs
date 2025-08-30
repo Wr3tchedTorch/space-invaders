@@ -11,6 +11,7 @@ using SpaceInvaders.Scenes.Navigators;
 using SpaceInvaders.Scenes.Autoloads;
 using System.Linq;
 using SpaceInvaders.assets.scripts.interfaces;
+using SpaceInvaders.Scenes.Agents.Upgrades;
 
 namespace SpaceInvaders.Scenes.Agents.Invaders;
 
@@ -26,7 +27,7 @@ public partial class Invader : Area2D, IEnemy
     [Export] public Resource[] UpgradeDrops { get; set; } = [];
 
     public InvaderResource InvaderResource { get; set; } = null!;
-
+    
     public override void _Ready()
     {
         HealthComponent.InitialHealth = InvaderResource.Health;
@@ -58,6 +59,7 @@ public partial class Invader : Area2D, IEnemy
         var upgradeIndex = (int)Mathf.Round((UpgradeDrops.Length - 1) * chance);
 
         GD.Print($"Upgrade resource picked: {upgradeIndex} / {UpgradeDrops[upgradeIndex].ResourcePath}");
+        SpawnDrop(UpgradeDrops[upgradeIndex]);
         QueueFree();
     }
 
@@ -70,8 +72,10 @@ public partial class Invader : Area2D, IEnemy
         var drop = (IDrop)dropResource;
 
         var scene = GD.Load<PackedScene>(drop.ScenePath);
-        var instance = scene.Instantiate<Node2D>();
+        var instance = scene.Instantiate<UpgradePickUp>();
         instance.GlobalPosition = GlobalPosition;
+
+        instance.UpgradeResource = dropResource;
 
         var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
         gameWorld?.AddChild(instance);        

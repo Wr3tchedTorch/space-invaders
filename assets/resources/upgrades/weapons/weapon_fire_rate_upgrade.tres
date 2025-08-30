@@ -1,8 +1,9 @@
 [gd_resource type="Resource" script_class="WeaponFireRateUpgradeResource" load_steps=2 format=3 uid="uid://b7eiwe4k0rel"]
 
-[ext_resource type="Script" uid="uid://c83e30227cwru" path="res://assets/resources/upgrades/weapons/WeaponFireRateUpgradeResource.cs" id="1_8eno6"]
+[ext_resource type="Script" uid="uid://c83e30227cwru" path="res://assets/resources/upgrades/weapons/WeaponFireRateUpgradeResource.cs" id="1_alw56"]
 
 [resource]
-script = ExtResource("1_8eno6")
+script = ExtResource("1_alw56")
 FireRateUpgradeInSec = 0.15
+ScenePath = "uid://b16sfwkqddj0f"
 metadata/_custom_type_script = "uid://c83e30227cwru"
