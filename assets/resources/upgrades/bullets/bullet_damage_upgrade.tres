@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BulletDamageUpgradeResource" load_steps=2 format=3 uid="uid://cacl6vfk5v61s"]
 
-[ext_resource type="Script" uid="uid://eak6khl3b33q" path="res://assets/resources/bullet/upgrade/BulletDamageUpgradeResource.cs" id="1_ypqjy"]
+[ext_resource type="Script" uid="uid://eak6khl3b33q" path="res://assets/resources/upgrades/bullets/BulletDamageUpgradeResource.cs" id="1_ypqjy"]
 
 [resource]
 script = ExtResource("1_ypqjy")

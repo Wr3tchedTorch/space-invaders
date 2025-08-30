@@ -1,13 +1,15 @@
 using Godot;
+using SpaceInvaders.assets.scripts.interfaces;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using System;
 
-namespace SpaceInvaders.Assets.Resources.Weapon.Upgrade;
+namespace SpaceInvaders.Assets.Resources.Upgrades.Weapons;
 
 [GlobalClass]
-public partial class WeaponFireRateUpgradeResource : Resource, IWeaponUpgrade
+public partial class WeaponFireRateUpgradeResource : Resource, IWeaponUpgrade, IDrop
 {
     [Export] public float FireRateUpgradeInSec { get; set; }
+    [Export] public string ScenePath { get; set; } = null!;
 
     public void ApplyUpgrade(IWeapon weapon)
     {

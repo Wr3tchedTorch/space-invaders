@@ -8,6 +8,9 @@ using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Assets.Scripts.Exceptions;
 using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Navigators;
+using SpaceInvaders.Scenes.Autoloads;
+using System.Linq;
+using SpaceInvaders.assets.scripts.interfaces;
 
 namespace SpaceInvaders.Scenes.Agents.Invaders;
 
@@ -20,6 +23,7 @@ public partial class Invader : Area2D, IEnemy
 
     [ExportGroup("Configuration")]
     [Export] public Resource[] BulletUpgradeResources { get; set; } = [];
+    [Export] public Resource[] UpgradeDrops { get; set; } = [];
 
     public InvaderResource InvaderResource { get; set; } = null!;
 
@@ -50,7 +54,27 @@ public partial class Invader : Area2D, IEnemy
 
     private void OnDied()
     {
+        var chance = GameWorld.Rng.NextDouble();
+        var upgradeIndex = (int)Mathf.Round((UpgradeDrops.Length - 1) * chance);
+
+        GD.Print($"Upgrade resource picked: {upgradeIndex} / {UpgradeDrops[upgradeIndex].ResourcePath}");
         QueueFree();
+    }
+
+    private void SpawnDrop(Resource dropResource)
+    {
+        if (dropResource is not IDrop)
+        {
+            throw new InvalidDropException(dropResource.ResourceName);
+        }
+        var drop = (IDrop)dropResource;
+
+        var scene = GD.Load<PackedScene>(drop.ScenePath);
+        var instance = scene.Instantiate<Node2D>();
+        instance.GlobalPosition = GlobalPosition;
+
+        var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
+        gameWorld?.AddChild(instance);        
     }
 
     private Vector2 GetDirection()

@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgrsqr43rbemu"]
+[gd_scene load_steps=13 format=3 uid="uid://bgrsqr43rbemu"]
 
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="1_dx0ke"]
 [ext_resource type="Script" uid="uid://c16ryohfwyoks" path="res://scenes/agents/invaders/Invader.cs" id="1_u2t08"]
 [ext_resource type="Texture2D" uid="uid://cuqyns68k2xu8" path="res://assets/sprites/invaders/invader3-1.png" id="1_um246"]
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="2_3fxjn"]
+[ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/upgrades/bullets/bullet_zigzag_upgrade.tres" id="2_wy44h"]
+[ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/upgrades/weapons/weapon_fire_rate_upgrade.tres" id="3_75ai7"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_se71y"]
 [ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy_blaster_gun.tres" id="4_n5qwy"]
 [ext_resource type="Texture2D" uid="uid://e2ys6g12wjoj" path="res://assets/sprites/invaders/invader3-2.png" id="7_n5qwy"]
@@ -35,6 +37,7 @@ script = ExtResource("1_u2t08")
 HealthComponent = NodePath("HealthComponent")
 WeaponComponent = NodePath("WeaponComponent")
 AnimatedSprite2D = NodePath("AnimatedSprite2D")
+UpgradeDrops = [ExtResource("2_wy44h"), ExtResource("3_75ai7")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_3fxjn")]
 
