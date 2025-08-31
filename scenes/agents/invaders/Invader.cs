@@ -23,6 +23,7 @@ public partial class Invader : Area2D, IEnemy
     [Export] public AnimatedSprite2D AnimatedSprite2D { get; set; } = null!;
 
     [ExportGroup("Configuration")]
+    [Export(PropertyHint.Range, "0,100")] public float UpgradeDropChance { get; set; } = 30f;
     [Export] public Resource[] BulletUpgradeResources { get; set; } = [];
     [Export] public Resource[] UpgradeDrops { get; set; } = [];
 
@@ -63,17 +64,20 @@ public partial class Invader : Area2D, IEnemy
         }
 
         isDead = true;
-        var chance = GameWorld.Rng.NextDouble();
-        var upgradeIndex = (int)Mathf.Round((UpgradeDrops.Length - 1) * chance);
-        var upgrade = UpgradeDrops[upgradeIndex];
-
-        SpawnDrop(upgrade);
-
+        var chance = GameWorld.Rng.NextDouble() * 100;
+        if (chance <= UpgradeDropChance)
+        {
+            SpawnDrop();
+        }        
         QueueFree();
     }
 
-    private void SpawnDrop(Resource dropResource)
+    private void SpawnDrop()
     {
+        var rng = GameWorld.Rng.NextDouble();
+        var upgradeIndex = (int)Mathf.Round((UpgradeDrops.Length - 1) * rng);
+        var dropResource = UpgradeDrops[upgradeIndex];
+
         if (dropResource is not IDrop)
         {
             throw new InvalidDropException(dropResource.ResourceName);
