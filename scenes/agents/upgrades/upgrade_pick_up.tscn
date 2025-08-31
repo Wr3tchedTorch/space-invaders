@@ -8,12 +8,21 @@ size = Vector2(8, 8)
 [sub_resource type="CircleShape2D" id="CircleShape2D_2kyiu"]
 radius = 3.0
 
-[node name="UpgradePickUp" type="Area2D"]
+[node name="UpgradePickUp" type="CharacterBody2D" node_paths=PackedStringArray("Area2D")]
 collision_layer = 8
+collision_mask = 128
 script = ExtResource("1_8glfo")
+Area2D = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_wo6cp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2kyiu")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 129
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_2kyiu")

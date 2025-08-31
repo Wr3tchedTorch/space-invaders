@@ -39,7 +39,9 @@ public partial class HealthComponent : Node
             _currentHealth = value;
 
             if (HealthBar != null)
+            {
                 HealthBar.Value = CurrentHealth;
+            }
 
             if (CurrentHealth <= 0 && !isDead)
             {

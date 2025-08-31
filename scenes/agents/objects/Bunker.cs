@@ -41,7 +41,6 @@ public partial class Bunker : Node2D
         {
             return;
         }
-        GD.Print($"Bunker hit! Current hit count: {CurrentHitCount}, Max num of hits: {AnimatedSprite2D.SpriteFrames.GetFrameCount(DefaultAnimationName)}");
         CurrentHitCount++;
 
         canTakeHit = false;

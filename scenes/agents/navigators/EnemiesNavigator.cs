@@ -67,7 +67,6 @@ public partial class EnemiesNavigator : Node2D
 
     public void OnLeftWallEntered(Area2D _)
     {
-        GD.Print($"Left wall hit. Direction: {Direction}");
         if (Mathf.Sign(Direction.X) == -1)
         {
             Direction = new Vector2(Mathf.Abs(Direction.X), Direction.Y);

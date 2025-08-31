@@ -27,6 +27,8 @@ public partial class Invader : Area2D, IEnemy
     [Export] public Resource[] UpgradeDrops { get; set; } = [];
 
     public InvaderResource InvaderResource { get; set; } = null!;
+
+    private bool isDead = false;
     
     public override void _Ready()
     {
@@ -55,11 +57,18 @@ public partial class Invader : Area2D, IEnemy
 
     private void OnDied()
     {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
         var chance = GameWorld.Rng.NextDouble();
         var upgradeIndex = (int)Mathf.Round((UpgradeDrops.Length - 1) * chance);
+        var upgrade = UpgradeDrops[upgradeIndex];
 
-        GD.Print($"Upgrade resource picked: {upgradeIndex} / {UpgradeDrops[upgradeIndex].ResourcePath}");
-        SpawnDrop(UpgradeDrops[upgradeIndex]);
+        SpawnDrop(upgrade);
+
         QueueFree();
     }
 
@@ -75,10 +84,11 @@ public partial class Invader : Area2D, IEnemy
         var instance = scene.Instantiate<UpgradePickUp>();
         instance.GlobalPosition = GlobalPosition;
 
+        GD.Print($"Upgrade resource spawned: {dropResource.ResourcePath}");
         instance.UpgradeResource = dropResource;
 
         var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
-        gameWorld?.AddChild(instance);        
+        gameWorld?.CallDeferred("add_child", instance);
     }
 
     private Vector2 GetDirection()

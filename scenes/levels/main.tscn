@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://dxttnhn22lr0x" path="res://scenes/agents/objects/bunker.tscn" id="3_7lrji"]
 [ext_resource type="Script" uid="uid://b182rcwbya5gj" path="res://scenes/agents/objects/BottomWall.cs" id="3_rssyh"]
-[ext_resource type="PackedScene" uid="uid://b16sfwkqddj0f" path="res://scenes/agents/upgrades/upgrade_pick_up.tscn" id="5_b6bv0"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkq25"]
@@ -17,6 +16,9 @@ size = Vector2(8, 224)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rssyh"]
 size = Vector2(256, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwp66"]
+size = Vector2(256, 9)
 
 [node name="Main" type="Node"]
 
@@ -54,6 +56,14 @@ script = ExtResource("3_rssyh")
 position = Vector2(128, 200.5)
 shape = SubResource("RectangleShape2D_rssyh")
 
+[node name="Floor" type="StaticBody2D" parent="GameWorld/Walls"]
+collision_layer = 128
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/Floor"]
+position = Vector2(128, 203.5)
+shape = SubResource("RectangleShape2D_hwp66")
+
 [node name="Bunkers" type="Node" parent="GameWorld"]
 
 [node name="Bunker" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
@@ -80,23 +90,12 @@ MovementTimer = NodePath("Timer")
 
 [node name="Player" parent="GameWorld" node_paths=PackedStringArray("HealthBar") instance=ExtResource("1_72ix8")]
 position = Vector2(125, 199)
+motion_mode = 1
 Speed = 120.0
 HealthBar = NodePath("../../Gui/CanvasLayer/ProgressBar")
 
 [node name="Camera2D" type="Camera2D" parent="GameWorld"]
 anchor_mode = 0
-
-[node name="UpgradePickUp2" parent="GameWorld" instance=ExtResource("5_b6bv0")]
-position = Vector2(69, 196)
-
-[node name="UpgradePickUp" parent="GameWorld" instance=ExtResource("5_b6bv0")]
-position = Vector2(194, 196)
-
-[node name="UpgradePickUp3" parent="GameWorld" instance=ExtResource("5_b6bv0")]
-position = Vector2(222, 196)
-
-[node name="UpgradePickUp4" parent="GameWorld" instance=ExtResource("5_b6bv0")]
-position = Vector2(239, 196)
 
 [node name="Gui" type="Control" parent="."]
 layout_mode = 3
