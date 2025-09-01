@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_3fmiw")
 Damage = 30.0
-Speed = 200.0
+Speed = 180.0
 ScenePath = "uid://2yeql2xgpeh6"
 metadata/_custom_type_script = "uid://dodx0gy21gd63"

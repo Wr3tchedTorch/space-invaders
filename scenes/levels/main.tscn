@@ -82,7 +82,7 @@ position = Vector2(224, 158)
 position = Vector2(128, 10)
 HorizontalMovementIncrement = 6.0
 VerticalMovementIncrement = 8.0
-MaxDelayBetweenMovements = 0.5
+MaxDelayBetweenMovements = 1.2
 DelayDecreaseBetweenRows = 0.05
 MovementTimer = NodePath("Timer")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b16sfwkqddj0f"]
+[gd_scene load_steps=7 format=3 uid="uid://b16sfwkqddj0f"]
 
 [ext_resource type="Script" uid="uid://vlbf2vc2psdd" path="res://scenes/agents/upgrades/UpgradePickUp.cs" id="1_8glfo"]
 
@@ -8,11 +8,50 @@ size = Vector2(8, 8)
 [sub_resource type="CircleShape2D" id="CircleShape2D_2kyiu"]
 radius = 3.0
 
-[node name="UpgradePickUp" type="CharacterBody2D" node_paths=PackedStringArray("Area2D")]
+[sub_resource type="Animation" id="Animation_wo6cp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_8glfo"]
+resource_name = "disappear"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(5.85633, 0.0490365),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kyiu"]
+_data = {
+&"RESET": SubResource("Animation_wo6cp"),
+&"disappear": SubResource("Animation_8glfo")
+}
+
+[node name="UpgradePickUp" type="CharacterBody2D" node_paths=PackedStringArray("Area2D", "AnimationPlayer")]
 collision_layer = 8
 collision_mask = 128
 script = ExtResource("1_8glfo")
 Area2D = NodePath("Area2D")
+AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_wo6cp")
@@ -26,3 +65,8 @@ collision_mask = 129
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_2kyiu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2kyiu")
+}
