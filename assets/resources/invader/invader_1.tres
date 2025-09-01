@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="InvaderResource" load_steps=3 format=3 uid="uid://c1hncsflge1qb"]
 
-[ext_resource type="Resource" uid="uid://duonkgukmxl4r" path="res://assets/resources/weapon/enemy_special_gun.tres" id="1_24a8m"]
+[ext_resource type="Resource" uid="uid://duonkgukmxl4r" path="res://assets/resources/weapon/enemy/enemy_special_gun.tres" id="1_24a8m"]
 [ext_resource type="Script" uid="uid://ctvn4oudpq11e" path="res://assets/resources/invader/InvaderResource.cs" id="2_qetji"]
 
 [resource]

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="InvaderResource" load_steps=3 format=3 uid="uid://def0xaxf61xkv"]
 
 [ext_resource type="Script" uid="uid://ctvn4oudpq11e" path="res://assets/resources/invader/InvaderResource.cs" id="1_sc5hn"]
-[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy_blaster_gun.tres" id="1_ydqoq"]
+[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy/enemy_blaster_gun.tres" id="1_ydqoq"]
 
 [resource]
 script = ExtResource("1_sc5hn")

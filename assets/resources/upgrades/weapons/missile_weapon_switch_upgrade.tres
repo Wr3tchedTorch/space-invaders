@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="WeaponSwitchUpgradeResource" load_steps=3 format=3 uid="uid://bvpbbeq48ne6v"]
+
+[ext_resource type="Resource" uid="uid://catm67fqrwp7m" path="res://assets/resources/weapon/player/player_rocket_launcher.tres" id="1_2w5k5"]
+[ext_resource type="Script" uid="uid://vieqih7l0bsr" path="res://assets/resources/upgrades/weapons/WeaponSwitchUpgradeResource.cs" id="1_gq47i"]
+
+[resource]
+script = ExtResource("1_gq47i")
+WeaponResource = ExtResource("1_2w5k5")
+DelayBeforeSwitchingBack = 5.0
+ScenePath = "uid://b16sfwkqddj0f"
+metadata/_custom_type_script = "uid://vieqih7l0bsr"

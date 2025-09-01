@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://b633utavxp7t1"]
+
+[ext_resource type="Script" uid="uid://c710eq45hs3q6" path="res://scenes/agents/bullets/Missile.cs" id="1_7fgxi"]
+[ext_resource type="PackedScene" uid="uid://uv67f8df5g3x" path="res://scenes/components/state_machine.tscn" id="2_w3g8j"]
+[ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_t4j0c"]
+[ext_resource type="PackedScene" uid="uid://0ce50c3g0yfv" path="res://scenes/components/velocity_component.tscn" id="4_qyi3k"]
+[ext_resource type="PackedScene" uid="uid://brc43l3heouke" path="res://scenes/components/explosion_component.tscn" id="5_tkdei"]
+[ext_resource type="Texture2D" uid="uid://baiu5mjl8rwyt" path="res://assets/sprites/weapons/rocket.png" id="6_1jojw"]
+[ext_resource type="PackedScene" uid="uid://dupuevgffirdp" path="res://scenes/agents/bullets/explosion_area.tscn" id="7_32qew"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4qer"]
+size = Vector2(4, 6)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tsdrv"]
+radius = 20.0
+
+[node name="PlayerMissile" type="Area2D" node_paths=PackedStringArray("ExplosionComponent", "ExplosionArea", "VelocityComponent", "StateMachine")]
+collision_layer = 32
+collision_mask = 16
+monitorable = false
+script = ExtResource("1_7fgxi")
+ExplosionComponent = NodePath("ExplosionComponent")
+ExplosionArea = NodePath("ExplosionArea")
+VelocityComponent = NodePath("VelocityComponent")
+StateMachine = NodePath("StateMachine")
+
+[node name="StateMachine" parent="." instance=ExtResource("2_w3g8j")]
+
+[node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_t4j0c")]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("4_qyi3k")]
+
+[node name="ExplosionComponent" parent="." node_paths=PackedStringArray("ExplosionArea", "ExplosionShape") instance=ExtResource("5_tkdei")]
+ExplosionArea = NodePath("../ExplosionArea")
+ExplosionShape = NodePath("../ExplosionArea/CollisionShape2D2")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, 4)
+scale = Vector2(0.1, 0.1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.662477, 0.60643, 1)
+scale = Vector2(0.981057, 0.946679)
+texture = ExtResource("6_1jojw")
+flip_v = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r4qer")
+
+[node name="ExplosionMarker2D" type="Marker2D" parent="."]
+position = Vector2(0, -4)
+
+[node name="ExplosionArea" parent="." instance=ExtResource("7_32qew")]
+collision_layer = 4
+collision_mask = 64
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ExplosionArea"]
+shape = SubResource("CircleShape2D_tsdrv")
+disabled = true
+
+[connection signal="EnemyHit" from="." to="ExplosionComponent" method="TriggerExplosion"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnScreenExited"]

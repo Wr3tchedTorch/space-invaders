@@ -21,6 +21,7 @@ public partial class WeaponComponent : Node, IWeapon
         get => _weaponResource;
         set
         {
+            previousWeaponResource = _weaponResource;
             _weaponResource = value;
 
             if (WeaponResource != null)
@@ -54,6 +55,7 @@ public partial class WeaponComponent : Node, IWeapon
     private bool isShooting = false;
 
     private WeaponResource _weaponResource = null!;
+    private WeaponResource previousWeaponResource = null!;
 
     public override void _Ready()
     {
@@ -99,6 +101,14 @@ public partial class WeaponComponent : Node, IWeapon
     {
         BulletUpgrades.Add(temporaryUpgrade);
         WaitAndRemove(temporaryUpgrade);
+    }
+
+    public async void SwitchToTemporaryWeapon(WeaponResource weaponResource, double timeBeforeSwitchingBack)
+    {
+        WeaponResource = weaponResource;
+
+        await ToSignal(GetTree().CreateTimer(timeBeforeSwitchingBack), "timeout");
+        WeaponResource = previousWeaponResource;
     }
 
     private void UpdateAttributes()

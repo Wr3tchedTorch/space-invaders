@@ -6,4 +6,6 @@ namespace SpaceInvaders.Assets.Scripts.Interfaces;
 public interface IWeapon
 {
     public WeaponResource WeaponResource { get; set; }
+
+    public void SwitchToTemporaryWeapon(WeaponResource weaponResource, double timeBeforeSwitchingBack);
 }

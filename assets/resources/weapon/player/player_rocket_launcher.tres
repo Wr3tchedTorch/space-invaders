@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=3 format=3 uid="uid://catm67fqrwp7m"]
+
+[ext_resource type="Resource" uid="uid://boalldtqp6qtk" path="res://assets/resources/bullet/player_missile.tres" id="1_6un0k"]
+[ext_resource type="Script" uid="uid://ckmtrt45a67gu" path="res://assets/resources/weapon/WeaponResource.cs" id="2_a8kbg"]
+
+[resource]
+script = ExtResource("2_a8kbg")
+FireRateDelay = 3.0
+BulletResource = ExtResource("1_6un0k")
+metadata/_custom_type_script = "uid://ckmtrt45a67gu"

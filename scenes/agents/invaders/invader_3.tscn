@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/upgrades/bullets/bullet_zigzag_upgrade.tres" id="2_wy44h"]
 [ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/upgrades/weapons/weapon_fire_rate_upgrade.tres" id="3_75ai7"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_se71y"]
-[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy_blaster_gun.tres" id="4_n5qwy"]
+[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy/enemy_blaster_gun.tres" id="4_n5qwy"]
 [ext_resource type="Texture2D" uid="uid://e2ys6g12wjoj" path="res://assets/sprites/invaders/invader3-2.png" id="7_n5qwy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2t08"]
