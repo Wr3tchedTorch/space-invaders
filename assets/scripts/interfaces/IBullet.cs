@@ -8,5 +8,8 @@ public interface IBullet : IAttacker, IPhysicsAgent
 {
     public BulletResource BulletResource { get; set; }
     public StateMachine StateMachine { get; set; }
-    public Callable GetDirection { get; set; }    
+    public Callable GetDirection { get; set; }
+
+    public void SetCollisionLayerValue(int layer, bool v);
+    public void SetCollisionMaskValue(int layerNumber, bool value);
 }

@@ -6,5 +6,5 @@
 script = ExtResource("1_dxihx")
 Damage = 50.0
 Speed = 225.0
-ScenePath = "res://scenes/agents/bullets/player_missile.tscn"
+ScenePath = "uid://b633utavxp7t1"
 metadata/_custom_type_script = "uid://dodx0gy21gd63"

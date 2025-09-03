@@ -59,6 +59,7 @@ attack={
 2d_physics/layer_6="enemy_bullets"
 2d_physics/layer_7="enemy_hurtbox"
 2d_physics/layer_8="objects"
+2d_physics/layer_9="tangible_bullets"
 
 [physics]
 

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="1_w1rl3"]
 [ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/upgrades/bullets/bullet_zigzag_upgrade.tres" id="2_cys7h"]
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_gs3gc"]
-[ext_resource type="Resource" uid="uid://b7eiwe4k0rel" path="res://assets/resources/upgrades/weapons/weapon_fire_rate_upgrade.tres" id="3_0w0mi"]
+[ext_resource type="Resource" uid="uid://bny4g31hickm8" path="res://assets/resources/upgrades/bullets/bullet_ghost_upgrade.tres" id="3_0w0mi"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_l3dlf"]
 [ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy/enemy_blaster_gun.tres" id="4_xh3qd"]
 [ext_resource type="Texture2D" uid="uid://b8ufvx7twhm5i" path="res://assets/sprites/invaders/invader1-2.png" id="8_gm47l"]
@@ -37,8 +37,8 @@ script = ExtResource("1_gs3gc")
 HealthComponent = NodePath("HealthComponent")
 WeaponComponent = NodePath("WeaponComponent")
 AnimatedSprite2D = NodePath("AnimatedSprite2D")
-BulletUpgradeResources = [ExtResource("2_cys7h")]
-UpgradeDrops = [ExtResource("2_cys7h"), ExtResource("3_0w0mi")]
+BulletUpgradeResources = [ExtResource("2_cys7h"), ExtResource("3_0w0mi")]
+UpgradeDrops = [ExtResource("3_0w0mi"), ExtResource("2_cys7h")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("1_w1rl3")]
 

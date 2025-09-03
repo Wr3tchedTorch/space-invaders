@@ -12,6 +12,9 @@ namespace SpaceInvaders.Scenes.Components;
 
 public partial class WeaponComponent : Node, IWeapon
 {
+    private readonly int BulletDefaultLayer = 9;
+    private readonly int BulletDefaultMask = 8;
+
     [Signal] public delegate void ShootedEventHandler();
 
     [ExportGroup("Configuration")]
@@ -100,7 +103,7 @@ public partial class WeaponComponent : Node, IWeapon
     public void AddUpgradeWaitAndRemove(IBulletTemporaryUpgrade temporaryUpgrade)
     {
         BulletUpgrades.Add(temporaryUpgrade);
-        WaitAndRemove(temporaryUpgrade);
+        WaitAndRemove(temporaryUpgrade);        
     }
 
     public async void SwitchToTemporaryWeapon(WeaponResource weaponResource, double timeBeforeSwitchingBack)
@@ -137,8 +140,11 @@ public partial class WeaponComponent : Node, IWeapon
         bullet.SetPhysicsLayer(BulletPhysicsLayer);
         bullet.SetPhysicsMask(BulletPhysicsMask);
 
+        bullet.SetCollisionLayerValue(BulletDefaultLayer, true);
+        bullet.SetCollisionMaskValue(BulletDefaultMask, true);
+
         foreach (var upgrade in BulletUpgrades)
-        {            
+        {
             upgrade.ApplyUpgrade(bullet);
         }
 
