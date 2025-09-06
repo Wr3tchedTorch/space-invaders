@@ -1,5 +1,5 @@
 using Godot;
-using SpaceInvaders.Assets.Scripts.interfaces;
+using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Components;
 using SpaceInvaders.Scenes.Levels;
@@ -10,7 +10,7 @@ using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Navigators;
 using SpaceInvaders.Scenes.Autoloads;
 using System.Linq;
-using SpaceInvaders.assets.scripts.interfaces;
+using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.Agents.Upgrades;
 
 namespace SpaceInvaders.Scenes.Agents.Invaders;

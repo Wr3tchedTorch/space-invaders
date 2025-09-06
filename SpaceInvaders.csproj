@@ -6,5 +6,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="scenes/agents/bullets/" />
+    <Folder Include="scenes/managers/" />
   </ItemGroup>
 </Project>

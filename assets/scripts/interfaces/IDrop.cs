@@ -1,6 +1,6 @@
 using System;
 
-namespace SpaceInvaders.assets.scripts.interfaces;
+namespace SpaceInvaders.Assets.Scripts.Interfaces;
 
 public interface IDrop
 {

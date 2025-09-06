@@ -2,7 +2,7 @@ using System;
 using Godot;
 using SpaceInvaders.Assets.Resources.Invader;
 
-namespace SpaceInvaders.Assets.Scripts.interfaces;
+namespace SpaceInvaders.Assets.Scripts.Interfaces;
 
 public interface IEnemy
 {

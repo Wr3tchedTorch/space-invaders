@@ -3,7 +3,7 @@ using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Navigators;
 using System.Linq;
 using System;
-using SpaceInvaders.Assets.Scripts.interfaces;
+using SpaceInvaders.Assets.Scripts.Interfaces;
 
 namespace SpaceInvaders.Scenes.Factories;
 

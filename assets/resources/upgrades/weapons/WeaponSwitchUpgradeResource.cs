@@ -1,6 +1,6 @@
 using System;
 using Godot;
-using SpaceInvaders.assets.scripts.interfaces;
+using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Assets.Resources.Weapon;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 

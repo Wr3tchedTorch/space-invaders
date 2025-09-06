@@ -2,7 +2,7 @@ using System;
 using Godot;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Assets.Scripts.Exceptions;
-using SpaceInvaders.assets.scripts.interfaces;
+using SpaceInvaders.Assets.Scripts.Interfaces;
 
 namespace SpaceInvaders.Assets.Resources.Upgrades.Bullets;
 

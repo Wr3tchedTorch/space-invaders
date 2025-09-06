@@ -1,5 +1,5 @@
 using Godot;
-using SpaceInvaders.assets.scripts.interfaces;
+using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using System;
 
