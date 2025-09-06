@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://e143nu2c0qss"]
+[gd_scene load_steps=2 format=3 uid="uid://e143nu2c0qss"]
+
+[ext_resource type="Script" uid="uid://rbpte16u31dq" path="res://scenes/managers/MarkerManager.cs" id="1_ooj2c"]
 
 [node name="MarkerManager" type="Node"]
+script = ExtResource("1_ooj2c")

@@ -23,7 +23,7 @@ public partial class MarkerManager : Node
 
     public override void _Ready()
     {
-        SpawnMarkers();
+        Callable.From(SpawnMarkers).CallDeferred();
     }
 
     private void SpawnMarkers()
@@ -51,7 +51,7 @@ public partial class MarkerManager : Node
         position.X = CenterPosition.X + HGap * index;
         if (index == 0)
         {
-            position.X = CenterPosition.X - TotalWidth/2;
+            position.X = CenterPosition.X - TotalWidth / 2;
         }
         position.Y = CenterPosition.Y;
         return position;
@@ -75,9 +75,17 @@ public partial class MarkerManager : Node
         var marker = new Marker2D()
         {
             GlobalPosition = position,
-            Rotation = rotation
+            RotationDegrees = rotation
         };
-        MarkersParent.AddChild(MarkersParent);
+        MarkersParent.AddChild(marker);
         return marker;
+    }
+    
+    private Texture2D CreateDebugTexture(int size = 16)
+    {
+        var image = Image.CreateEmpty(size, size, false, Image.Format.Rgba8);
+        image.Fill(Colors.Red); // Fill with red so it’s visible
+        var tex = ImageTexture.CreateFromImage(image);
+        return tex;
     }
 }

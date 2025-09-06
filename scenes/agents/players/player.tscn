@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://4oqb4vuw77as"]
+[gd_scene load_steps=10 format=3 uid="uid://4oqb4vuw77as"]
 
 [ext_resource type="Script" uid="uid://bi4t7f2cuoenm" path="res://scenes/agents/players/Player.cs" id="1_y3jks"]
 [ext_resource type="Texture2D" uid="uid://bmxl3pgpljhj0" path="res://assets/sprites/player/player.png" id="2_fovvg"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="2_ok5fs"]
 [ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/player/blaster_gun.tres" id="3_ok5fs"]
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="4_vjyvw"]
+[ext_resource type="PackedScene" uid="uid://e143nu2c0qss" path="res://scenes/managers/marker_manager.tscn" id="5_mws0h"]
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="5_uoiam"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y3jks"]
@@ -32,6 +33,13 @@ BulletSpawnMarker = NodePath("../Marker2D")
 [node name="Timer" type="Timer" parent="WeaponComponent"]
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_vjyvw")]
+
+[node name="MarkerManager" parent="." node_paths=PackedStringArray("MarkersCenter", "MarkersParent") instance=ExtResource("5_mws0h")]
+MarkersCount = 5
+HGap = 4.0
+MaxAngle = 45.0
+MarkersCenter = NodePath("../Marker2D")
+MarkersParent = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
