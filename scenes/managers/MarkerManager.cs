@@ -15,11 +15,11 @@ public partial class MarkerManager : Node
     [Export] public float MaxAngle { get; set; }
 
     [ExportGroup("Dependencies")]
-    [Export] public Marker2D MarkersCenter { get; set; } = null!;
+    [Export] public Marker2D CenterMarker { get; set; } = null!;
     [Export] public Node2D MarkersParent { get; set; } = null!;
 
-    private float TotalWidth => MarkersCount * HGap;
-    private Vector2 CenterPosition => MarkersCenter.GlobalPosition;
+    private float TotalWidth => (MarkersCount - 1) * HGap;
+    private Vector2 CenterPosition => CenterMarker.Position;
 
     public override void _Ready()
     {
@@ -42,24 +42,22 @@ public partial class MarkerManager : Node
 
     private Vector2 GetMarkerPosition(int index)
     {
-        if (index < 0)
+        if (index < 0 || index >= MarkersCount)
         {
             throw new IndexOutOfRangeException();
         }
+        float startX = CenterPosition.X - TotalWidth / 2;
 
         var position = Vector2.Zero;
-        position.X = CenterPosition.X + HGap * index;
-        if (index == 0)
-        {
-            position.X = CenterPosition.X - TotalWidth / 2;
-        }
+        position.X = startX + index * HGap;
         position.Y = CenterPosition.Y;
+        
         return position;
     }
 
     private float GetMarkerAngle(int index)
     {
-        if (index < 0)
+        if (index < 0 || index >= MarkersCount)
         {
             throw new IndexOutOfRangeException();
         }
@@ -74,13 +72,13 @@ public partial class MarkerManager : Node
     {
         var marker = new Marker2D()
         {
-            GlobalPosition = position,
+            Position = position,
             RotationDegrees = rotation
         };
         MarkersParent.AddChild(marker);
         return marker;
     }
-    
+
     private Texture2D CreateDebugTexture(int size = 16)
     {
         var image = Image.CreateEmpty(size, size, false, Image.Format.Rgba8);

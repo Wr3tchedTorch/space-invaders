@@ -23,22 +23,21 @@ CollisionShape2D = NodePath("CollisionShape2D")
 WeaponComponent = NodePath("WeaponComponent")
 HealthComponent = NodePath("HealthComponent")
 
-[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarker") instance=ExtResource("2_ok5fs")]
+[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer") instance=ExtResource("2_ok5fs")]
 WeaponResource = ExtResource("3_ok5fs")
 BulletPhysicsLayer = 3
 BulletPhysicsMask = 7
 FireRateTimer = NodePath("Timer")
-BulletSpawnMarker = NodePath("../Marker2D")
 
 [node name="Timer" type="Timer" parent="WeaponComponent"]
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_vjyvw")]
 
-[node name="MarkerManager" parent="." node_paths=PackedStringArray("MarkersCenter", "MarkersParent") instance=ExtResource("5_mws0h")]
+[node name="MarkerManager" parent="." node_paths=PackedStringArray("CenterMarker", "MarkersParent") instance=ExtResource("5_mws0h")]
 MarkersCount = 5
-HGap = 4.0
+HGap = 10.0
 MaxAngle = 45.0
-MarkersCenter = NodePath("../Marker2D")
+CenterMarker = NodePath("../Marker2D")
 MarkersParent = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -50,7 +49,7 @@ position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_y3jks")
 
 [node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -11)
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("5_uoiam")]
 collision_mask = 32
@@ -59,5 +58,6 @@ collision_mask = 32
 position = Vector2(0, -2.5)
 shape = SubResource("RectangleShape2D_vjyvw")
 
+[connection signal="MarkersSpawned" from="MarkerManager" to="WeaponComponent" method="ChangeBulletSpawnMarkers"]
 [connection signal="Attacked" from="HurtboxComponent" to="." method="OnAttacked"]
 [connection signal="Attacked" from="HurtboxComponent" to="HealthComponent" method="TakeDamage"]

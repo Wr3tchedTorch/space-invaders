@@ -52,7 +52,7 @@ public partial class WeaponComponent : Node, IWeapon
 
     [ExportCategory("Dependencies")]
     [Export] private Timer FireRateTimer { get; set; } = null!;
-    [Export] private Marker2D BulletSpawnMarker { get; set; } = null!;
+    [Export] private Marker2D[] BulletSpawnMarkers { get; set; } = [];
 
     private bool canShoot = true;
     private bool isShooting = false;
@@ -114,6 +114,11 @@ public partial class WeaponComponent : Node, IWeapon
         WeaponResource = previousWeaponResource;
     }
 
+    public void ChangeBulletSpawnMarkers(Marker2D[] toMarkers)
+    {
+        BulletSpawnMarkers = toMarkers;
+    }
+
     private void UpdateAttributes()
     {
         if (WeaponResource == null)
@@ -130,27 +135,34 @@ public partial class WeaponComponent : Node, IWeapon
 
     private void Shoot()
     {
+        if (BulletSpawnMarkers.Length == 0)
+        {
+            return;
+        }
+
         canShoot = false;
         FireRateTimer.Start();
 
-        var bulletPosition = BulletSpawnMarker.GlobalPosition;
-        var bullet = BulletFactory.SpawnBullet(bulletPosition, (BulletResource)WeaponResource.BulletResource.Duplicate());
-        bullet.GetDirection = GetDirection;
-
-        bullet.SetPhysicsLayer(BulletPhysicsLayer);
-        bullet.SetPhysicsMask(BulletPhysicsMask);
-
-        bullet.SetCollisionLayerValue(BulletDefaultLayer, true);
-        bullet.SetCollisionMaskValue(BulletDefaultMask, true);
-
-        foreach (var upgrade in BulletUpgrades)
+        foreach (var marker in BulletSpawnMarkers)
         {
-            upgrade.ApplyUpgrade(bullet);
+            var bulletPosition = marker.GlobalPosition;
+            var bullet = BulletFactory.SpawnBullet(bulletPosition, (BulletResource)WeaponResource.BulletResource.Duplicate());
+            bullet.GetDirection = GetDirection;            
+
+            bullet.SetPhysicsLayer(BulletPhysicsLayer);
+            bullet.SetPhysicsMask(BulletPhysicsMask);
+
+            bullet.SetCollisionLayerValue(BulletDefaultLayer, true);
+            bullet.SetCollisionMaskValue(BulletDefaultMask, true);
+
+            foreach (var upgrade in BulletUpgrades)
+            {
+                upgrade.ApplyUpgrade(bullet);
+            }
+
+            var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
+            gameWorld.AddChild((Node2D)bullet);            
         }
-
-        var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
-        gameWorld.AddChild((Node2D)bullet);
-
         EmitSignal(SignalName.Shooted);
     }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=12 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://dxttnhn22lr0x" path="res://scenes/agents/objects/bunker.tscn" id="3_7lrji"]
 [ext_resource type="Script" uid="uid://b182rcwbya5gj" path="res://scenes/agents/objects/BottomWall.cs" id="3_rssyh"]
-[ext_resource type="Resource" uid="uid://c1hncsflge1qb" path="res://assets/resources/invader/invader_1.tres" id="4_2xkjh"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkq25"]
@@ -28,7 +27,6 @@ script = ExtResource("1_j4d2a")
 
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
 EnemiesNavigator = NodePath("../EnemiesNavigator")
-invaders = [ExtResource("4_2xkjh")]
 
 [node name="Walls" type="Node" parent="GameWorld"]
 
@@ -84,7 +82,7 @@ position = Vector2(224, 158)
 position = Vector2(128, 10)
 HorizontalMovementIncrement = 6.0
 VerticalMovementIncrement = 8.0
-MaxDelayBetweenMovements = 1.2
+MaxDelayBetweenMovements = 1.0
 DelayDecreaseBetweenRows = 0.05
 MovementTimer = NodePath("Timer")
 
