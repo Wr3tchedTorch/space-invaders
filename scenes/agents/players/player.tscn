@@ -34,9 +34,8 @@ FireRateTimer = NodePath("Timer")
 [node name="HealthComponent" parent="." instance=ExtResource("4_vjyvw")]
 
 [node name="MarkerManager" parent="." node_paths=PackedStringArray("CenterMarker", "MarkersParent") instance=ExtResource("5_mws0h")]
-MarkersCount = 5
-HGap = 10.0
-MaxAngle = 45.0
+MarkersCount = 3
+MaxAngle = 10.0
 CenterMarker = NodePath("../Marker2D")
 MarkersParent = NodePath("..")
 

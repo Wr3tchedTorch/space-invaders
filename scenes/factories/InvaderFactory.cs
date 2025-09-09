@@ -24,6 +24,12 @@ public partial class InvaderFactory : Node
 
     public override void _Ready()
     {
+        if (Columns <= 0 || Rows <= 0)
+        {
+            GD.Print($"{nameof(InvaderFactory)}: Either Column or Rows are set to 0 or lower. Spawning operation skipped.");
+            return;
+        }
+
         SpawnInvaders();
     }
 

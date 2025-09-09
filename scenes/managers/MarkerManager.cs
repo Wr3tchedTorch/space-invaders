@@ -10,9 +10,51 @@ public partial class MarkerManager : Node
     [Signal] public delegate void MarkersSpawnedEventHandler(Marker2D[] markers);
 
     [ExportGroup("Configuration")]
-    [Export] public int MarkersCount { get; set; }
-    [Export] public float HGap { get; set; }
-    [Export] public float MaxAngle { get; set; }
+    [Export]
+    public int MarkersCount
+    {
+        get => _markersCount;
+        set
+        {
+            _markersCount = value;
+
+            if (!_initialized)
+            {
+                return;
+            }
+            SpawnMarkers();
+        }
+    }
+    [Export]
+    public float HGap
+    {
+        get => _hGap;
+        set
+        {
+            _hGap = value;
+
+            if (!_initialized)
+            {
+                return;
+            }
+            SpawnMarkers();
+        }
+    }
+    [Export]
+    public float MaxAngle
+    {
+        get => _maxAngle;
+        set
+        {
+            _maxAngle = value;
+
+            if (!_initialized)
+            {
+                return;
+            }
+            SpawnMarkers();
+        }
+    }
 
     [ExportGroup("Dependencies")]
     [Export] public Marker2D CenterMarker { get; set; } = null!;
@@ -21,9 +63,15 @@ public partial class MarkerManager : Node
     private float TotalWidth => (MarkersCount - 1) * HGap;
     private Vector2 CenterPosition => CenterMarker.Position;
 
+    private int _markersCount;
+    private float _hGap;
+    private float _maxAngle;
+    private bool _initialized = false;
+
     public override void _Ready()
     {
         Callable.From(SpawnMarkers).CallDeferred();
+        Callable.From(() => _initialized = true).CallDeferred();
     }
 
     private void SpawnMarkers()
@@ -51,7 +99,7 @@ public partial class MarkerManager : Node
         var position = Vector2.Zero;
         position.X = startX + index * HGap;
         position.Y = CenterPosition.Y;
-        
+
         return position;
     }
 
@@ -62,7 +110,12 @@ public partial class MarkerManager : Node
             throw new IndexOutOfRangeException();
         }
 
-        var t = (MarkersCount == 1) ? 0.5f : (float)index / MarkersCount;
+        if (MarkersCount == 1)
+        {
+            return 0f; // Single marker stays centered
+        }
+
+        var t = (float)index / (MarkersCount-1);
         var angle = -MaxAngle + t * (2 * MaxAngle);
 
         return angle;

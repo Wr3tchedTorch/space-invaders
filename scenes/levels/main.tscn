@@ -26,6 +26,7 @@ size = Vector2(256, 9)
 script = ExtResource("1_j4d2a")
 
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
+Columns = 0
 EnemiesNavigator = NodePath("../EnemiesNavigator")
 
 [node name="Walls" type="Node" parent="GameWorld"]
@@ -67,16 +68,16 @@ shape = SubResource("RectangleShape2D_hwp66")
 [node name="Bunkers" type="Node" parent="GameWorld"]
 
 [node name="Bunker" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
-position = Vector2(96, 158)
+position = Vector2(96, 26)
 
 [node name="Bunker2" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
-position = Vector2(32, 158)
+position = Vector2(32, 26)
 
 [node name="Bunker4" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
-position = Vector2(160, 158)
+position = Vector2(160, 26)
 
 [node name="Bunker5" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
-position = Vector2(224, 158)
+position = Vector2(224, 26)
 
 [node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]
 position = Vector2(128, 10)

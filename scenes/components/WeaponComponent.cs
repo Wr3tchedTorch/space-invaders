@@ -147,7 +147,8 @@ public partial class WeaponComponent : Node, IWeapon
         {
             var bulletPosition = marker.GlobalPosition;
             var bullet = BulletFactory.SpawnBullet(bulletPosition, (BulletResource)WeaponResource.BulletResource.Duplicate());
-            bullet.GetDirection = GetDirection;            
+            bullet.GetDirection = GetDirection;
+            bullet.Rotation = marker.Rotation;
 
             bullet.SetPhysicsLayer(BulletPhysicsLayer);
             bullet.SetPhysicsMask(BulletPhysicsMask);
@@ -164,7 +165,7 @@ public partial class WeaponComponent : Node, IWeapon
             gameWorld.AddChild((Node2D)bullet);            
         }
         EmitSignal(SignalName.Shooted);
-    }
+    }    
 
     private async void WaitAndRemove(IBulletTemporaryUpgrade temporaryUpgrade)
     {

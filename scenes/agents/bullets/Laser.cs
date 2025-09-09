@@ -37,7 +37,7 @@ public partial class Laser : Area2D, IBullet, IMover
 
     public float Damage { get => BulletResource.Damage; }
 
-    private Vector2 direction;    
+    private Vector2 direction;
     private Callable _getDirection;
 
     public override void _Ready()
@@ -50,7 +50,7 @@ public partial class Laser : Area2D, IBullet, IMover
 
     private Vector2 GetBulletDirection()
     {
-        return direction;
+        return direction.Rotated(Rotation);
     }
 
     protected virtual void OnBodyEntered(Node2D body)
@@ -67,7 +67,7 @@ public partial class Laser : Area2D, IBullet, IMover
     {
         GlobalPosition += Velocity;
 
-        Rotation = angle - Mathf.Pi/2;
+        // Rotation = angle - Mathf.Pi/2;
     }
 
     public void SetPhysicsLayer(uint layer)
