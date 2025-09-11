@@ -42,7 +42,7 @@ public partial class Invader : Area2D, IEnemy
         }
 
         InvaderResource = (InvaderResource)InvaderResource.Duplicate(true);
-        WeaponComponent.WeaponResource = InvaderResource.WeaponResource;
+        WeaponComponent.PrimaryWeaponResource = InvaderResource.WeaponResource;
         WeaponComponent.GetDirection = Callable.From(GetDirection);
 
         foreach (var upgrade in BulletUpgradeResources)
@@ -102,20 +102,20 @@ public partial class Invader : Area2D, IEnemy
 
     private async void StartShooting()
     {
-        InvaderResource.WeaponResource.FireRateDelay = GetRandomFireRateDelay();
+        InvaderResource.WeaponResource.MaxFireRateDelay = GetRandomFireRateDelay();
 
-        await ToSignal(GetTree().CreateTimer(InvaderResource.WeaponResource.FireRateDelay), "timeout");
+        await ToSignal(GetTree().CreateTimer(InvaderResource.WeaponResource.MaxFireRateDelay), "timeout");
         WeaponComponent.StartShooting();
     }
 
     private float GetRandomFireRateDelay()
     {
-        var halfFireRate = InvaderResource.WeaponResource.FireRateDelay * 0.95f;
+        var halfFireRate = InvaderResource.WeaponResource.MaxFireRateDelay * 0.95f;
 
         var randomOffset = (float)(GameWorld.Rng.NextDouble() * halfFireRate);
         var randomSign = GameWorld.Rng.Next(0, 2) * 2 - 1;
 
-        return InvaderResource.WeaponResource.FireRateDelay + randomOffset * randomSign;
+        return InvaderResource.WeaponResource.MaxFireRateDelay + randomOffset * randomSign;
     }
 
     private void AddBulletUpgrade(Resource upgrade)

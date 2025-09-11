@@ -13,6 +13,6 @@ public partial class CannonUpgradeResource : Resource, IWeaponUpgrade, IDrop
 
     public void ApplyUpgrade(IWeapon weapon)
     {
-        ((WeaponComponent)weapon).AddCannon(Amount);
+        weapon.AddCannon(Amount);
     }
 }

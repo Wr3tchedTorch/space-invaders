@@ -10,17 +10,18 @@ public partial class WeaponResource : Resource
     [Signal] public delegate void FireRateDelayChangedEventHandler();
 
     [Export]
-    public float FireRateDelay
+    public float MaxFireRateDelay
     {
-        get => _fireRateDelay;
+        get => _maxFireRateDelay;
         set
         {
-            _fireRateDelay = value;
+            _maxFireRateDelay = value;
 
             EmitSignal(SignalName.FireRateDelayChanged);
         }
     }
+    [Export] public float FireRateDelay { get; set; }
     [Export] public BulletResource BulletResource { get; set; } = null!;
 
-    private float _fireRateDelay;
+    private float _maxFireRateDelay;
 }

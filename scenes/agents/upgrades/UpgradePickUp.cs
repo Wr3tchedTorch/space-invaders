@@ -63,7 +63,6 @@ public partial class UpgradePickUp : CharacterBody2D
             AnimationPlayer.Play(DisappearAnimationName);
         }
         AnimationPlayer.SpeedScale = (float)(timePassedSinceSpawn / AnimationStartDelay);
-        GD.Print($"Animation Speed: {AnimationPlayer.SpeedScale}");
     }
 
     public override void _PhysicsProcess(double delta)

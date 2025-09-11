@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_iuwqr")
+MaxFireRateDelay = 50.0
 FireRateDelay = 50.0
 BulletResource = ExtResource("1_g5w2i")
 metadata/_custom_type_script = "uid://ckmtrt45a67gu"

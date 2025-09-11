@@ -2,7 +2,6 @@ using System;
 using Godot;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Assets.Resources.Weapon;
-using SpaceInvaders.Assets.Scripts.Interfaces;
 
 namespace SpaceInvaders.Assets.Resources.Upgrades.Weapons;
 
@@ -15,6 +14,6 @@ public partial class WeaponSwitchUpgradeResource : Resource, IWeaponUpgrade, IDr
 
     public void ApplyUpgrade(IWeapon weapon)
     {
-        weapon.SwitchToTemporaryWeapon(WeaponResource, DelayBeforeSwitchingBack);
+        weapon.SwitchToTemporaryWeapon((WeaponResource) WeaponResource.Duplicate(), DelayBeforeSwitchingBack);
     }
 }

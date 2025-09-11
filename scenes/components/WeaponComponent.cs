@@ -7,6 +7,7 @@ using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Levels;
 using System.Collections.Generic;
 using System;
+using SpaceInvaders.Scenes.Agents.Players;
 
 namespace SpaceInvaders.Scenes.Components;
 
@@ -21,20 +22,7 @@ public partial class WeaponComponent : Node, IWeapon
 
     [ExportGroup("Configuration")]
     [Export]
-    public WeaponResource WeaponResource
-    {
-        get => _weaponResource;
-        set
-        {
-            previousWeaponResource = _weaponResource;
-            _weaponResource = value;
-
-            if (WeaponResource != null)
-            {
-                UpdateAttributes();
-            }
-        }
-    }
+    public WeaponResource PrimaryWeaponResource { get; set; } = null!;
     [Export]
     private uint BulletPhysicsLayer
     {
@@ -56,11 +44,37 @@ public partial class WeaponComponent : Node, IWeapon
     [Export] private Timer FireRateTimer { get; set; } = null!;
     [Export] private Marker2D[] BulletSpawnMarkers { get; set; } = [];
 
+    private WeaponResource CurrentWeaponResource
+    {
+        get => _currentWeaponResource;
+        set
+        {
+            _currentWeaponResource = value;
+
+            if (CurrentWeaponResource != null)
+            {
+                UpdateAttributes();
+            }
+        }
+    }
+
     private bool canShoot = true;
     private bool isShooting = false;
 
-    private WeaponResource _weaponResource = null!;
-    private WeaponResource previousWeaponResource = null!;
+    private WeaponResource _currentWeaponResource = null!;
+
+    private float CurrentFireRateUpgrade
+    {
+        get => _currentFireRateUpgrade;
+        set
+        {
+            _currentFireRateUpgrade = value;
+
+            UpdateAttributes();
+        }
+    }
+
+    private float _currentFireRateUpgrade = 0;
 
     public override void _Ready()
     {
@@ -68,7 +82,9 @@ public partial class WeaponComponent : Node, IWeapon
         FireRateTimer.OneShot = true;
         FireRateTimer.Timeout += () => canShoot = true;
 
-        if (WeaponResource != null)
+        CurrentWeaponResource = PrimaryWeaponResource;
+
+        if (PrimaryWeaponResource != null)
         {
             UpdateAttributes();
         }
@@ -85,6 +101,11 @@ public partial class WeaponComponent : Node, IWeapon
 
     public override void _Process(double delta)
     {
+        if (GetOwner<Node2D>() is Player)
+        {
+            GD.Print($"Fire Rate: {CurrentWeaponResource.FireRateDelay} | {CurrentWeaponResource.MaxFireRateDelay} | {CurrentFireRateUpgrade} %");
+        }
+
         if (!isShooting || !canShoot)
         {
             return;
@@ -109,11 +130,11 @@ public partial class WeaponComponent : Node, IWeapon
     }
 
     public async void SwitchToTemporaryWeapon(WeaponResource weaponResource, double timeBeforeSwitchingBack)
-    {
-        WeaponResource = weaponResource;
+    {        
+        CurrentWeaponResource = weaponResource;
 
         await ToSignal(GetTree().CreateTimer(timeBeforeSwitchingBack), "timeout");
-        WeaponResource = previousWeaponResource;
+        CurrentWeaponResource = PrimaryWeaponResource;
     }
 
     public void ChangeBulletSpawnMarkers(Marker2D[] toMarkers)
@@ -137,16 +158,17 @@ public partial class WeaponComponent : Node, IWeapon
 
     private void UpdateAttributes()
     {
-        if (WeaponResource == null)
+        if (CurrentWeaponResource == null)
         {
-            throw new ResourceNullException(nameof(WeaponResource));
+            throw new ResourceNullException(nameof(CurrentWeaponResource));
         }
         if (!IsInstanceValid(FireRateTimer))
         {
             return;
         }
-        FireRateTimer.WaitTime = WeaponResource.FireRateDelay;
-        WeaponResource.FireRateDelayChanged += () => { FireRateTimer.WaitTime = WeaponResource.FireRateDelay; };
+        var percentage = CurrentWeaponResource.MaxFireRateDelay * _currentFireRateUpgrade / 100;
+        CurrentWeaponResource.FireRateDelay = CurrentWeaponResource.MaxFireRateDelay - percentage;
+        FireRateTimer.WaitTime = CurrentWeaponResource.FireRateDelay;
     }
 
     private void Shoot()
@@ -162,7 +184,7 @@ public partial class WeaponComponent : Node, IWeapon
         foreach (var marker in BulletSpawnMarkers)
         {
             var bulletPosition = marker.GlobalPosition;
-            var bullet = BulletFactory.SpawnBullet(bulletPosition, (BulletResource)WeaponResource.BulletResource.Duplicate());
+            var bullet = BulletFactory.SpawnBullet(bulletPosition, (BulletResource)CurrentWeaponResource.BulletResource.Duplicate());
             bullet.GetDirection = GetDirection;
             bullet.Rotation = marker.Rotation;
 
@@ -188,5 +210,10 @@ public partial class WeaponComponent : Node, IWeapon
         await ToSignal(GetTree().CreateTimer(temporaryUpgrade.Duration), "timeout");
 
         BulletUpgrades.Remove(temporaryUpgrade);
-    }    
+    }
+
+    public void IncrementFireRatePercentage(float percentage)
+    {        
+        CurrentFireRateUpgrade += percentage;
+    }
 }

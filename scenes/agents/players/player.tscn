@@ -24,7 +24,7 @@ WeaponComponent = NodePath("WeaponComponent")
 HealthComponent = NodePath("HealthComponent")
 
 [node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer") instance=ExtResource("2_ok5fs")]
-WeaponResource = ExtResource("3_ok5fs")
+PrimaryWeaponResource = ExtResource("3_ok5fs")
 BulletPhysicsLayer = 3
 BulletPhysicsMask = 7
 FireRateTimer = NodePath("Timer")
@@ -34,7 +34,7 @@ FireRateTimer = NodePath("Timer")
 [node name="HealthComponent" parent="." instance=ExtResource("4_vjyvw")]
 
 [node name="MarkerManager" parent="." node_paths=PackedStringArray("CenterMarker", "MarkersParent") instance=ExtResource("5_mws0h")]
-MarkersCount = 3
+MarkersCount = 1
 MaxAngle = 15.0
 CenterMarker = NodePath("../Marker2D")
 MarkersParent = NodePath("..")
