@@ -1,6 +1,5 @@
 using Godot;
 using SpaceInvaders.Assets.Scripts.Interfaces;
-using SpaceInvaders.Assets.Scripts.Interfaces;
 using System;
 
 namespace SpaceInvaders.Assets.Resources.Upgrades.Weapons;

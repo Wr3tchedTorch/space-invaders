@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CannonUpgradeResource" load_steps=2 format=3 uid="uid://bl8xvykvdrn47"]
+
+[ext_resource type="Script" uid="uid://h0t6yalbko8" path="res://assets/resources/upgrades/weapons/CannonUpgradeResource.cs" id="1_1pqxv"]
+
+[resource]
+script = ExtResource("1_1pqxv")
+Amount = 1
+ScenePath = "uid://b16sfwkqddj0f"
+metadata/_custom_type_script = "uid://h0t6yalbko8"

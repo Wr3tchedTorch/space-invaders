@@ -16,6 +16,8 @@ public partial class WeaponComponent : Node, IWeapon
     private readonly int BulletDefaultMask = 8;
 
     [Signal] public delegate void ShootedEventHandler();
+    [Signal] public delegate void CannonAddedEventHandler(int count);
+    [Signal] public delegate void CannonRemovedEventHandler(int count);
 
     [ExportGroup("Configuration")]
     [Export]
@@ -117,6 +119,20 @@ public partial class WeaponComponent : Node, IWeapon
     public void ChangeBulletSpawnMarkers(Marker2D[] toMarkers)
     {
         BulletSpawnMarkers = toMarkers;
+    }
+
+    public void AddCannon(int count)
+    {
+        EmitSignal(SignalName.CannonAdded, count);
+    }
+
+    public void RemoveCannon(int count)
+    {
+        if (BulletSpawnMarkers.Length - count <= 0)
+        {
+            GD.PrintErr($"{nameof(WeaponComponent)}: Can't remove more markers.");
+        }
+        EmitSignal(SignalName.CannonRemoved, count);
     }
 
     private void UpdateAttributes()

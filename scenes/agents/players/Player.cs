@@ -5,6 +5,7 @@ using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.Autoloads;
 using SpaceInvaders.Scenes.Components;
 using System;
+using System.Linq;
 
 namespace SpaceInvaders.Scenes.Agents.Players;
 
@@ -24,7 +25,7 @@ public partial class Player : CharacterBody2D
     [Export] private HealthComponent HealthComponent { get; set; } = null!;
     [Export] private ProgressBar HealthBar { get; set; } = null!;
 
-    [Export] private Resource BulletUpgrade { get; set; } = null!;
+    [Export] private Resource[] BulletUpgrades { get; set; } = [];
 
     private float endBorder;
     private float startBorder;
@@ -49,7 +50,19 @@ public partial class Player : CharacterBody2D
         GameEvents.Instance.BulletUpgradePickedUp += OnBulletUpgradePickedUp;
         GameEvents.Instance.WeaponUpgradePickedUp += OnWeaponUpgradePickedUp;
 
-        WeaponComponent.BulletUpgrades.Add((IBulletUpgrade)BulletUpgrade);
+        AddInitialUpgrades();
+    }
+
+    private void AddInitialUpgrades()
+    {
+        if (BulletUpgrades.Length == 0)
+        {
+            return;
+        }
+        foreach (var upgrade in BulletUpgrades)
+        {
+            WeaponComponent.BulletUpgrades.Add((IBulletUpgrade)upgrade);
+        }
     }
 
     public override void _Process(double delta)

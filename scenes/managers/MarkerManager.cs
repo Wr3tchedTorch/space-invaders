@@ -115,7 +115,7 @@ public partial class MarkerManager : Node
             return 0f; // Single marker stays centered
         }
 
-        var t = (float)index / (MarkersCount-1);
+        var t = (float)index / (MarkersCount - 1);
         var angle = -MaxAngle + t * (2 * MaxAngle);
 
         return angle;
@@ -132,11 +132,19 @@ public partial class MarkerManager : Node
         return marker;
     }
 
-    private Texture2D CreateDebugTexture(int size = 16)
+    private void OnMarkerAdded(int count)
     {
-        var image = Image.CreateEmpty(size, size, false, Image.Format.Rgba8);
-        image.Fill(Colors.Red); // Fill with red so it’s visible
-        var tex = ImageTexture.CreateFromImage(image);
-        return tex;
+        if (MarkersCount + count > 0)
+        {
+            MarkersCount += count;
+        }
+    }
+    
+    private void OnMarkerRemoved(int count)
+    {
+        if (MarkersCount - count > 0)
+        {
+            MarkersCount -= count;
+        }
     }
 }
