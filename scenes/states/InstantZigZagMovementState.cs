@@ -47,6 +47,7 @@ public partial class InstantZigZagMovementState : Node, IState
         }        
         direction = (Vector2)ParentMover.GetDirection.Call();
         direction = GetRotatedDirection();
+        Parent.Rotation = -angle;
 
         ParentMover.Velocity = direction * ParentMover.Speed * delta;
         ParentMover.Move(angle);

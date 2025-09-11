@@ -24,6 +24,8 @@ public partial class Player : CharacterBody2D
     [Export] private HealthComponent HealthComponent { get; set; } = null!;
     [Export] private ProgressBar HealthBar { get; set; } = null!;
 
+    [Export] private Resource BulletUpgrade { get; set; } = null!;
+
     private float endBorder;
     private float startBorder;
     private float spriteWidth;
@@ -46,6 +48,8 @@ public partial class Player : CharacterBody2D
 
         GameEvents.Instance.BulletUpgradePickedUp += OnBulletUpgradePickedUp;
         GameEvents.Instance.WeaponUpgradePickedUp += OnWeaponUpgradePickedUp;
+
+        WeaponComponent.BulletUpgrades.Add((IBulletUpgrade)BulletUpgrade);
     }
 
     public override void _Process(double delta)

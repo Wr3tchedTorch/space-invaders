@@ -13,7 +13,8 @@ public partial class Laser : Area2D, IBullet, IMover
     [Export] public VelocityComponent VelocityComponent { get; set; } = null!;
     [Export] public StateMachine StateMachine { get; set; } = null!;    
 
-    public BulletResource BulletResource { get; set; } = null!;    
+    public BulletResource BulletResource { get; set; } = null!;
+    private float rotationOffset;
 
     public Callable GetDirection
     {
@@ -46,11 +47,13 @@ public partial class Laser : Area2D, IBullet, IMover
 
         AreaEntered += OnAreaEntered;
         BodyEntered += OnBodyEntered;
+
+        rotationOffset = Rotation;
     }
 
     private Vector2 GetBulletDirection()
     {
-        return direction.Rotated(Rotation);
+        return direction.Rotated(rotationOffset);
     }
 
     protected virtual void OnBodyEntered(Node2D body)
@@ -66,8 +69,6 @@ public partial class Laser : Area2D, IBullet, IMover
     public void Move(float angle)
     {
         GlobalPosition += Velocity;
-
-        // Rotation = angle - Mathf.Pi/2;
     }
 
     public void SetPhysicsLayer(uint layer)

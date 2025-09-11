@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://4oqb4vuw77as"]
+[gd_scene load_steps=11 format=3 uid="uid://4oqb4vuw77as"]
 
 [ext_resource type="Script" uid="uid://bi4t7f2cuoenm" path="res://scenes/agents/players/Player.cs" id="1_y3jks"]
 [ext_resource type="Texture2D" uid="uid://bmxl3pgpljhj0" path="res://assets/sprites/player/player.png" id="2_fovvg"]
+[ext_resource type="Resource" uid="uid://bog4j1rf72s5x" path="res://assets/resources/upgrades/bullets/bullet_zigzag_upgrade.tres" id="2_g6hfa"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="2_ok5fs"]
 [ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/player/blaster_gun.tres" id="3_ok5fs"]
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="4_vjyvw"]
@@ -22,6 +23,7 @@ MaxHealth = 400.0
 CollisionShape2D = NodePath("CollisionShape2D")
 WeaponComponent = NodePath("WeaponComponent")
 HealthComponent = NodePath("HealthComponent")
+BulletUpgrade = ExtResource("2_g6hfa")
 
 [node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer") instance=ExtResource("2_ok5fs")]
 WeaponResource = ExtResource("3_ok5fs")
@@ -34,8 +36,8 @@ FireRateTimer = NodePath("Timer")
 [node name="HealthComponent" parent="." instance=ExtResource("4_vjyvw")]
 
 [node name="MarkerManager" parent="." node_paths=PackedStringArray("CenterMarker", "MarkersParent") instance=ExtResource("5_mws0h")]
-MarkersCount = 2
-MaxAngle = 10.0
+MarkersCount = 5
+MaxAngle = 45.0
 CenterMarker = NodePath("../Marker2D")
 MarkersParent = NodePath("..")
 
