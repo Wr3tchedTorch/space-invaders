@@ -1,6 +1,5 @@
 using Godot;
 using SpaceInvaders.Assets.Scripts.Interfaces;
-using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.States;
 using System;
 

@@ -90,11 +90,12 @@ MovementTimer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="GameWorld/EnemiesNavigator"]
 
-[node name="Player" parent="GameWorld" node_paths=PackedStringArray("HealthBar") instance=ExtResource("1_72ix8")]
+[node name="Player" parent="GameWorld" node_paths=PackedStringArray("HealthBar", "AmmunitionLabel") instance=ExtResource("1_72ix8")]
 position = Vector2(125, 199)
 motion_mode = 1
 Speed = 120.0
-HealthBar = NodePath("../../Gui/CanvasLayer/ProgressBar")
+HealthBar = NodePath("../../Gui/CanvasLayer/PlayerHealthBar")
+AmmunitionLabel = NodePath("../../Gui/CanvasLayer/PlayerAmmunitionLabel")
 
 [node name="Camera2D" type="Camera2D" parent="GameWorld"]
 anchor_mode = 0
@@ -107,7 +108,7 @@ offset_bottom = 40.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Gui"]
 
-[node name="ProgressBar" type="ProgressBar" parent="Gui/CanvasLayer"]
+[node name="PlayerHealthBar" type="ProgressBar" parent="Gui/CanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -120,6 +121,23 @@ theme = ExtResource("9_7lrji")
 theme_type_variation = &"PlayerHealthBar"
 value = 50.0
 show_percentage = false
+
+[node name="PlayerAmmunitionLabel" type="Label" parent="Gui/CanvasLayer"]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "15/20"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
 
 [connection signal="area_entered" from="GameWorld/Walls/RightWall" to="GameWorld/EnemiesNavigator" method="OnRightWallEntered"]
 [connection signal="area_entered" from="GameWorld/Walls/LeftWall" to="GameWorld/EnemiesNavigator" method="OnLeftWallEntered"]

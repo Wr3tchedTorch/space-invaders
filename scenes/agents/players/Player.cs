@@ -4,8 +4,6 @@ using SpaceInvaders.Assets.Scripts.Extensions;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.Autoloads;
 using SpaceInvaders.Scenes.Components;
-using System;
-using System.Linq;
 
 namespace SpaceInvaders.Scenes.Agents.Players;
 
@@ -24,6 +22,7 @@ public partial class Player : CharacterBody2D
     [Export] private WeaponComponent WeaponComponent { get; set; } = null!;
     [Export] private HealthComponent HealthComponent { get; set; } = null!;
     [Export] private ProgressBar HealthBar { get; set; } = null!;
+    [Export] private Label AmmunitionLabel { get; set; } = null!;
 
     [Export] private Resource[] BulletUpgrades { get; set; } = [];
 
@@ -42,6 +41,7 @@ public partial class Player : CharacterBody2D
         HealthComponent.InitialHealth = 100;
 
         WeaponComponent.GetDirection = new Callable(this, MethodName.GetDirection);
+        WeaponComponent.AmmunitionLabel = AmmunitionLabel;
 
         spriteWidth = CollisionShape2D.Shape.GetRect().Size.X;
 
@@ -124,7 +124,6 @@ public partial class Player : CharacterBody2D
             throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IWeaponUpgrade));
         }
         ((IWeaponUpgrade)upgrade).ApplyUpgrade(WeaponComponent);
-        GD.Print($"upgrade picked up: {upgrade.ResourcePath}");
     }
 
     private void OnBulletUpgradePickedUp(Resource upgrade)

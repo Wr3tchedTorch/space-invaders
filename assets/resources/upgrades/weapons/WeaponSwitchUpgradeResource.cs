@@ -14,6 +14,6 @@ public partial class WeaponSwitchUpgradeResource : Resource, IWeaponUpgrade, IDr
 
     public void ApplyUpgrade(IWeapon weapon)
     {
-        weapon.SwitchToTemporaryWeapon((WeaponResource) WeaponResource.Duplicate(), DelayBeforeSwitchingBack);
+        weapon.SwitchToTemporaryWeapon(WeaponResource);
     }
 }

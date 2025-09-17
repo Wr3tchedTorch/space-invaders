@@ -7,5 +7,6 @@
 script = ExtResource("2_a8kbg")
 MaxFireRateDelay = 3.0
 FireRateDelay = 3.0
+Ammunition = 6
 BulletResource = ExtResource("1_6un0k")
 metadata/_custom_type_script = "uid://ckmtrt45a67gu"

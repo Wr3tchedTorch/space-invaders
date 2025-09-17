@@ -13,6 +13,9 @@ namespace SpaceInvaders.Scenes.Components;
 
 public partial class WeaponComponent : Node, IWeapon
 {
+    private readonly string PrimaryWeaponResourceName = "primary_weapon";
+    private readonly string TemporaryWeaponResourceName = "temporary_weapon";
+
     private readonly int BulletDefaultLayer = 9;
     private readonly int BulletDefaultMask = 8;
 
@@ -41,6 +44,7 @@ public partial class WeaponComponent : Node, IWeapon
     public List<IBulletUpgrade> BulletUpgrades { get; private set; } = [];
 
     [ExportCategory("Dependencies")]
+    [Export] public Label? AmmunitionLabel { get; set; }
     [Export] private Timer FireRateTimer { get; set; } = null!;
     [Export] private Marker2D[] BulletSpawnMarkers { get; set; } = [];
 
@@ -76,18 +80,16 @@ public partial class WeaponComponent : Node, IWeapon
 
     private float _currentFireRateUpgrade = 0;
 
+    private int maxAmmo = 0;
+
     public override void _Ready()
     {
         FireRateTimer.Autostart = false;
         FireRateTimer.OneShot = true;
         FireRateTimer.Timeout += () => canShoot = true;
 
-        CurrentWeaponResource = PrimaryWeaponResource;
-
-        if (PrimaryWeaponResource != null)
-        {
-            UpdateAttributes();
-        }
+        PrimaryWeaponResource.ResourceName = PrimaryWeaponResourceName;
+        Callable.From(SwitchToPrimaryWeapon).CallDeferred();
 
         if (BulletPhysicsLayer <= 0)
         {
@@ -101,11 +103,6 @@ public partial class WeaponComponent : Node, IWeapon
 
     public override void _Process(double delta)
     {
-        if (GetOwner<Node2D>() is Player)
-        {
-            GD.Print($"Fire Rate: {CurrentWeaponResource.FireRateDelay} | {CurrentWeaponResource.MaxFireRateDelay} | {CurrentFireRateUpgrade} %");
-        }
-
         if (!isShooting || !canShoot)
         {
             return;
@@ -126,15 +123,30 @@ public partial class WeaponComponent : Node, IWeapon
     public void AddUpgradeWaitAndRemove(IBulletTemporaryUpgrade temporaryUpgrade)
     {
         BulletUpgrades.Add(temporaryUpgrade);
-        WaitAndRemove(temporaryUpgrade);        
+        WaitAndRemove(temporaryUpgrade);
     }
 
-    public async void SwitchToTemporaryWeapon(WeaponResource weaponResource, double timeBeforeSwitchingBack)
-    {        
-        CurrentWeaponResource = weaponResource;
+    public void SwitchToTemporaryWeapon(WeaponResource weaponResource)
+    {
+        maxAmmo = weaponResource.Ammunition;
+        UpdateAmmoLabel(maxAmmo, maxAmmo);
 
-        await ToSignal(GetTree().CreateTimer(timeBeforeSwitchingBack), "timeout");
-        CurrentWeaponResource = PrimaryWeaponResource;
+        CurrentWeaponResource = (WeaponResource)weaponResource.Duplicate();
+        CurrentWeaponResource.ResourceName = TemporaryWeaponResourceName;
+
+        FireRateTimer.Stop();
+        canShoot = true;
+    }
+
+    public void SwitchToPrimaryWeapon()
+    {
+        CurrentWeaponResource = (WeaponResource)PrimaryWeaponResource.Duplicate();
+        CurrentWeaponResource.ResourceName = PrimaryWeaponResourceName;
+
+        UpdateAmmoLabel("∞/∞");
+
+        FireRateTimer.Stop();
+        canShoot = true;
     }
 
     public void ChangeBulletSpawnMarkers(Marker2D[] toMarkers)
@@ -154,6 +166,21 @@ public partial class WeaponComponent : Node, IWeapon
             GD.PrintErr($"{nameof(WeaponComponent)}: Can't remove more markers.");
         }
         EmitSignal(SignalName.CannonRemoved, count);
+    }
+
+    private void UpdateAmmoLabel(int ammo, int maxAmmo)
+    {
+        UpdateAmmoLabel($"{ammo}/{maxAmmo}");
+    }
+
+    private void UpdateAmmoLabel(string label)
+    {
+        if (AmmunitionLabel == null)
+        {
+            return;
+        }
+        AmmunitionLabel.Text = label;
+        AmmunitionLabel.Visible = true;
     }
 
     private void UpdateAttributes()
@@ -180,7 +207,6 @@ public partial class WeaponComponent : Node, IWeapon
 
         canShoot = false;
         FireRateTimer.Start();
-
         foreach (var marker in BulletSpawnMarkers)
         {
             var bulletPosition = marker.GlobalPosition;
@@ -200,10 +226,35 @@ public partial class WeaponComponent : Node, IWeapon
             }
 
             var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
-            gameWorld.AddChild((Node2D)bullet);            
+            gameWorld.AddChild((Node2D)bullet);
         }
         EmitSignal(SignalName.Shooted);
-    }    
+
+        UpdateAmmunition();
+    }
+
+    private void UpdateAmmunition()
+    {
+        if (AmmunitionLabel == null)
+        {
+            return;
+        }
+
+        GD.Print($"{nameof(CurrentWeaponResource.ResourceName)}: {PrimaryWeaponResource.ResourceName} | {CurrentWeaponResource.ResourceName}");
+
+        if (CurrentWeaponResource.ResourceName == PrimaryWeaponResource.ResourceName)
+        {
+            return;
+        }
+
+        CurrentWeaponResource.Ammunition -= BulletSpawnMarkers.Length;
+        UpdateAmmoLabel(CurrentWeaponResource.Ammunition, maxAmmo);
+
+        if (CurrentWeaponResource.Ammunition <= 0)
+        {
+            SwitchToPrimaryWeapon();
+        }
+    }
 
     private async void WaitAndRemove(IBulletTemporaryUpgrade temporaryUpgrade)
     {
@@ -213,7 +264,7 @@ public partial class WeaponComponent : Node, IWeapon
     }
 
     public void IncrementFireRatePercentage(float percentage)
-    {        
+    {
         CurrentFireRateUpgrade += percentage;
     }
 }

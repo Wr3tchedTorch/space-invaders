@@ -4,13 +4,8 @@ using SpaceInvaders.Assets.Resources.Invader;
 using SpaceInvaders.Scenes.Components;
 using SpaceInvaders.Scenes.Levels;
 using System;
-using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Assets.Scripts.Exceptions;
-using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Navigators;
-using SpaceInvaders.Scenes.Autoloads;
-using System.Linq;
-using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.Agents.Upgrades;
 
 namespace SpaceInvaders.Scenes.Agents.Invaders;
@@ -88,7 +83,6 @@ public partial class Invader : Area2D, IEnemy
         var instance = scene.Instantiate<UpgradePickUp>();
         instance.GlobalPosition = GlobalPosition;
 
-        GD.Print($"Upgrade resource spawned: {dropResource.ResourcePath}");
         instance.UpgradeResource = dropResource;
 
         var gameWorld = GetTree().GetFirstNodeInGroup(nameof(GameWorld));
