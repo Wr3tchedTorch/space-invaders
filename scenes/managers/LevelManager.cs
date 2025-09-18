@@ -29,20 +29,43 @@ public partial class LevelManager : Node
 
     public void SpawnEnemiesForTheLevel(int level)
     {
-        var totalNumberOfInvaders = level * EnemiesIncreasePerLevel;
-        var enemiesRowCount = (int)Mathf.Round(totalNumberOfInvaders * 0.3125f);
-        var enemiesColCount = (int)Mathf.Round(totalNumberOfInvaders * 0.6875f);
-        currentNumberOfInvaders = totalNumberOfInvaders;
+        var totalNumberOfEnemies = level * EnemiesIncreasePerLevel;
 
-        GD.Print($"Total number of enemies: {totalNumberOfInvaders}");
-        GD.Print($"Rows: {enemiesRowCount}, Column: {enemiesColCount}\n");
+        var grid = GetGrid(totalNumberOfEnemies);
+        currentNumberOfInvaders = totalNumberOfEnemies;
 
-        InvaderFactory.SpawnInvaders(enemiesRowCount, enemiesColCount);
+        GD.Print($"Total number of enemies: {currentNumberOfInvaders}");
+        GD.Print($"Rows: {grid.Y}, Columns: {grid.X}\n");
+
+        InvaderFactory.SpawnInvaders(grid.Y, grid.X);
         EnemiesNavigator.StartMoving();
     }
 
+    private static Vector2I GetGrid(int totalEnemies)
+    {
+        int bestRows = 1;
+        int bestCols = totalEnemies;
+
+        for (int i = 1; i <= Mathf.Sqrt(totalEnemies); i++)
+        {
+            if (totalEnemies % i == 0)
+            {
+                int rows = i;
+                int cols = totalEnemies / i;
+
+                if (cols >= rows)
+                {
+                    bestRows = rows;
+                    bestCols = cols;
+                }
+            }
+        }
+        return new Vector2I(bestCols, bestRows);
+    }
+
+
     private void OnLevelStarted()
-    {    
+    {
         GD.PrintRich($"[color=green][b]Level number {GameData.Instance.CurrentLevel} is starting![/b][/color]");
 
         SpawnEnemiesForTheLevel(GameData.Instance.CurrentLevel);
@@ -51,11 +74,19 @@ public partial class LevelManager : Node
     private void OnInvaderDied()
     {
         currentNumberOfInvaders--;
-
         if (currentNumberOfInvaders <= 0)
         {
             GameEvents.Instance.EmitSignal(GameEvents.SignalName.LevelEnded);
+
+            StartLevelWithDelay();
         }
-    }    
+    }
+
+    private async void StartLevelWithDelay()
+    {
+        await ToSignal(GetTree().CreateTimer(3), "timeout");
+        GameData.Instance.CurrentLevel++;
+        GameEvents.Instance.EmitSignal(GameEvents.SignalName.LevelStarted);
+    }
 }
 

@@ -7,6 +7,7 @@ using System;
 using SpaceInvaders.Assets.Scripts.Exceptions;
 using SpaceInvaders.Scenes.Navigators;
 using SpaceInvaders.Scenes.Agents.Upgrades;
+using SpaceInvaders.Scenes.Autoloads;
 
 namespace SpaceInvaders.Scenes.Agents.Invaders;
 
@@ -57,7 +58,7 @@ public partial class Invader : Area2D, IEnemy
     }
 
     private void OnDied()
-    {
+    {        
         if (isDead)
         {
             return;
@@ -69,6 +70,7 @@ public partial class Invader : Area2D, IEnemy
         {
             SpawnDrop();
         }
+        GameEvents.Instance.EmitSignal(GameEvents.SignalName.InvaderDied);
         QueueFree();
     }
 

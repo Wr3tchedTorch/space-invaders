@@ -57,7 +57,6 @@ public partial class InvaderFactory : Node
             {
                 var initialPosition = EnemiesNavigator.GlobalPosition;
                 var enemyResource = GetEnemyResource(row);
-                GD.Print("Enemy resource: " + enemyResource);
                 var enemyPosition = GetGridPosition(initialPosition, row, col, CellWidth, CellHeight);
 
                 var enemy = (IEnemy)SpawnEnemy(enemyResource.ScenePath, enemyPosition);

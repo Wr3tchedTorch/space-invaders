@@ -239,9 +239,7 @@ public partial class WeaponComponent : Node, IWeapon
         {
             return;
         }
-
-        GD.Print($"{nameof(CurrentWeaponResource.ResourceName)}: {PrimaryWeaponResource.ResourceName} | {CurrentWeaponResource.ResourceName}");
-
+        
         if (CurrentWeaponResource.ResourceName == PrimaryWeaponResource.ResourceName)
         {
             return;
