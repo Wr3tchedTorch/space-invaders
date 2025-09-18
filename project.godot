@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.4", "C#", "GL Compatibility")
 [autoload]
 
 GameEvents="*res://scenes/autoloads/GameEvents.cs"
+GameData="*res://scenes/autoloads/GameData.cs"
 
 [display]
 

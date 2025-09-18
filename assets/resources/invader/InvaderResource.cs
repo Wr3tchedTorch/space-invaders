@@ -10,6 +10,7 @@ public partial class InvaderResource : Resource
     [ExportGroup("Attributes")]
     [Export] public float Health;
     [Export] public int ScoreValue;
+    [Export] public int LevelIntroduced = 1;
 
     [ExportGroup("Configuration")]
     [Export(PropertyHint.File, ".tscn")] public string ScenePath { get; set; } = null!;

@@ -39,11 +39,10 @@ UpgradeDrops = [ExtResource("2_6erdc")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_4h2o5")]
 
-[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarker") instance=ExtResource("3_fp0of")]
+[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer") instance=ExtResource("3_fp0of")]
 BulletPhysicsLayer = 6
 BulletPhysicsMask = 5
 FireRateTimer = NodePath("Timer")
-BulletSpawnMarker = NodePath("../BulletSpawnMarker")
 
 [node name="Timer" type="Timer" parent="WeaponComponent"]
 

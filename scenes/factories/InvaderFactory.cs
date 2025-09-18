@@ -9,8 +9,8 @@ namespace SpaceInvaders.Scenes.Factories;
 
 public partial class InvaderFactory : Node
 {
-    [Export] private int Columns { get; set; } = 11;
-    [Export] private int Rows { get; set; } = 5;
+    [Export] private int Columns { get; set; } = 0;
+    [Export] private int Rows { get; set; } = 0;
     [Export] private float HGap { get; set; } = 10;
     [Export] private float VGap { get; set; } = 10;
     [Export] private EnemiesNavigator EnemiesNavigator { get; set; } = null!;
@@ -23,14 +23,30 @@ public partial class InvaderFactory : Node
     private Vector2 CurrentPosition { get; set; }
 
     public override void _Ready()
+    {        
+        SpawnInvaders(Rows, Columns);
+    }
+
+    public void SpawnInvaders(int row, int col)
     {
-        if (Columns <= 0 || Rows <= 0)
+        if (row <= 0 || col <= 0)
         {
-            GD.Print($"{nameof(InvaderFactory)}: Either Column or Rows are set to 0 or lower. Spawning operation skipped.");
+            GD.PushWarning($"{nameof(InvaderFactory)}: Either Columns or Rows are set to 0 or lower. Spawning operation skipped.");
             return;
         }
-
+        Columns = col;
+        Rows = row;
         SpawnInvaders();
+    }
+
+    public Node2D SpawnEnemy(string scenePath, Vector2 position)
+    {
+        var scene = GD.Load<PackedScene>(scenePath);
+        var enemy = scene.Instantiate<Node2D>();
+        enemy.Position = position;
+
+        EnemiesNavigator.AddChild(enemy);
+        return enemy;
     }
 
     private void SpawnInvaders()
@@ -41,10 +57,10 @@ public partial class InvaderFactory : Node
             {
                 var initialPosition = EnemiesNavigator.GlobalPosition;
                 var enemyResource = GetEnemyResource(row);
+                GD.Print("Enemy resource: " + enemyResource);
                 var enemyPosition = GetGridPosition(initialPosition, row, col, CellWidth, CellHeight);
 
                 var enemy = (IEnemy)SpawnEnemy(enemyResource.ScenePath, enemyPosition);
-
                 enemy.InvaderResource = enemyResource;
             }
         }
@@ -95,15 +111,5 @@ public partial class InvaderFactory : Node
             return invaders[1];
         }
         return invaders[2];
-    }
-
-    public Node2D SpawnEnemy(string scenePath, Vector2 position)
-    {
-        var scene = GD.Load<PackedScene>(scenePath);
-        var enemy = scene.Instantiate<Node2D>();
-        enemy.Position = position;
-
-        EnemiesNavigator.AddChild(enemy);
-        return enemy;
     }
 }

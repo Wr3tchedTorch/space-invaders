@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://6vpmrsmbifqk" path="res://scenes/factories/invader_factory.tscn" id="1_y0acb"]
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
-[ext_resource type="PackedScene" uid="uid://dxttnhn22lr0x" path="res://scenes/agents/objects/bunker.tscn" id="3_7lrji"]
+[ext_resource type="PackedScene" uid="uid://dbc3xe03cdvp8" path="res://scenes/managers/level_manager.tscn" id="2_rssyh"]
 [ext_resource type="Script" uid="uid://b182rcwbya5gj" path="res://scenes/agents/objects/BottomWall.cs" id="3_rssyh"]
 [ext_resource type="Resource" uid="uid://def0xaxf61xkv" path="res://assets/resources/invader/invader_3.tres" id="3_vkq25"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
@@ -25,6 +25,11 @@ size = Vector2(256, 9)
 
 [node name="GameWorld" type="Node2D" parent="."]
 script = ExtResource("1_j4d2a")
+
+[node name="LevelManager" parent="GameWorld" node_paths=PackedStringArray("InvaderFactory", "EnemiesNavigator") instance=ExtResource("2_rssyh")]
+EnemiesIncreasePerLevel = 4
+InvaderFactory = NodePath("../InvaderFactory")
+EnemiesNavigator = NodePath("../EnemiesNavigator")
 
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
 EnemiesNavigator = NodePath("../EnemiesNavigator")
@@ -65,20 +70,6 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/Floor"]
 position = Vector2(128, 203.5)
 shape = SubResource("RectangleShape2D_hwp66")
-
-[node name="Bunkers" type="Node" parent="GameWorld"]
-
-[node name="Bunker" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
-position = Vector2(96, 162)
-
-[node name="Bunker2" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
-position = Vector2(32, 162)
-
-[node name="Bunker4" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
-position = Vector2(160, 162)
-
-[node name="Bunker5" parent="GameWorld/Bunkers" instance=ExtResource("3_7lrji")]
-position = Vector2(224, 162)
 
 [node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]
 position = Vector2(128, 10)
@@ -141,5 +132,3 @@ clip_text = true
 
 [connection signal="area_entered" from="GameWorld/Walls/RightWall" to="GameWorld/EnemiesNavigator" method="OnRightWallEntered"]
 [connection signal="area_entered" from="GameWorld/Walls/LeftWall" to="GameWorld/EnemiesNavigator" method="OnLeftWallEntered"]
-
-[editable path="GameWorld/Bunkers/Bunker"]

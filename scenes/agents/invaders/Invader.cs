@@ -25,8 +25,13 @@ public partial class Invader : Area2D, IEnemy
     public InvaderResource InvaderResource { get; set; } = null!;
 
     private bool isDead = false;
-    
+
     public override void _Ready()
+    {
+        Callable.From(Init).CallDeferred();
+    }
+
+    private void Init()
     {
         HealthComponent.InitialHealth = InvaderResource.Health;
         HealthComponent.Died += OnDied;
@@ -63,7 +68,7 @@ public partial class Invader : Area2D, IEnemy
         if (chance <= UpgradeDropChance)
         {
             SpawnDrop();
-        }        
+        }
         QueueFree();
     }
 

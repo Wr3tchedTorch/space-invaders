@@ -28,25 +28,36 @@ public partial class EnemiesNavigator : Node2D
     private float _currentDelayBetweenMovements;
 
     private Vector2 Direction = Vector2.Right;
-
+    private Vector2 initialPosition;
 
     public override void _Ready()
     {
+        initialPosition = GlobalPosition;
+
         GameEvents.Instance.GameOver += () =>
         {
             MovementTimer.Stop();
+        };
+        GameEvents.Instance.LevelEnded += () =>
+        {
+            MovementTimer.Stop();            
+
+            GlobalPosition = initialPosition;
         };
 
         CurrentDelayBetweenMovements = MaxDelayBetweenMovements;
 
         MovementTimer.WaitTime = MaxDelayBetweenMovements;
         MovementTimer.Timeout += () =>
-        
         {
             Move();
 
             EmitSignal(SignalName.Moved);
         };
+    }
+
+    public void StartMoving()
+    {
         MovementTimer.Start();
     }
 
