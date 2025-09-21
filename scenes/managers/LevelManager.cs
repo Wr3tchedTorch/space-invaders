@@ -68,18 +68,26 @@ public partial class LevelManager : Node
     {
         GD.PrintRich($"[color=green][b]Level number {GameData.Instance.CurrentLevel} is starting![/b][/color]");
 
-        SpawnEnemiesForTheLevel(GameData.Instance.CurrentLevel);
+
+        SpawnEnemiesForTheLevel(GameData.Instance.CurrentLevel);        
     }
 
     private void OnInvaderDied()
     {
         currentNumberOfInvaders--;
-        if (currentNumberOfInvaders <= 0)
-        {
-            GameEvents.Instance.EmitSignal(GameEvents.SignalName.LevelEnded);
 
-            StartLevelWithDelay();
+        if (currentNumberOfInvaders == 1)
+        {
+            EnemiesNavigator.CurrentDelayBetweenMovements -= 1;
+            return;
         }
+
+        if (currentNumberOfInvaders <= 0)
+            {
+                GameEvents.Instance.EmitSignal(GameEvents.SignalName.LevelEnded);
+
+                StartLevelWithDelay();
+            }
     }
 
     private async void StartLevelWithDelay()

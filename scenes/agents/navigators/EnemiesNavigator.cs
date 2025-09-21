@@ -15,7 +15,7 @@ public partial class EnemiesNavigator : Node2D
     [Export] public float DelayDecreaseBetweenRows { get; set; }
     [Export] public Timer MovementTimer { get; set; } = null!;
 
-    private float CurrentDelayBetweenMovements
+    public float CurrentDelayBetweenMovements
     {
         get => _currentDelayBetweenMovements;
         set
@@ -40,9 +40,7 @@ public partial class EnemiesNavigator : Node2D
         };
         GameEvents.Instance.LevelEnded += () =>
         {
-            MovementTimer.Stop();            
-
-            GlobalPosition = initialPosition;
+            Reset();
         };
 
         CurrentDelayBetweenMovements = MaxDelayBetweenMovements;
@@ -59,6 +57,15 @@ public partial class EnemiesNavigator : Node2D
     public void StartMoving()
     {
         MovementTimer.Start();
+    }
+
+    private void Reset()
+    {        
+        MovementTimer.Stop();
+        MovementTimer.WaitTime = MaxDelayBetweenMovements;
+        CurrentDelayBetweenMovements = MaxDelayBetweenMovements;
+        Direction = Vector2.Right;
+        GlobalPosition = initialPosition;
     }
 
     private void Move()

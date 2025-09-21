@@ -71,10 +71,10 @@ position = Vector2(128, 203.5)
 shape = SubResource("RectangleShape2D_hwp66")
 
 [node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]
-position = Vector2(128, 10)
+position = Vector2(129, 10)
 HorizontalMovementIncrement = 6.0
 VerticalMovementIncrement = 8.0
-MaxDelayBetweenMovements = 1.0
+MaxDelayBetweenMovements = 0.8
 DelayDecreaseBetweenRows = 0.05
 MovementTimer = NodePath("Timer")
 
