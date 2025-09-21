@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://bk1bwp6wykrvc"]
+
+[ext_resource type="Script" uid="uid://b0atpghjms1i0" path="res://scenes/agents/bullets/Laser.cs" id="1_1ec83"]
+[ext_resource type="PackedScene" uid="uid://uv67f8df5g3x" path="res://scenes/components/state_machine.tscn" id="2_cc11h"]
+[ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_8a003"]
+[ext_resource type="PackedScene" uid="uid://b3dm4onxrrbum" path="res://scenes/states/instant_zig_zag_movement_state.tscn" id="4_rq338"]
+[ext_resource type="PackedScene" uid="uid://0ce50c3g0yfv" path="res://scenes/components/velocity_component.tscn" id="5_skpsn"]
+[ext_resource type="PackedScene" uid="uid://cjhy085jvr3k" path="res://scenes/components/off_screen_destroyer_component.tscn" id="6_ipyxs"]
+
+[sub_resource type="Gradient" id="Gradient_xxv35"]
+offsets = PackedFloat32Array(0.994872, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_esc3o"]
+gradient = SubResource("Gradient_xxv35")
+width = 14
+height = 14
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.478632)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t06qx"]
+radius = 7.0
+
+[node name="GiantLaser" type="Area2D" node_paths=PackedStringArray("VelocityComponent", "StateMachine")]
+collision_layer = 260
+collision_mask = 144
+script = ExtResource("1_1ec83")
+VelocityComponent = NodePath("VelocityComponent")
+StateMachine = NodePath("StateMachine")
+
+[node name="StateMachine" parent="." instance=ExtResource("2_cc11h")]
+
+[node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_8a003")]
+
+[node name="InstantZigZagMovementState" parent="StateMachine" instance=ExtResource("4_rq338")]
+TurnDelay = 0.3
+TurnAmountDegs = 45.0
+
+[node name="VelocityComponent" parent="." instance=ExtResource("5_skpsn")]
+
+[node name="OffScreenDestroyerComponent" parent="." node_paths=PackedStringArray("NodeToFree") instance=ExtResource("6_ipyxs")]
+position = Vector2(0, 1.19209e-07)
+scale = Vector2(0.05, 0.35)
+NodeToFree = NodePath("..")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_esc3o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_t06qx")

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BulletResource" load_steps=2 format=3 uid="uid://b0fjhwt5d3fd6"]
+
+[ext_resource type="Script" uid="uid://dodx0gy21gd63" path="res://assets/resources/bullet/BulletResource.cs" id="1_1vx26"]
+
+[resource]
+script = ExtResource("1_1vx26")
+Damage = 50.0
+Speed = 100.0
+Penetration = 999
+ScenePath = "uid://bk1bwp6wykrvc"
+metadata/_custom_type_script = "uid://dodx0gy21gd63"

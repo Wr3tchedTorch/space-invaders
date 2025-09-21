@@ -7,7 +7,6 @@ using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Levels;
 using System.Collections.Generic;
 using System;
-using SpaceInvaders.Scenes.Agents.Players;
 
 namespace SpaceInvaders.Scenes.Components;
 
@@ -84,21 +83,7 @@ public partial class WeaponComponent : Node, IWeapon
 
     public override void _Ready()
     {
-        FireRateTimer.Autostart = false;
-        FireRateTimer.OneShot = true;
-        FireRateTimer.Timeout += () => canShoot = true;
-
-        PrimaryWeaponResource.ResourceName = PrimaryWeaponResourceName;
-        Callable.From(SwitchToPrimaryWeapon).CallDeferred();
-
-        if (BulletPhysicsLayer <= 0)
-        {
-            throw new InvalidPhysicsLayerException((int)BulletPhysicsLayer);
-        }
-        if (BulletPhysicsMask <= 0)
-        {
-            throw new InvalidPhysicsMaskException((int)BulletPhysicsMask);
-        }
+        Callable.From(Init).CallDeferred();
     }
 
     public override void _Process(double delta)
@@ -128,8 +113,11 @@ public partial class WeaponComponent : Node, IWeapon
 
     public void SwitchToTemporaryWeapon(WeaponResource weaponResource)
     {
-        maxAmmo = weaponResource.Ammunition;
-        UpdateAmmoLabel(maxAmmo, maxAmmo);
+        if (AmmunitionLabel != null)
+        {
+            maxAmmo = weaponResource.Ammunition;
+            UpdateAmmoLabel(maxAmmo, maxAmmo);
+        }
 
         CurrentWeaponResource = (WeaponResource)weaponResource.Duplicate();
         CurrentWeaponResource.ResourceName = TemporaryWeaponResourceName;
@@ -166,6 +154,25 @@ public partial class WeaponComponent : Node, IWeapon
             GD.PrintErr($"{nameof(WeaponComponent)}: Can't remove more markers.");
         }
         EmitSignal(SignalName.CannonRemoved, count);
+    }
+
+    private void Init()
+    {
+        FireRateTimer.Autostart = false;
+        FireRateTimer.OneShot = true;
+        FireRateTimer.Timeout += () => canShoot = true;
+
+        PrimaryWeaponResource.ResourceName = PrimaryWeaponResourceName;
+        Callable.From(SwitchToPrimaryWeapon).CallDeferred();
+
+        if (BulletPhysicsLayer <= 0)
+        {
+            throw new InvalidPhysicsLayerException((int)BulletPhysicsLayer);
+        }
+        if (BulletPhysicsMask <= 0)
+        {
+            throw new InvalidPhysicsMaskException((int)BulletPhysicsMask);
+        }
     }
 
     private void UpdateAmmoLabel(int ammo, int maxAmmo)
@@ -230,7 +237,10 @@ public partial class WeaponComponent : Node, IWeapon
         }
         EmitSignal(SignalName.Shooted);
 
-        UpdateAmmunition();
+        if (AmmunitionLabel != null)
+        {
+            UpdateAmmunition();
+        }
     }
 
     private void UpdateAmmunition()
@@ -239,7 +249,7 @@ public partial class WeaponComponent : Node, IWeapon
         {
             return;
         }
-        
+
         if (CurrentWeaponResource.ResourceName == PrimaryWeaponResource.ResourceName)
         {
             return;

@@ -35,14 +35,16 @@ script = ExtResource("1_c6t25")
 HealthComponent = NodePath("HealthComponent")
 WeaponComponent = NodePath("WeaponComponent")
 AnimatedSprite2D = NodePath("AnimatedSprite2D")
+UpgradeDropChance = 15.0
 UpgradeDrops = [ExtResource("2_6erdc")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_4h2o5")]
 
-[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer") instance=ExtResource("3_fp0of")]
+[node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarkers") instance=ExtResource("3_fp0of")]
 BulletPhysicsLayer = 6
 BulletPhysicsMask = 5
 FireRateTimer = NodePath("Timer")
+BulletSpawnMarkers = [NodePath("../BulletSpawnMarker")]
 
 [node name="Timer" type="Timer" parent="WeaponComponent"]
 

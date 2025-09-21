@@ -40,9 +40,12 @@ public partial class Laser : Area2D, IBullet, IMover
 
     private Vector2 direction;
     private Callable _getDirection;
+    private int currentPenetration;
 
     public override void _Ready()
     {
+        currentPenetration = BulletResource.Penetration;
+
         StateMachine.Enter();
 
         AreaEntered += OnAreaEntered;
@@ -58,12 +61,20 @@ public partial class Laser : Area2D, IBullet, IMover
 
     protected virtual void OnBodyEntered(Node2D body)
     {
-        Callable.From(QueueFree).CallDeferred();
+        currentPenetration--;
+        if (currentPenetration <= 0)
+        {
+            Callable.From(QueueFree).CallDeferred();
+        }
     }
 
     protected virtual void OnAreaEntered(Area2D area)
     {
-        Callable.From(QueueFree).CallDeferred();
+        currentPenetration--;
+        if (currentPenetration <= 0)
+        {
+            Callable.From(QueueFree).CallDeferred();
+        }
     }
 
     public void Move(float angle)

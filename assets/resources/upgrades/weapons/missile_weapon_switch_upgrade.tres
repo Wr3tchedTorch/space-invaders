@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_gq47i")
 WeaponResource = ExtResource("1_2w5k5")
-DelayBeforeSwitchingBack = 5.0
+DelayBeforeSwitchingBack = 0.0
 ScenePath = "uid://b16sfwkqddj0f"
 metadata/_custom_type_script = "uid://vieqih7l0bsr"
