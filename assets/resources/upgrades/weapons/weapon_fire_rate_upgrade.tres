@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_alw56")
-FireRateUpgradePercentage = 5.0
+FireRateUpgrade = 0.1
 ScenePath = "uid://b16sfwkqddj0f"
 metadata/_custom_type_script = "uid://c83e30227cwru"

@@ -162,6 +162,7 @@ public partial class WeaponComponent : Node, IWeapon
         FireRateTimer.OneShot = true;
         FireRateTimer.Timeout += () => canShoot = true;
 
+        PrimaryWeaponResource = (WeaponResource)PrimaryWeaponResource.Duplicate();
         PrimaryWeaponResource.ResourceName = PrimaryWeaponResourceName;
         Callable.From(SwitchToPrimaryWeapon).CallDeferred();
 
@@ -200,8 +201,7 @@ public partial class WeaponComponent : Node, IWeapon
         {
             return;
         }
-        var percentage = CurrentWeaponResource.MaxFireRateDelay * _currentFireRateUpgrade / 100;
-        CurrentWeaponResource.FireRateDelay = CurrentWeaponResource.MaxFireRateDelay - percentage;
+        CurrentWeaponResource.FireRateDelay = Mathf.Max(CurrentWeaponResource.MaxFireRateDelay - _currentFireRateUpgrade, 0.1f);
         FireRateTimer.WaitTime = CurrentWeaponResource.FireRateDelay;
     }
 
@@ -271,8 +271,8 @@ public partial class WeaponComponent : Node, IWeapon
         BulletUpgrades.Remove(temporaryUpgrade);
     }
 
-    public void IncrementFireRatePercentage(float percentage)
+    public void IncrementFireRate(float amount)
     {
-        CurrentFireRateUpgrade += percentage;
+        CurrentFireRateUpgrade += amount;
     }
 }

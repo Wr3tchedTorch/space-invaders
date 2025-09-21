@@ -26,7 +26,8 @@ size = Vector2(256, 9)
 script = ExtResource("1_j4d2a")
 
 [node name="LevelManager" parent="GameWorld" node_paths=PackedStringArray("InvaderFactory", "EnemiesNavigator") instance=ExtResource("2_rssyh")]
-EnemiesIncreasePerLevel = 4
+EnemiesIncreasePerLevel = 10
+EnemiesMovementDelayDecreasePerLevel = 1.0
 InvaderFactory = NodePath("../InvaderFactory")
 EnemiesNavigator = NodePath("../EnemiesNavigator")
 

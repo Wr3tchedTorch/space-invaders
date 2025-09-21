@@ -8,6 +8,6 @@ public interface IWeapon
     public WeaponResource PrimaryWeaponResource { get; set; }
 
     public void SwitchToTemporaryWeapon(WeaponResource weaponResource);
-    public void IncrementFireRatePercentage(float amount);
+    public void IncrementFireRate(float amount);
     public void AddCannon(int count);
 }

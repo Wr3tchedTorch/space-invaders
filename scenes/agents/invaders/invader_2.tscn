@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6s186pqpm1lh"]
+[gd_scene load_steps=12 format=3 uid="uid://b6s186pqpm1lh"]
 
 [ext_resource type="Texture2D" uid="uid://cooli7patbik2" path="res://assets/sprites/invaders/invader2-1.png" id="1_3i4rc"]
 [ext_resource type="Script" uid="uid://c16ryohfwyoks" path="res://scenes/agents/invaders/Invader.cs" id="1_c6t25"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://bvpbbeq48ne6v" path="res://assets/resources/upgrades/weapons/missile_weapon_switch_upgrade.tres" id="2_6erdc"]
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_uxcem"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_fp0of"]
+[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy/enemy_blaster_gun.tres" id="5_58dac"]
 [ext_resource type="Texture2D" uid="uid://cxju7f7q5xyom" path="res://assets/sprites/invaders/invader2-2.png" id="6_fp0of"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uxcem"]
@@ -41,6 +42,7 @@ UpgradeDrops = [ExtResource("2_6erdc")]
 [node name="HealthComponent" parent="." instance=ExtResource("2_4h2o5")]
 
 [node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarkers") instance=ExtResource("3_fp0of")]
+PrimaryWeaponResource = ExtResource("5_58dac")
 BulletPhysicsLayer = 6
 BulletPhysicsMask = 5
 FireRateTimer = NodePath("Timer")
