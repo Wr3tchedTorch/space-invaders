@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://56oh5iilbb6v"
-path="res://.godot/imported/bunker_top_left_4.png-edec8057356927c0ad6d0813a443a98d.ctex"
+uid="uid://b3yqr2saqm6jm"
+path="res://.godot/imported/progress-bar-frame.png-dff1aa092aabef10eadd09d536358816.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/bunker/bunker_top_left_4.png"
-dest_files=["res://.godot/imported/bunker_top_left_4.png-edec8057356927c0ad6d0813a443a98d.ctex"]
+source_file="res://assets/sprites/ui/progress-bar-frame.png"
+dest_files=["res://.godot/imported/progress-bar-frame.png-dff1aa092aabef10eadd09d536358816.ctex"]
 
 [params]
 

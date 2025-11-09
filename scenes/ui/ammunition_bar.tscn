@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bifi08dxhq6gj"]
+
+[ext_resource type="Texture2D" uid="uid://cqwc221pa6tcj" path="res://assets/sprites/ui/progress-bar-circle.png" id="1_40bk0"]
+[ext_resource type="Script" uid="uid://bylynpapbmc0i" path="res://scenes/ui/ReloadBar.cs" id="1_ys17r"]
+
+[node name="AmmunitionBar" type="Control" node_paths=PackedStringArray("ProgressBar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -256.0
+offset_bottom = -224.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ys17r")
+ProgressBar = NodePath("TextureProgressBar")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(0.125, 0.125)
+value = 25.0
+fill_mode = 5
+texture_under = ExtResource("1_40bk0")
+texture_progress = ExtResource("1_40bk0")
+tint_under = Color(0.16, 0.16, 0.16, 1)

@@ -7,6 +7,7 @@ using SpaceInvaders.Scenes.Factories;
 using SpaceInvaders.Scenes.Levels;
 using System.Collections.Generic;
 using System;
+using SpaceInvaders.Scenes.UI;
 
 namespace SpaceInvaders.Scenes.Components;
 
@@ -46,6 +47,7 @@ public partial class WeaponComponent : Node, IWeapon
     [Export] public Label? AmmunitionLabel { get; set; }
     [Export] private Timer FireRateTimer { get; set; } = null!;
     [Export] private Marker2D[] BulletSpawnMarkers { get; set; } = [];
+    [Export] private ReloadBar? AmmunitionBar { get; set; }
 
     private WeaponResource CurrentWeaponResource
     {
@@ -214,6 +216,7 @@ public partial class WeaponComponent : Node, IWeapon
 
         canShoot = false;
         FireRateTimer.Start();
+        AmmunitionBar?.Play(FireRateTimer);
         foreach (var marker in BulletSpawnMarkers)
         {
             var bulletPosition = marker.GlobalPosition;
