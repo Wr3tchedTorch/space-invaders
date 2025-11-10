@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=14 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://dbc3xe03cdvp8" path="res://scenes/managers/level_manager.tscn" id="2_rssyh"]
 [ext_resource type="Script" uid="uid://b182rcwbya5gj" path="res://scenes/agents/objects/BottomWall.cs" id="3_rssyh"]
+[ext_resource type="Script" uid="uid://crxuy7wsldmnv" path="res://scenes/ui/Gui.cs" id="7_vkq25"]
+[ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/player/blaster_gun.tres" id="8_7lrji"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkq25"]
@@ -85,48 +87,65 @@ MovementTimer = NodePath("Timer")
 position = Vector2(125, 199)
 motion_mode = 1
 Speed = 120.0
-HealthBar = NodePath("../../Gui/CanvasLayer/PlayerHealthBar")
-AmmunitionLabel = NodePath("../../Gui/CanvasLayer/PlayerAmmunitionLabel")
+HealthBar = NodePath("../../Gui/CanvasLayer/HBoxContainer/PlayerHealthBar")
+AmmunitionLabel = NodePath("../../Gui/CanvasLayer/HBoxContainer/VBoxContainer/PlayerAmmunitionLabel")
 
 [node name="Camera2D" type="Camera2D" parent="GameWorld"]
 anchor_mode = 0
 
-[node name="Gui" type="Control" parent="."]
+[node name="Gui" type="Control" parent="." node_paths=PackedStringArray("PlayerWeaponLabel")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("7_vkq25")
+PlayerWeaponLabel = NodePath("CanvasLayer/HBoxContainer/VBoxContainer/PlayerWeaponLabel")
+InitialPlayerWeapon = ExtResource("8_7lrji")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Gui"]
 
-[node name="PlayerHealthBar" type="ProgressBar" parent="Gui/CanvasLayer"]
-anchors_preset = 2
-anchor_top = 1.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Gui/CanvasLayer"]
+anchors_preset = -1
+anchor_top = 0.87100005
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = -9.0
-offset_right = 75.0
-offset_bottom = -3.0
+offset_top = 3.895996
+grow_horizontal = 2
 grow_vertical = 0
+size_flags_vertical = 8
+theme_override_constants/separation = 80
+alignment = 1
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="Gui/CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 10)
+layout_mode = 2
+size_flags_vertical = 4
 theme = ExtResource("9_7lrji")
 theme_type_variation = &"PlayerHealthBar"
 value = 50.0
 show_percentage = false
 
-[node name="PlayerAmmunitionLabel" type="Label" parent="Gui/CanvasLayer"]
-visible = false
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -44.0
-offset_top = -23.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 10
+[node name="VBoxContainer" type="VBoxContainer" parent="Gui/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="PlayerWeaponLabel" type="Label" parent="Gui/CanvasLayer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "ROCKET LAUNCHER"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="PlayerAmmunitionLabel" type="Label" parent="Gui/CanvasLayer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
 text = "15/20"
-horizontal_alignment = 1
+horizontal_alignment = 2
 vertical_alignment = 1
 clip_text = true
 

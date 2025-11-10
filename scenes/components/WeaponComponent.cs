@@ -8,6 +8,8 @@ using SpaceInvaders.Scenes.Levels;
 using System.Collections.Generic;
 using System;
 using SpaceInvaders.Scenes.UI;
+using SpaceInvaders.Scenes.Autoloads;
+using SpaceInvaders.Scenes.Agents.Players;
 
 namespace SpaceInvaders.Scenes.Components;
 
@@ -126,6 +128,11 @@ public partial class WeaponComponent : Node, IWeapon
 
         FireRateTimer.Stop();
         canShoot = true;
+
+        if (GetOwner() is Player)
+        {
+            GameEvents.Instance.EmitSignal(GameEvents.SignalName.WeaponChanged, weaponResource);
+        }
     }
 
     public void SwitchToPrimaryWeapon()
@@ -137,6 +144,11 @@ public partial class WeaponComponent : Node, IWeapon
 
         FireRateTimer.Stop();
         canShoot = true;
+
+        if (GetOwner() is Player)
+        {
+            GameEvents.Instance.EmitSignal(GameEvents.SignalName.WeaponChanged, PrimaryWeaponResource);
+        }
     }
 
     public void ChangeBulletSpawnMarkers(Marker2D[] toMarkers)

@@ -9,4 +9,5 @@ MaxFireRateDelay = 4.0
 FireRateDelay = 4.0
 Ammunition = 3
 BulletResource = ExtResource("1_kijjd")
+Name = "Giant Blaster"
 metadata/_custom_type_script = "uid://ckmtrt45a67gu"

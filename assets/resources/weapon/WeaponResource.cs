@@ -23,6 +23,8 @@ public partial class WeaponResource : Resource
     [Export] public float FireRateDelay { get; set; }
     [Export] public int Ammunition { get; set; }
     [Export] public BulletResource BulletResource { get; set; } = null!;
+    [Export]
+    public string? Name { get; set; }
 
     private float _maxFireRateDelay;
 }

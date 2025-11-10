@@ -7,6 +7,6 @@
 script = ExtResource("2_6y0al")
 MaxFireRateDelay = 1.0
 FireRateDelay = 1.0
-Ammunition = 0
 BulletResource = ExtResource("1_156un")
+Name = "Blaster"
 metadata/_custom_type_script = "uid://ckmtrt45a67gu"
