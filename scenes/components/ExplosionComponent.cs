@@ -14,6 +14,7 @@ public partial class ExplosionComponent : Node
     [ExportGroup("Explosion Configuration")]
     [Export] private Area2D ExplosionArea { get; set; } = null!;
     [Export] private CollisionShape2D ExplosionShape { get; set; } = null!;
+    [Export] public GpuParticles2D ExplosionParticles { get; set; } = null!;
 
     public void TriggerExplosion()
     {
@@ -23,6 +24,8 @@ public partial class ExplosionComponent : Node
     private async void CreateExplosionCollision()
     {
         ExplosionShape.SetDeferred("disabled", false);
+        (ExplosionParticles as ExplosionParticles).LifeTimeInSeconds = Duration;
+        ExplosionParticles.Emitting = true;
 
         await ToSignal(GetTree().CreateTimer(Duration), "timeout");
         ExplosionShape.SetDeferred("disabled", true);

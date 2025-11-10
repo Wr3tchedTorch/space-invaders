@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=15 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -7,8 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://dbc3xe03cdvp8" path="res://scenes/managers/level_manager.tscn" id="2_rssyh"]
 [ext_resource type="Script" uid="uid://b182rcwbya5gj" path="res://scenes/agents/objects/BottomWall.cs" id="3_rssyh"]
 [ext_resource type="Script" uid="uid://crxuy7wsldmnv" path="res://scenes/ui/Gui.cs" id="7_vkq25"]
-[ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/player/blaster_gun.tres" id="8_7lrji"]
+[ext_resource type="Resource" uid="uid://catm67fqrwp7m" path="res://assets/resources/weapon/player/player_rocket_launcher.tres" id="8_7lrji"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2xkjh"]
+size = Vector2(270, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vkq25"]
 size = Vector2(8, 224)
@@ -38,6 +41,15 @@ EnemiesNavigator = NodePath("../EnemiesNavigator")
 EnemiesNavigator = NodePath("../EnemiesNavigator")
 
 [node name="Walls" type="Node" parent="GameWorld"]
+
+[node name="Roof" type="Area2D" parent="GameWorld/Walls"]
+position = Vector2(0, 176)
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/Roof"]
+position = Vector2(127, -183)
+shape = SubResource("RectangleShape2D_2xkjh")
 
 [node name="RightWall" type="Area2D" parent="GameWorld/Walls"]
 position = Vector2(256, 88)

@@ -11,6 +11,8 @@ public partial class Missile : Laser
     [ExportGroup("Dependencies")]
     [Export] public ExplosionComponent ExplosionComponent { get; set; } = null!;
     [Export] public ExplosionArea ExplosionArea { get; set; } = null!;
+    [Export]
+    public Sprite2D MissileSprite { get; set; } = null!;
 
     public override void _Ready()
     {
@@ -23,6 +25,7 @@ public partial class Missile : Laser
 
     protected override void OnBodyEntered(Node2D body)
     {
+        MissileSprite.Visible = false;
         StateMachine.Exit();
 
         EmitSignal(SignalName.EnemyHit);
@@ -30,6 +33,7 @@ public partial class Missile : Laser
 
     protected override void OnAreaEntered(Area2D area)
     {
+        MissileSprite.Visible = false;
         StateMachine.Exit();
 
         EmitSignal(SignalName.EnemyHit);

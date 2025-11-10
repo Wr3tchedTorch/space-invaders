@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bi4t7f2cuoenm" path="res://scenes/agents/players/Player.cs" id="1_y3jks"]
 [ext_resource type="Texture2D" uid="uid://bmxl3pgpljhj0" path="res://assets/sprites/player/player.png" id="2_fovvg"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="2_ok5fs"]
-[ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/player/blaster_gun.tres" id="3_ok5fs"]
+[ext_resource type="Resource" uid="uid://catm67fqrwp7m" path="res://assets/resources/weapon/player/player_rocket_launcher.tres" id="3_g6hfa"]
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="4_vjyvw"]
 [ext_resource type="PackedScene" uid="uid://e143nu2c0qss" path="res://scenes/managers/marker_manager.tscn" id="5_mws0h"]
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="5_uoiam"]
@@ -25,7 +25,7 @@ WeaponComponent = NodePath("WeaponComponent")
 HealthComponent = NodePath("HealthComponent")
 
 [node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarkers", "AmmunitionBar") instance=ExtResource("2_ok5fs")]
-PrimaryWeaponResource = ExtResource("3_ok5fs")
+PrimaryWeaponResource = ExtResource("3_g6hfa")
 BulletPhysicsLayer = 3
 BulletPhysicsMask = 7
 FireRateTimer = NodePath("Timer")

@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://dpx2trmhd4liw"]
+
+[ext_resource type="Script" uid="uid://c0h6534l2yvca" path="res://scenes/vfx/ExplosionParticles.cs" id="1_kraxw"]
+[ext_resource type="PackedScene" uid="uid://dupuevgffirdp" path="res://scenes/agents/bullets/explosion_area.tscn" id="2_tj6ev"]
+
+[sub_resource type="Gradient" id="Gradient_hbein"]
+offsets = PackedFloat32Array(0.5234568, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dvl6r"]
+gradient = SubResource("Gradient_hbein")
+
+[sub_resource type="Curve" id="Curve_ubly1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_revhv"]
+curve = SubResource("Curve_ubly1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_83lfj"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+spread = 180.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_revhv")
+color_ramp = SubResource("GradientTexture1D_dvl6r")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_td7cs"]
+radius = 20.0
+
+[node name="ExplosionParticles" type="GPUParticles2D"]
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_83lfj")
+script = ExtResource("1_kraxw")
+LifeTimeInSeconds = 1.0
+
+[node name="ExplosionArea" parent="." instance=ExtResource("2_tj6ev")]
+collision_layer = 260
+collision_mask = 64
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ExplosionArea"]
+shape = SubResource("CircleShape2D_td7cs")
+disabled = true
