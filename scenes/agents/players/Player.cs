@@ -25,6 +25,10 @@ public partial class Player : CharacterBody2D
     [Export] private Label AmmunitionLabel { get; set; } = null!;
 
     [Export] private Resource[] BulletUpgrades { get; set; } = [];
+    [Export] private AnimatedSprite2D AnimatedSprite2D { get; set; } = null!;
+
+    private readonly StringName DefaultAnimationName = "default";
+    private readonly StringName DeathAnimationName = "death";
 
     private float endBorder;
     private float startBorder;
@@ -32,9 +36,11 @@ public partial class Player : CharacterBody2D
 
     private Vector2 _direction;
 
+    private bool died = false;
+
     public override void _Ready()
     {
-        GameEvents.Instance.GameOver += Die;
+        AnimatedSprite2D.Play(DefaultAnimationName);        
 
         HealthComponent.Died += OnDied;
         HealthComponent.HealthBar = HealthBar;
@@ -67,11 +73,21 @@ public partial class Player : CharacterBody2D
 
     public override void _Process(double delta)
     {
+        if (died)
+        {
+            return;
+        }
+
         HandleWeaponShootingInput();
     }
 
     public override void _PhysicsProcess(double delta)
     {
+        if (died)
+        {
+            return;
+        }
+
         var dir = Input.GetAxis(LeftArrowAction, RightArrowAction);
 
         _direction.X = dir;
@@ -103,6 +119,11 @@ public partial class Player : CharacterBody2D
 
     private void HandleWeaponShootingInput()
     {
+        if (died)
+        {
+            return;
+        }
+
         var isAttacking = Input.IsActionPressed(AttackAction);
         if (isAttacking)
         {
@@ -119,6 +140,11 @@ public partial class Player : CharacterBody2D
 
     private void OnWeaponUpgradePickedUp(Resource upgrade)
     {
+        if (died)
+        {
+            return;
+        }
+
         if (upgrade is not IWeaponUpgrade)
         {
             throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IWeaponUpgrade));
@@ -128,6 +154,11 @@ public partial class Player : CharacterBody2D
 
     private void OnBulletUpgradePickedUp(Resource upgrade)
     {
+        if (died)
+        {
+            return;
+        }
+
         if (upgrade is not IBulletUpgrade)
         {
             throw new InvalidUpgradeTypeException(upgrade.ResourcePath, nameof(IBulletUpgrade));
@@ -147,13 +178,9 @@ public partial class Player : CharacterBody2D
 
     private void OnDied()
     {
+        died = true;
         GameEvents.Instance.EmitSignal(GameEvents.SignalName.GameOver);
 
-        Die();
-    }
-
-    private void Die()
-    {
-        QueueFree();
+        AnimatedSprite2D.Play(DeathAnimationName);
     }
 }
