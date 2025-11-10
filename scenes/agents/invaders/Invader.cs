@@ -13,6 +13,9 @@ namespace SpaceInvaders.Scenes.Agents.Invaders;
 
 public partial class Invader : Area2D, IEnemy
 {
+    private readonly StringName DeathAnimationName = "death";
+    private readonly StringName DefaultAnimationName = "default";
+
     [ExportGroup("Dependencies")]
     [Export] public HealthComponent HealthComponent { get; private set; } = null!;
     [Export] public WeaponComponent WeaponComponent { get; private set; } = null!;
@@ -29,11 +32,15 @@ public partial class Invader : Area2D, IEnemy
 
     public override void _Ready()
     {
-        Callable.From(Init).CallDeferred();
+        Callable.From(Init).CallDeferred();        
     }
 
     private void Init()
     {
+        AnimatedSprite2D.Play(DefaultAnimationName);
+        AnimatedSprite2D.Stop();
+        AnimatedSprite2D.Frame = 0;
+
         HealthComponent.InitialHealth = InvaderResource.Health;
         HealthComponent.Died += OnDied;
 
@@ -58,7 +65,7 @@ public partial class Invader : Area2D, IEnemy
     }
 
     private void OnDied()
-    {        
+    {
         if (isDead)
         {
             return;
@@ -71,7 +78,9 @@ public partial class Invader : Area2D, IEnemy
             SpawnDrop();
         }
         GameEvents.Instance.EmitSignal(GameEvents.SignalName.InvaderDied);
-        QueueFree();
+
+        AnimatedSprite2D.Play(DeathAnimationName);
+        AnimatedSprite2D.AnimationFinished += QueueFree;
     }
 
     private void SpawnDrop()
@@ -131,6 +140,10 @@ public partial class Invader : Area2D, IEnemy
     private void OnFlockMoved()
     {
         if (!IsInstanceValid(AnimatedSprite2D))
+        {
+            return;
+        }
+        if (isDead)
         {
             return;
         }

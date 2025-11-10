@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://wwsrngddnnvl"]
+[gd_scene load_steps=15 format=3 uid="uid://wwsrngddnnvl"]
 
 [ext_resource type="Texture2D" uid="uid://82e1rsen24j1" path="res://assets/sprites/invaders/invader1-1.png" id="1_6jb7b"]
 [ext_resource type="Script" uid="uid://c16ryohfwyoks" path="res://scenes/agents/invaders/Invader.cs" id="1_gs3gc"]
@@ -9,12 +9,25 @@
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_l3dlf"]
 [ext_resource type="Resource" uid="uid://keui42hn5pop" path="res://assets/resources/weapon/enemy/enemy_rocket_launcher.tres" id="6_0w0mi"]
 [ext_resource type="Texture2D" uid="uid://b8ufvx7twhm5i" path="res://assets/sprites/invaders/invader1-2.png" id="8_gm47l"]
+[ext_resource type="Texture2D" uid="uid://cjvdrpoeml211" path="res://assets/sprites/invaders/invader-explosion-1.png" id="9_eee4h"]
+[ext_resource type="Texture2D" uid="uid://c53qw3rnc8yfy" path="res://assets/sprites/invaders/invader-explosion-2.png" id="10_2vj47"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l3dlf"]
 radius = 6.08276
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0w0mi"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_eee4h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_2vj47")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_6jb7b")
@@ -63,6 +76,9 @@ shape = SubResource("CircleShape2D_l3dlf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0w0mi")
+animation = &"death"
+frame = 1
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6jb7b")
