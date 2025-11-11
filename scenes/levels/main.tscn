@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=17 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cjp0hloduxmna" path="res://scenes/agents/navigators/enemies_navigator.tscn" id="2_j4d2a"]
 [ext_resource type="PackedScene" uid="uid://dbc3xe03cdvp8" path="res://scenes/managers/level_manager.tscn" id="2_rssyh"]
 [ext_resource type="Script" uid="uid://b182rcwbya5gj" path="res://scenes/agents/objects/BottomWall.cs" id="3_rssyh"]
+[ext_resource type="PackedScene" uid="uid://cdxfau7vyugkg" path="res://scenes/factories/bunker_factory.tscn" id="4_rssyh"]
+[ext_resource type="PackedScene" uid="uid://dxttnhn22lr0x" path="res://scenes/agents/objects/bunker.tscn" id="5_hwp66"]
 [ext_resource type="Script" uid="uid://crxuy7wsldmnv" path="res://scenes/ui/Gui.cs" id="7_vkq25"]
 [ext_resource type="Resource" uid="uid://catm67fqrwp7m" path="res://assets/resources/weapon/player/player_rocket_launcher.tres" id="8_7lrji"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
@@ -38,6 +40,14 @@ EnemiesNavigator = NodePath("../EnemiesNavigator")
 
 [node name="InvaderFactory" parent="GameWorld" node_paths=PackedStringArray("EnemiesNavigator") instance=ExtResource("1_y0acb")]
 EnemiesNavigator = NodePath("../EnemiesNavigator")
+
+[node name="BunkerFactory" parent="GameWorld" node_paths=PackedStringArray("CenterMarker") instance=ExtResource("4_rssyh")]
+Gap = 0.0
+BunkerScene = ExtResource("5_hwp66")
+CenterMarker = NodePath("Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="GameWorld/BunkerFactory"]
+position = Vector2(128, 158)
 
 [node name="Walls" type="Node" parent="GameWorld"]
 
@@ -84,6 +94,8 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/Floor"]
 position = Vector2(118, -3.5)
 shape = SubResource("RectangleShape2D_hwp66")
+
+[node name="Bunkers" type="Node" parent="GameWorld" groups=["BunkersParent"]]
 
 [node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]
 position = Vector2(129, 10)
