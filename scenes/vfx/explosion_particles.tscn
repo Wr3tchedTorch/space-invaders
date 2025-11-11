@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpx2trmhd4liw"]
+[gd_scene load_steps=7 format=3 uid="uid://dpx2trmhd4liw"]
 
 [ext_resource type="Script" uid="uid://c0h6534l2yvca" path="res://scenes/vfx/ExplosionParticles.cs" id="1_kraxw"]
-[ext_resource type="PackedScene" uid="uid://dupuevgffirdp" path="res://scenes/agents/bullets/explosion_area.tscn" id="2_tj6ev"]
 
 [sub_resource type="Gradient" id="Gradient_hbein"]
 offsets = PackedFloat32Array(0.5234568, 1)
@@ -30,9 +29,6 @@ scale_max = 3.0
 scale_curve = SubResource("CurveTexture_revhv")
 color_ramp = SubResource("GradientTexture1D_dvl6r")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_td7cs"]
-radius = 20.0
-
 [node name="ExplosionParticles" type="GPUParticles2D"]
 emitting = false
 amount = 100
@@ -41,11 +37,3 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_83lfj")
 script = ExtResource("1_kraxw")
 LifeTimeInSeconds = 1.0
-
-[node name="ExplosionArea" parent="." instance=ExtResource("2_tj6ev")]
-collision_layer = 260
-collision_mask = 64
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="ExplosionArea"]
-shape = SubResource("CircleShape2D_td7cs")
-disabled = true

@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://bvpbbeq48ne6v" path="res://assets/resources/upgrades/weapons/missile_weapon_switch_upgrade.tres" id="2_6erdc"]
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="2_uxcem"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="3_fp0of"]
-[ext_resource type="Resource" uid="uid://73a51ueu2vuv" path="res://assets/resources/weapon/enemy/enemy_blaster_gun.tres" id="5_58dac"]
+[ext_resource type="Resource" uid="uid://keui42hn5pop" path="res://assets/resources/weapon/enemy/enemy_rocket_launcher.tres" id="5_lh7vm"]
 [ext_resource type="Texture2D" uid="uid://cxju7f7q5xyom" path="res://assets/sprites/invaders/invader2-2.png" id="6_fp0of"]
 [ext_resource type="Texture2D" uid="uid://cjvdrpoeml211" path="res://assets/sprites/invaders/invader-explosion-1.png" id="9_2rpuc"]
 [ext_resource type="Texture2D" uid="uid://c53qw3rnc8yfy" path="res://assets/sprites/invaders/invader-explosion-2.png" id="10_myg2e"]
@@ -55,7 +55,7 @@ UpgradeDrops = [ExtResource("2_6erdc")]
 [node name="HealthComponent" parent="." instance=ExtResource("2_4h2o5")]
 
 [node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarkers") instance=ExtResource("3_fp0of")]
-PrimaryWeaponResource = ExtResource("5_58dac")
+PrimaryWeaponResource = ExtResource("5_lh7vm")
 BulletPhysicsLayer = 6
 BulletPhysicsMask = 5
 FireRateTimer = NodePath("Timer")
@@ -75,7 +75,6 @@ debug_color = Color(0.819608, 0.4, 0.0901961, 0.188235)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6erdc")
-animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3i4rc")

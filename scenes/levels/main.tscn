@@ -23,7 +23,7 @@ size = Vector2(8, 224)
 size = Vector2(256, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hwp66"]
-size = Vector2(256, 9)
+size = Vector2(256, 25)
 
 [node name="Main" type="Node"]
 
@@ -31,7 +31,6 @@ size = Vector2(256, 9)
 script = ExtResource("1_j4d2a")
 
 [node name="LevelManager" parent="GameWorld" node_paths=PackedStringArray("InvaderFactory", "EnemiesNavigator") instance=ExtResource("2_rssyh")]
-GameInvaders = Array[Object]([])
 EnemiesIncreasePerLevel = 10
 EnemiesMovementDelayDecreasePerLevel = 1.0
 InvaderFactory = NodePath("../InvaderFactory")
@@ -78,11 +77,12 @@ position = Vector2(128, 200.5)
 shape = SubResource("RectangleShape2D_rssyh")
 
 [node name="Floor" type="StaticBody2D" parent="GameWorld/Walls"]
+position = Vector2(10, 215)
 collision_layer = 128
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/Floor"]
-position = Vector2(128, 203.5)
+position = Vector2(118, -3.5)
 shape = SubResource("RectangleShape2D_hwp66")
 
 [node name="EnemiesNavigator" parent="GameWorld" node_paths=PackedStringArray("MovementTimer") instance=ExtResource("2_j4d2a")]

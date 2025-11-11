@@ -1,12 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://b16sfwkqddj0f"]
 
 [ext_resource type="Script" uid="uid://vlbf2vc2psdd" path="res://scenes/agents/upgrades/UpgradePickUp.cs" id="1_8glfo"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wo6cp"]
-size = Vector2(8, 8)
+[ext_resource type="Texture2D" uid="uid://jrt71jg7d1wp" path="res://assets/sprites/misc/upgrade-orb.png" id="2_wo6cp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2kyiu"]
-radius = 3.0
+radius = 5.0
 
 [sub_resource type="Animation" id="Animation_wo6cp"]
 length = 0.001
@@ -55,7 +53,7 @@ AnimationPlayer = NodePath("AnimationPlayer")
 DelayBeforeDisappearing = 8.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_wo6cp")
+texture = ExtResource("2_wo6cp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2kyiu")

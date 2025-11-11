@@ -16,8 +16,8 @@ size = Vector2(4, 6)
 radius = 20.0
 
 [node name="PlayerMissile" type="Area2D" node_paths=PackedStringArray("ExplosionComponent", "ExplosionArea", "MissileSprite", "VelocityComponent", "StateMachine")]
-collision_layer = 288
-collision_mask = 144
+collision_layer = 260
+collision_mask = 192
 monitorable = false
 script = ExtResource("1_7fgxi")
 ExplosionComponent = NodePath("ExplosionComponent")

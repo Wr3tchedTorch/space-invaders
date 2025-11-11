@@ -34,14 +34,8 @@ public partial class EnemiesNavigator : Node2D
     {
         initialPosition = GlobalPosition;
 
-        GameEvents.Instance.GameOver += () =>
-        {
-            MovementTimer.Stop();
-        };
-        GameEvents.Instance.LevelEnded += () =>
-        {
-            Reset();
-        };
+        GameEvents.Instance.GameOver += MovementTimer.Stop;
+        GameEvents.Instance.LevelEnded += Reset;
 
         CurrentDelayBetweenMovements = MaxDelayBetweenMovements;
 
