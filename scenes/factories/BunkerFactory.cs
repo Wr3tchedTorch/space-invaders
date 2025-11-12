@@ -36,30 +36,45 @@ public partial class BunkerFactory : Node
 	public override void _Ready()
 	{
 		GameEvents.Instance.LevelStarted += OnLevelStarted;
+		GameEvents.Instance.LevelEnded += OnLevelEnded;
 	}
 
-    private void OnLevelStarted()
+	private void OnLevelEnded()
+	{
+		ClearBunkers();
+	}
+
+	private void OnLevelStarted()
+	{
+		SpawnBunkers(BunkerPresetResources[GameData.Instance.CurrentLevel % BunkerPresetResources.Count]);
+	}
+
+	private void SpawnBunkers(BunkerPresetResource preset)
+	{
+		Gap = preset.Gap;
+		SpawnBunkers(preset.BunkerCount);
+	}
+
+	private void ClearBunkers()
 	{
 		var bunkers = GetTree().GetNodesInGroup(BunkersGroup);
+		if (bunkers.Count == 0)
+		{
+			return;
+		}
+
 		foreach (var bunker in bunkers)
 		{
 			bunker.QueueFree();
 		}
-		SpawnBunkers(BunkerPresetResources[GameData.Instance.CurrentLevel % BunkerPresetResources.Count]);
-    }
-
-    private void SpawnBunkers(BunkerPresetResource preset)
-    {
-		Gap = preset.Gap;
-		SpawnBunkers(preset.BunkerCount);
-    }
+	}
 
 	private void SpawnBunkers(int count)
 	{
 		float totalGap = (count - 1) * Gap;
 		float totalWidth = (count * BunkerWidth) + totalGap;
-		float startingPos = CenterMarker.GlobalPosition.X - totalWidth / 2 + BunkerWidth/2;
-		
+		float startingPos = CenterMarker.GlobalPosition.X - totalWidth / 2 + BunkerWidth / 2;
+
 		for (int i = 0; i < count; i++)
 		{
 			var bunkerPos = startingPos + i * (BunkerWidth + Gap);

@@ -72,6 +72,8 @@ public partial class Invader : Area2D, IEnemy
         }
 
         isDead = true;
+        GameData.Instance.Score += InvaderResource.ScoreValue;
+
         var chance = GameWorld.Rng.NextDouble() * 100;
         if (chance <= UpgradeDropChance)
         {
@@ -80,7 +82,7 @@ public partial class Invader : Area2D, IEnemy
         GameEvents.Instance.EmitSignal(GameEvents.SignalName.InvaderDied);
 
         AnimatedSprite2D.Play(DeathAnimationName);
-        AnimatedSprite2D.AnimationFinished += QueueFree;
+        AnimatedSprite2D.AnimationFinished += QueueFree;        
     }
 
     private void SpawnDrop()
