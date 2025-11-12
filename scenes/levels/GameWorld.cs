@@ -17,17 +17,4 @@ public partial class GameWorld : Node2D
 
 		AddToGroup(nameof(GameWorld));
 	}
-
-	public override void _Input(InputEvent @event)
-	{
-		if (@event is InputEventKey eventKey)
-		{            
-			if (eventKey.Pressed && eventKey.Keycode == Key.N && GameData.Instance.CurrentLevel == 0)
-			{
-				GameData.Instance.CurrentLevel++;
-
-				GameEvents.Instance.EmitSignal(GameEvents.SignalName.LevelStarted);
-			}
-		}
-	}
 }

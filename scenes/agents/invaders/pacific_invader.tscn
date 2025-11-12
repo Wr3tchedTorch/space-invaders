@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://cqypjbqceg3gb"]
+
+[ext_resource type="Script" uid="uid://br134lh8fyyvd" path="res://scenes/agents/invaders/PacificInvader.cs" id="1_ylig2"]
+[ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="2_8smhp"]
+[ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="3_ilnen"]
+[ext_resource type="Texture2D" uid="uid://cjvdrpoeml211" path="res://assets/sprites/invaders/invader-explosion-1.png" id="4_1d45i"]
+[ext_resource type="Texture2D" uid="uid://c53qw3rnc8yfy" path="res://assets/sprites/invaders/invader-explosion-2.png" id="5_fp5ha"]
+[ext_resource type="Texture2D" uid="uid://cooli7patbik2" path="res://assets/sprites/invaders/invader2-1.png" id="6_awek7"]
+[ext_resource type="Texture2D" uid="uid://cxju7f7q5xyom" path="res://assets/sprites/invaders/invader2-2.png" id="7_44ebp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uxcem"]
+radius = 7.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6erdc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_1d45i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fp5ha")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_awek7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_44ebp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3i4rc"]
+radius = 6.08276
+
+[node name="PacificInvader" type="Area2D" node_paths=PackedStringArray("HealthComponent", "AnimatedSprite2D", "LevelStartTimer")]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_ylig2")
+HealthComponent = NodePath("HealthComponent")
+AnimatedSprite2D = NodePath("AnimatedSprite2D")
+LevelStartTimer = NodePath("Timer")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_8smhp")]
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("3_ilnen")]
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_uxcem")
+debug_color = Color(0.819608, 0.4, 0.0901961, 0.188235)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6erdc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3i4rc")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="Attacked" from="HurtboxComponent" to="." method="Attacked"]
+[connection signal="Attacked" from="HurtboxComponent" to="HealthComponent" method="TakeDamage"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=19 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -10,7 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://dxttnhn22lr0x" path="res://scenes/agents/objects/bunker.tscn" id="5_hwp66"]
 [ext_resource type="Script" uid="uid://crxuy7wsldmnv" path="res://scenes/ui/Gui.cs" id="7_vkq25"]
 [ext_resource type="Resource" uid="uid://catm67fqrwp7m" path="res://assets/resources/weapon/player/player_rocket_launcher.tres" id="8_7lrji"]
+[ext_resource type="PackedScene" uid="uid://cqypjbqceg3gb" path="res://scenes/agents/invaders/pacific_invader.tscn" id="9_2xkjh"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
+[ext_resource type="PackedScene" uid="uid://bqcyi23jnvc5l" path="res://scenes/ui/score_gui.tscn" id="13_dj21o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2xkjh"]
 size = Vector2(270, 14)
@@ -117,6 +119,9 @@ AmmunitionLabel = NodePath("../../Gui/CanvasLayer/HBoxContainer/VBoxContainer/Pl
 [node name="Camera2D" type="Camera2D" parent="GameWorld"]
 anchor_mode = 0
 
+[node name="PacificInvader" parent="GameWorld" instance=ExtResource("9_2xkjh")]
+position = Vector2(130, 59)
+
 [node name="Gui" type="Control" parent="." node_paths=PackedStringArray("PlayerWeaponLabel")]
 layout_mode = 3
 anchors_preset = 0
@@ -172,6 +177,15 @@ text = "15/20"
 horizontal_alignment = 2
 vertical_alignment = 1
 clip_text = true
+
+[node name="ScoreGUI" parent="Gui/CanvasLayer" instance=ExtResource("13_dj21o")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.0
+offset_top = -25.0
+offset_right = 36.0
+offset_bottom = 25.0
 
 [connection signal="area_entered" from="GameWorld/Walls/RightWall" to="GameWorld/EnemiesNavigator" method="OnRightWallEntered"]
 [connection signal="area_entered" from="GameWorld/Walls/LeftWall" to="GameWorld/EnemiesNavigator" method="OnLeftWallEntered"]

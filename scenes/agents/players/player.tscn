@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bi4t7f2cuoenm" path="res://scenes/agents/players/Player.cs" id="1_y3jks"]
 [ext_resource type="Texture2D" uid="uid://bmxl3pgpljhj0" path="res://assets/sprites/player/player.png" id="2_fovvg"]
 [ext_resource type="PackedScene" uid="uid://cpk4vtnxsnii2" path="res://scenes/components/weapon_component.tscn" id="2_ok5fs"]
-[ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/player/blaster_gun.tres" id="3_8nvt7"]
+[ext_resource type="Resource" uid="uid://cfun7wpw0no6x" path="res://assets/resources/weapon/player/player_giant_gun.tres" id="3_8nvt7"]
 [ext_resource type="PackedScene" uid="uid://c6wup6v31n5as" path="res://scenes/components/health_component.tscn" id="4_vjyvw"]
 [ext_resource type="PackedScene" uid="uid://e143nu2c0qss" path="res://scenes/managers/marker_manager.tscn" id="5_mws0h"]
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="5_uoiam"]

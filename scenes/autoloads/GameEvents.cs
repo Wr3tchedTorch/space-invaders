@@ -11,8 +11,10 @@ public partial class GameEvents : Node
     [Signal] public delegate void WeaponChangedEventHandler(WeaponResource newWeapon);
     [Signal] public delegate void LevelEndedEventHandler();
     [Signal] public delegate void LevelStartedEventHandler();
+    [Signal] public delegate void PacificInvaderDiedEventHandler();
     [Signal] public delegate void InvaderDiedEventHandler();
     [Signal] public delegate void GameOverEventHandler();
+    [Signal] public delegate void TalkedEventHandler(string name, string text);
 
     public static GameEvents Instance { get; private set; } = null!;
 

@@ -83,6 +83,7 @@ public partial class LevelManager : Node
 
         if (currentNumberOfInvaders <= 0)
         {
+            GameData.Instance.CurrentLevel++;
             GameEvents.Instance.EmitSignal(GameEvents.SignalName.LevelEnded);
 
             StartLevelWithDelay();
@@ -92,7 +93,6 @@ public partial class LevelManager : Node
     private async void StartLevelWithDelay()
     {
         await ToSignal(GetTree().CreateTimer(3), "timeout");
-        GameData.Instance.CurrentLevel++;
         GameEvents.Instance.EmitSignal(GameEvents.SignalName.LevelStarted);
     }
 }

@@ -35,8 +35,6 @@ public partial class BunkerFactory : Node
 
 	public override void _Ready()
 	{
-		SpawnBunkers(BunkerPresetResources[4]);
-
 		GameEvents.Instance.LevelStarted += OnLevelStarted;
 	}
 
