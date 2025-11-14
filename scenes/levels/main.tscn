@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=20 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cqypjbqceg3gb" path="res://scenes/agents/invaders/pacific_invader.tscn" id="9_2xkjh"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
 [ext_resource type="PackedScene" uid="uid://bqcyi23jnvc5l" path="res://scenes/ui/score_gui.tscn" id="13_dj21o"]
+[ext_resource type="PackedScene" uid="uid://bwdcnsd0hl3et" path="res://scenes/ui/game_over.tscn" id="14_6ui35"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2xkjh"]
 size = Vector2(270, 14)
@@ -186,6 +187,10 @@ offset_left = -36.0
 offset_top = -25.0
 offset_right = 36.0
 offset_bottom = 25.0
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="Gui"]
+
+[node name="GameOver" parent="Gui/CanvasLayer2" instance=ExtResource("14_6ui35")]
 
 [connection signal="area_entered" from="GameWorld/Walls/RightWall" to="GameWorld/EnemiesNavigator" method="OnRightWallEntered"]
 [connection signal="area_entered" from="GameWorld/Walls/LeftWall" to="GameWorld/EnemiesNavigator" method="OnLeftWallEntered"]
