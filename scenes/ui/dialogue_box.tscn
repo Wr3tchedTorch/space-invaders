@@ -1,24 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://c03xfs64atnjx"]
+[gd_scene load_steps=3 format=3 uid="uid://c03xfs64atnjx"]
 
+[ext_resource type="Script" uid="uid://bond8q8sl1vr6" path="res://scenes/ui/DialogueBox.cs" id="1_6iboe"]
 [ext_resource type="Texture2D" uid="uid://bugk42b24dskb" path="res://assets/sprites/ui/dialogue-box.png" id="1_xg44k"]
 
 [node name="DialogueBox" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
 grow_horizontal = 2
-grow_vertical = 2
+script = ExtResource("1_6iboe")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -69.23334
+offset_left = -91.0
 offset_top = 5.0
-offset_right = 69.23334
-offset_bottom = 45.0
+offset_right = 91.0
+offset_bottom = 75.0
 grow_horizontal = 2
 texture = ExtResource("1_xg44k")
 region_rect = Rect2(-0.0076265335, -0.02517128, 56.918713, 32.096718)
@@ -45,19 +46,19 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Label2" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="Name" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 theme_override_font_sizes/font_size = 7
 text = "Alien"
 autowrap_mode = 2
-clip_text = true
 uppercase = true
 
-[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+[node name="Dialogue" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 theme_override_font_sizes/font_size = 6
 text = "   Hey there... how are you doing?"
 autowrap_mode = 2
-clip_text = true

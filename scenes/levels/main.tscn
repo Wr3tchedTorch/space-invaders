@@ -15,9 +15,9 @@
 [ext_resource type="Resource" uid="uid://catm67fqrwp7m" path="res://assets/resources/weapon/player/player_rocket_launcher.tres" id="8_7lrji"]
 [ext_resource type="PackedScene" uid="uid://cqypjbqceg3gb" path="res://scenes/agents/invaders/pacific_invader.tscn" id="9_2xkjh"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
-[ext_resource type="Texture2D" uid="uid://bugk42b24dskb" path="res://assets/sprites/ui/dialogue-box.png" id="11_qgoyv"]
 [ext_resource type="PackedScene" uid="uid://bqcyi23jnvc5l" path="res://scenes/ui/score_gui.tscn" id="13_dj21o"]
 [ext_resource type="PackedScene" uid="uid://bwdcnsd0hl3et" path="res://scenes/ui/game_over.tscn" id="14_6ui35"]
+[ext_resource type="PackedScene" uid="uid://c03xfs64atnjx" path="res://scenes/ui/dialogue_box.tscn" id="18_qgoyv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2xkjh"]
 size = Vector2(270, 14)
@@ -126,7 +126,7 @@ AmmunitionLabel = NodePath("../../Gui/CanvasLayer/HBoxContainer/VBoxContainer/Pl
 anchor_mode = 0
 
 [node name="PacificInvader" parent="GameWorld" instance=ExtResource("9_2xkjh")]
-position = Vector2(130, 59)
+position = Vector2(130, 88)
 
 [node name="Gui" type="Control" parent="." node_paths=PackedStringArray("PlayerWeaponLabel")]
 layout_mode = 3
@@ -138,7 +138,6 @@ PlayerWeaponLabel = NodePath("CanvasLayer/HBoxContainer/VBoxContainer/PlayerWeap
 InitialPlayerWeapon = ExtResource("8_7lrji")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Gui"]
-visible = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Gui/CanvasLayer"]
 anchors_preset = -1
@@ -195,62 +194,12 @@ offset_right = 36.0
 offset_bottom = 25.0
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="Gui"]
-visible = false
 
 [node name="GameOver" parent="Gui/CanvasLayer2" instance=ExtResource("14_6ui35")]
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="Gui"]
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Gui/CanvasLayer3"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -69.23334
-offset_top = 5.0
-offset_right = 69.23334
-offset_bottom = 45.0
-grow_horizontal = 2
-texture = ExtResource("11_qgoyv")
-region_rect = Rect2(-0.0076265335, -0.02517128, 56.918713, 32.096718)
-patch_margin_left = 5
-patch_margin_top = 5
-patch_margin_right = 6
-patch_margin_bottom = 6
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="Gui/CanvasLayer3/NinePatchRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Gui/CanvasLayer3/NinePatchRect/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Label2" type="Label" parent="Gui/CanvasLayer3/NinePatchRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 15)
-layout_mode = 2
-theme_override_font_sizes/font_size = 7
-text = "Alien"
-autowrap_mode = 2
-clip_text = true
-uppercase = true
-
-[node name="Label" type="Label" parent="Gui/CanvasLayer3/NinePatchRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 15)
-layout_mode = 2
-theme_override_font_sizes/font_size = 6
-text = "   Hey there... how are you doing?"
-autowrap_mode = 2
-clip_text = true
+[node name="DialogueBox" parent="Gui/CanvasLayer3" instance=ExtResource("18_qgoyv")]
 
 [connection signal="area_entered" from="GameWorld/Walls/RightWall" to="GameWorld/EnemiesNavigator" method="OnRightWallEntered"]
 [connection signal="area_entered" from="GameWorld/Walls/LeftWall" to="GameWorld/EnemiesNavigator" method="OnLeftWallEntered"]
