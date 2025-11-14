@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://c03xfs64atnjx"]
+
+[ext_resource type="Texture2D" uid="uid://bugk42b24dskb" path="res://assets/sprites/ui/dialogue-box.png" id="1_xg44k"]
+
+[node name="DialogueBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -69.23334
+offset_top = 5.0
+offset_right = 69.23334
+offset_bottom = 45.0
+grow_horizontal = 2
+texture = ExtResource("1_xg44k")
+region_rect = Rect2(-0.0076265335, -0.02517128, 56.918713, 32.096718)
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 6
+patch_margin_bottom = 6
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label2" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_font_sizes/font_size = 7
+text = "Alien"
+autowrap_mode = 2
+clip_text = true
+uppercase = true
+
+[node name="Label" type="Label" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+text = "   Hey there... how are you doing?"
+autowrap_mode = 2
+clip_text = true
