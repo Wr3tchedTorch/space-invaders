@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using SpaceInvaders.Assets.Scripts.Exceptions;
 using SpaceInvaders.Assets.Scripts.Extensions;
@@ -43,6 +44,7 @@ public partial class Player : CharacterBody2D
         AnimatedSprite2D.Play(DefaultAnimationName);        
 
         HealthComponent.Died += OnDied;
+        HealthComponent.DamageTaken += OnDamageTaken;
         HealthComponent.HealthBar = HealthBar;
         HealthComponent.InitialHealth = 100;
 
@@ -57,6 +59,11 @@ public partial class Player : CharacterBody2D
         GameEvents.Instance.WeaponUpgradePickedUp += OnWeaponUpgradePickedUp;
 
         AddInitialUpgrades();
+    }
+
+    private void OnDamageTaken()
+    {
+        GD.Print("Player took damage!");
     }
 
     private void AddInitialUpgrades()
@@ -169,11 +176,6 @@ public partial class Player : CharacterBody2D
             return;
         }
         WeaponComponent.BulletUpgrades.Add((IBulletUpgrade)upgrade);
-    }
-
-    private void OnAttacked(float damage)
-    {
-        GD.Print($"Player attacked with {damage} damage.");
     }
 
     private void OnDied()

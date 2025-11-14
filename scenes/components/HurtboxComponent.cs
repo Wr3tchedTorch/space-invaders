@@ -23,7 +23,7 @@ public partial class HurtboxComponent : Area2D
         if (body is not IAttacker)
         {
             throw new InvalidAttackerException();
-        }
+        }        
         var attacker = (IAttacker)body;
         EmitHurtSignal(attacker);
     }

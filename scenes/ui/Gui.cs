@@ -21,7 +21,11 @@ public partial class Gui : Control
 
 	private void OnWeaponChanged(WeaponResource newWeapon)
 	{
+		if (GameData.Instance.IsGameOver)
+        {
+            return;
+        }
+
 		PlayerWeaponLabel.Text = newWeapon.Name;
 	}
-
 }

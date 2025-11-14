@@ -63,7 +63,12 @@ AmmunitionBar = NodePath("../AmmunitionBar")
 
 [node name="Timer" type="Timer" parent="WeaponComponent"]
 
-[node name="HealthComponent" parent="." instance=ExtResource("4_vjyvw")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("InvincibilityTimer") instance=ExtResource("4_vjyvw")]
+InvincibilityTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="HealthComponent"]
+wait_time = 0.6
+one_shot = true
 
 [node name="MarkerManager" parent="." node_paths=PackedStringArray("CenterMarker", "MarkersParent") instance=ExtResource("5_mws0h")]
 MarkersCount = 1
