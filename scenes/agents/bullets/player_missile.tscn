@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://b633utavxp7t1"]
+[gd_scene load_steps=12 format=3 uid="uid://b633utavxp7t1"]
 
 [ext_resource type="Script" uid="uid://c710eq45hs3q6" path="res://scenes/agents/bullets/Missile.cs" id="1_7fgxi"]
 [ext_resource type="PackedScene" uid="uid://uv67f8df5g3x" path="res://scenes/components/state_machine.tscn" id="2_w3g8j"]
 [ext_resource type="PackedScene" uid="uid://cgdmgvrbvdbk3" path="res://scenes/states/instant_straight_movement_state.tscn" id="3_t4j0c"]
 [ext_resource type="PackedScene" uid="uid://0ce50c3g0yfv" path="res://scenes/components/velocity_component.tscn" id="4_qyi3k"]
+[ext_resource type="PackedScene" uid="uid://b3dm4onxrrbum" path="res://scenes/states/instant_zig_zag_movement_state.tscn" id="4_t4j0c"]
 [ext_resource type="PackedScene" uid="uid://brc43l3heouke" path="res://scenes/components/explosion_component.tscn" id="5_tkdei"]
 [ext_resource type="Texture2D" uid="uid://baiu5mjl8rwyt" path="res://assets/sprites/weapons/rocket.png" id="6_1jojw"]
 [ext_resource type="PackedScene" uid="uid://dupuevgffirdp" path="res://scenes/agents/bullets/explosion_area.tscn" id="7_32qew"]
@@ -29,6 +30,10 @@ StateMachine = NodePath("StateMachine")
 [node name="StateMachine" parent="." instance=ExtResource("2_w3g8j")]
 
 [node name="InstantStraightMovementState" parent="StateMachine" instance=ExtResource("3_t4j0c")]
+
+[node name="InstantZigZagMovementState" parent="StateMachine" instance=ExtResource("4_t4j0c")]
+TurnDelay = 0.3
+TurnAmountDegs = 45.0
 
 [node name="VelocityComponent" parent="." instance=ExtResource("4_qyi3k")]
 
