@@ -60,17 +60,17 @@ public partial class PacificInvader : Area2D
     {
         Talk("Ahhh... Não acredito que vou morrer assim... Diga adeus a minha familia...");
 
-        await WaitAndCloseDialogue(2.0);
-
         AnimatedSprite2D.Play(DeathAnimationName);
         AnimatedSprite2D.AnimationFinished += () =>
         {
             AnimatedSprite2D.Visible = false;
-            LevelStartTimer.Start();
-
-            GameData.Instance.CurrentLevel++;
-            GameEvents.Instance.EmitSignal(GameEvents.SignalName.PacificInvaderDied);
         };
+        
+        await WaitAndCloseDialogue(2.0);
+
+        LevelStartTimer.Start();
+        GameData.Instance.CurrentLevel++;
+        GameEvents.Instance.EmitSignal(GameEvents.SignalName.PacificInvaderDied);
     }
 
     private void StartLevel()

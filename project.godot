@@ -34,6 +34,10 @@ project/assembly_name="SpaceInvaders"
 
 BunkersParent=""
 
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
+
 [input]
 
 left={
