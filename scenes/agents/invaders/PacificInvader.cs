@@ -21,7 +21,7 @@ public partial class PacificInvader : Area2D
     [Export]
     private AnimatedSprite2D AnimatedSprite2D { get; set; } = null!;
     [Export]
-    private Timer LevelStartTimer { get; set; } = null!;
+    private Timer LevelStartTimer { get; set; } = null!;    
 
     private Queue<string> DamageDialogueQueue { get; } = new(
     [
@@ -35,8 +35,6 @@ public partial class PacificInvader : Area2D
     {
         HealthComponent.InitialHealth = InitialHealth;
         HealthComponent.Died += OnDied;
-
-        LevelStartTimer.Timeout += StartLevel;
 
         Callable.From(() => Talk("Eae, não esparava ver alguém ai. Quem é você maninho?")).CallDeferred();
     }
@@ -68,21 +66,8 @@ public partial class PacificInvader : Area2D
         
         await WaitAndCloseDialogue(2.0);
 
-        LevelStartTimer.Start();
-        GameData.Instance.CurrentLevel++;
-        GameEvents.Instance.EmitSignal(GameEvents.SignalName.PacificInvaderDied);
-    }
-
-    private void StartLevel()
-    {
-        if (IsQueuedForDeletion())
-        {
-            return;
-        }
-
         QueueFree();
-
-        GameEvents.Instance.EmitSignal(GameEvents.SignalName.LevelStarted);
+        GameEvents.Instance.EmitSignal(GameEvents.SignalName.CutsceneStarted);
     }
 
     private void Talk(string text)

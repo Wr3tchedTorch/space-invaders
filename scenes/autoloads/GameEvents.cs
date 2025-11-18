@@ -16,15 +16,17 @@ public partial class GameEvents : Node
     [Signal] public delegate void LevelEndedEventHandler();
     [Signal] public delegate void LevelStartedEventHandler();
     [Signal] public delegate void GameOverEventHandler();
-    #endregion
-
-
-    [Signal] public delegate void PacificInvaderDiedEventHandler();
-    [Signal] public delegate void InvaderDiedEventHandler();
+    #endregion    
     
     #region Dialogue
     [Signal] public delegate void TalkedEventHandler(string name, string text);
     [Signal] public delegate void EndedDialogueEventHandler();
+    #endregion
+
+    #region Misc
+    [Signal] public delegate void PacificInvaderDiedEventHandler();
+    [Signal] public delegate void InvaderDiedEventHandler();
+    [Signal] public delegate void CutsceneStartedEventHandler();
     #endregion
 
     public static GameEvents Instance { get; private set; } = null!;

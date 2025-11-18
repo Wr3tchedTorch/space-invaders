@@ -29,7 +29,7 @@ public partial class DialogueBox : Control
         GameEvents.Instance.Talked += OnTalked;
     }
 
-    private void OnTalked(string name, string text)
+    public void Talk(string name, string text)
     {
         Visible = true;
 
@@ -37,9 +37,19 @@ public partial class DialogueBox : Control
         DialogueLabel.Text = text;
     }
 
-    private void OnEndedDialogue()
+    public void CloseDialogueBox()
     {
         Visible = false;
+    }
+
+    private void OnTalked(string name, string text)
+    {
+        Talk(name, text);
+    }
+
+    private void OnEndedDialogue()
+    {
+        CloseDialogueBox();
     }
 }
 

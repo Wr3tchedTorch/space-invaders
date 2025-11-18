@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=26 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -12,6 +12,8 @@
 [ext_resource type="Resource" uid="uid://catm67fqrwp7m" path="res://assets/resources/weapon/player/player_rocket_launcher.tres" id="8_7lrji"]
 [ext_resource type="PackedScene" uid="uid://cqypjbqceg3gb" path="res://scenes/agents/invaders/pacific_invader.tscn" id="9_2xkjh"]
 [ext_resource type="Theme" uid="uid://dlnihpx8ewbtj" path="res://assets/resources/game_theme.tres" id="9_7lrji"]
+[ext_resource type="PackedScene" uid="uid://bm6h2pgwjok1i" path="res://scenes/agents/invaders/dad_invader.tscn" id="10_sv52t"]
+[ext_resource type="Script" uid="uid://06y8nhwtfnpq" path="res://scenes/levels/CutscenePlayer.cs" id="11_7exfm"]
 [ext_resource type="PackedScene" uid="uid://bqcyi23jnvc5l" path="res://scenes/ui/score_gui.tscn" id="13_dj21o"]
 [ext_resource type="PackedScene" uid="uid://bwdcnsd0hl3et" path="res://scenes/ui/game_over.tscn" id="14_6ui35"]
 [ext_resource type="PackedScene" uid="uid://c03xfs64atnjx" path="res://scenes/ui/dialogue_box.tscn" id="18_qgoyv"]
@@ -30,6 +32,90 @@ size = Vector2(256, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hwp66"]
 size = Vector2(256, 25)
+
+[sub_resource type="Animation" id="Animation_sv52t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DadInvader:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(72, -12)]
+}
+
+[sub_resource type="Animation" id="Animation_y56qp"]
+resource_name = "intro_scene"
+length = 8.0
+step = 0.15
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Gui/CanvasLayer3/DialogueBox")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8571429, 2, 4, 6, 8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"CloseDialogueBox"
+}, {
+"args": ["Pai do Alienzinho", "..."],
+"method": &"Talk"
+}, {
+"args": [],
+"method": &"CloseDialogueBox"
+}, {
+"args": ["Pai do Alienzinho", "O que você fez com o meu filho!?"],
+"method": &"Talk"
+}, {
+"args": ["Pai do Alienzinho", "Você o matou! Vai pagar por isso."],
+"method": &"Talk"
+}, {
+"args": [],
+"method": &"CloseDialogueBox"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DadInvader:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.85714287, 1.1428572, 1.5714287, 2),
+"transitions": PackedFloat32Array(0.49999997, 1, 0.34151006, 0.35, 1),
+"update": 0,
+"values": [Vector2(72, -12), Vector2(72, 84), Vector2(72, 84), Vector2(48, 84), Vector2(96, 84)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DadInvader")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(4, 8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"StartAnimating"
+}, {
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sv52t"]
+_data = {
+&"RESET": SubResource("Animation_sv52t"),
+&"intro_scene": SubResource("Animation_y56qp")
+}
 
 [node name="Main" type="Node"]
 
@@ -123,6 +209,16 @@ anchor_mode = 0
 
 [node name="PacificInvader" parent="GameWorld" instance=ExtResource("9_2xkjh")]
 position = Vector2(130, 88)
+InitialHealth = 50.0
+
+[node name="DadInvader" parent="GameWorld" instance=ExtResource("10_sv52t")]
+position = Vector2(72, -12)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameWorld"]
+libraries = {
+&"": SubResource("AnimationLibrary_sv52t")
+}
+script = ExtResource("11_7exfm")
 
 [node name="Gui" type="Control" parent="." node_paths=PackedStringArray("PlayerWeaponLabel")]
 layout_mode = 3
