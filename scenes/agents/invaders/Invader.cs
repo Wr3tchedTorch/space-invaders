@@ -30,6 +30,8 @@ public partial class Invader : Area2D, IEnemy
 
     private bool isDead = false;
 
+    private float fixedMaxFireRateDelay = 0f;
+
     public override void _Ready()
     {
         Callable.From(Init).CallDeferred();        
@@ -37,6 +39,8 @@ public partial class Invader : Area2D, IEnemy
 
     private void Init()
     {
+        fixedMaxFireRateDelay = InvaderResource.WeaponResource.MaxFireRateDelay;
+
         AnimatedSprite2D.Play(DefaultAnimationName);
         AnimatedSprite2D.Stop();
         AnimatedSprite2D.Frame = 0;
@@ -124,17 +128,10 @@ public partial class Invader : Area2D, IEnemy
 
     private float GetRandomFireRateDelay()
     {
-        var halfFireRate = InvaderResource.WeaponResource.MaxFireRateDelay * 0.95f;
+        float min = InvaderResource.WeaponResource.FireRateDelay;
+        float max = fixedMaxFireRateDelay;
 
-        var randomOffset = (float)(GameWorld.Rng.NextDouble() * halfFireRate);
-        var randomSign = GameWorld.Rng.Next(0, 2) * 2 - 1;
-
-        if (InvaderResource.WeaponResource.MaxFireRateDelay + randomOffset * randomSign <= 5)
-        {
-            return GetRandomFireRateDelay() + GameWorld.Rng.Next(2, 5);
-        }
-
-        return InvaderResource.WeaponResource.MaxFireRateDelay + randomOffset * randomSign;
+        return (float)(GameWorld.Rng.NextDouble() * (max - min) + min);
     }
 
     private void AddBulletUpgrade(Resource upgrade)

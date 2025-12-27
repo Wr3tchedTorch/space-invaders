@@ -7,10 +7,12 @@ namespace SpaceInvaders.Scenes.Levels;
 public partial class CutscenePlayer : AnimationPlayer
 {
     [Export]
-    private StringName CutsceneAnimationName { get; set; } = "intro_scene";    
+    private StringName CutsceneAnimationName { get; set; } = "intro_scene";        
 
     public override void _Ready() 
     {
+        Callable.From(SkipCutscene).CallDeferred();        
+
         GameEvents.Instance.CutsceneStarted += () => 
         {
             if (IsPlaying())
@@ -20,6 +22,15 @@ public partial class CutscenePlayer : AnimationPlayer
             Play(CutsceneAnimationName);
         };
         AnimationFinished += SetupLevelStart;
+    }
+
+    private void SkipCutscene()
+    {
+        if (!GameWorld.SkippingCutscene)
+        {
+            return;
+        }
+        SetupLevelStart(CutsceneAnimationName);
     }
 
     private void SetupLevelStart(StringName animationName)

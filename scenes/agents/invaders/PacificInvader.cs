@@ -1,6 +1,7 @@
 using Godot;
 using SpaceInvaders.Scenes.Autoloads;
 using SpaceInvaders.Scenes.Components;
+using SpaceInvaders.Scenes.Levels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ public partial class PacificInvader : Area2D
         HealthComponent.InitialHealth = InitialHealth;
         HealthComponent.Died += OnDied;
 
-        Callable.From(() => Talk("Eae, não esparava ver alguém ai. Quem é você maninho?")).CallDeferred();
+        Callable.From(SkipCutscene).CallDeferred();
     }
 
     public void Attacked(float _)
@@ -80,5 +81,16 @@ public partial class PacificInvader : Area2D
         await ToSignal(GetTree().CreateTimer(seconds), "timeout");
 
         GameEvents.Instance.EmitSignal(GameEvents.SignalName.EndedDialogue);            
+    }
+
+    private void SkipCutscene()
+    {
+        if (!GameWorld.SkippingCutscene)
+        {
+            Talk("Eae, não esparava ver alguém ai. Quem é você maninho?");
+            return;
+        }
+        GameEvents.Instance.EmitSignal(GameEvents.SignalName.EndedDialogue);            
+        QueueFree();
     }
 }

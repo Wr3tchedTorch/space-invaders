@@ -49,6 +49,7 @@ public partial class DialogueBox : Control
 
     private void OnEndedDialogue()
     {
+        GD.Print("Dialogue ended, closing dialogue box...");
         CloseDialogueBox();
     }
 }

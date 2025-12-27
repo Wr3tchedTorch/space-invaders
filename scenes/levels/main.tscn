@@ -209,7 +209,6 @@ anchor_mode = 0
 
 [node name="PacificInvader" parent="GameWorld" instance=ExtResource("9_2xkjh")]
 position = Vector2(130, 88)
-InitialHealth = 50.0
 
 [node name="DadInvader" parent="GameWorld" instance=ExtResource("10_sv52t")]
 position = Vector2(72, -12)
