@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://4oqb4vuw77as"]
+[gd_scene load_steps=18 format=3 uid="uid://4oqb4vuw77as"]
 
 [ext_resource type="Script" uid="uid://bi4t7f2cuoenm" path="res://scenes/agents/players/Player.cs" id="1_y3jks"]
 [ext_resource type="Texture2D" uid="uid://bmxl3pgpljhj0" path="res://assets/sprites/player/player.png" id="2_fovvg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://bkgndk5wqx8j3" path="res://assets/resources/weapon/player/blaster_gun.tres" id="4_w6byd"]
 [ext_resource type="PackedScene" uid="uid://e143nu2c0qss" path="res://scenes/managers/marker_manager.tscn" id="5_mws0h"]
 [ext_resource type="PackedScene" uid="uid://dpxn2hvqockmm" path="res://scenes/components/hurtbox_component.tscn" id="5_uoiam"]
+[ext_resource type="PackedScene" uid="uid://cuyxgdgm7s4hx" path="res://scenes/components/slow_motion_component.tscn" id="5_w6byd"]
 [ext_resource type="Texture2D" uid="uid://cbads1qnmannx" path="res://assets/sprites/player/player-explosion3.png" id="6_8nvt7"]
 [ext_resource type="Texture2D" uid="uid://daw8ljucicyqv" path="res://assets/sprites/player/player-explosion2.png" id="7_w6byd"]
 [ext_resource type="PackedScene" uid="uid://bifi08dxhq6gj" path="res://scenes/ui/ammunition_bar.tscn" id="8_g6hfa"]
@@ -43,7 +44,13 @@ size = Vector2(13, 5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjyvw"]
 size = Vector2(13, 5)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CollisionShape2D", "WeaponComponent", "HealthComponent", "AnimatedSprite2D")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w6byd"]
+bg_color = Color(0.06115471, 0.17997134, 0.24173665, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yiiiv"]
+bg_color = Color(0.2569214, 0.50000525, 0.6700964, 1)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CollisionShape2D", "WeaponComponent", "HealthComponent", "SlowMotionComponent", "AnimatedSprite2D")]
 collision_mask = 0
 script = ExtResource("1_y3jks")
 Speed = 300.0
@@ -51,6 +58,7 @@ MaxHealth = 400.0
 CollisionShape2D = NodePath("CollisionShape2D")
 WeaponComponent = NodePath("WeaponComponent")
 HealthComponent = NodePath("HealthComponent")
+SlowMotionComponent = NodePath("SlowMotionComponent")
 AnimatedSprite2D = NodePath("AnimatedSprite2D")
 
 [node name="WeaponComponent" parent="." node_paths=PackedStringArray("FireRateTimer", "BulletSpawnMarkers", "AmmunitionBar") instance=ExtResource("2_ok5fs")]
@@ -69,6 +77,11 @@ InvincibilityTimer = NodePath("Timer")
 [node name="Timer" type="Timer" parent="HealthComponent"]
 wait_time = 0.6
 one_shot = true
+
+[node name="SlowMotionComponent" parent="." node_paths=PackedStringArray("SlowMotionbar") instance=ExtResource("5_w6byd")]
+SlowMotionbar = NodePath("../ProgressBar")
+SlowMotionTimeScale = 0.25
+MaxSlowMotionDuration = 1.0
 
 [node name="MarkerManager" parent="." node_paths=PackedStringArray("CenterMarker", "MarkersParent") instance=ExtResource("5_mws0h")]
 MarkersCount = 1
@@ -100,6 +113,16 @@ offset_left = 8.0
 offset_top = -25.0
 offset_right = 8.0
 offset_bottom = -25.0
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -31.0
+offset_top = -20.0
+offset_right = -9.0
+offset_bottom = -14.0
+theme_override_styles/background = SubResource("StyleBoxFlat_w6byd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yiiiv")
+value = 50.0
+show_percentage = false
 
 [connection signal="CannonAdded" from="WeaponComponent" to="MarkerManager" method="OnMarkerAdded"]
 [connection signal="MarkersSpawned" from="MarkerManager" to="WeaponComponent" method="ChangeBulletSpawnMarkers"]

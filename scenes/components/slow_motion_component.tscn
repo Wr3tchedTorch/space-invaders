@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuyxgdgm7s4hx"]
+
+[ext_resource type="Script" uid="uid://dihnxu0d7p0bk" path="res://scenes/components/SlowMotionComponent.cs" id="1_0lf0c"]
+
+[node name="SlowMotionComponent" type="Node"]
+script = ExtResource("1_0lf0c")

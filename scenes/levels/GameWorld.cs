@@ -22,4 +22,9 @@ public partial class GameWorld : Node2D
 
 		AddToGroup(nameof(GameWorld));
 	}
+
+	public static void EnableSlowMotion(float slowMotionTimeScale)
+	{
+		Engine.TimeScale = slowMotionTimeScale;
+	}
 }

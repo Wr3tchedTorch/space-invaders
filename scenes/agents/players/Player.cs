@@ -5,6 +5,7 @@ using SpaceInvaders.Assets.Scripts.Extensions;
 using SpaceInvaders.Assets.Scripts.Interfaces;
 using SpaceInvaders.Scenes.Autoloads;
 using SpaceInvaders.Scenes.Components;
+using SpaceInvaders.Scenes.Levels;
 
 namespace SpaceInvaders.Scenes.Agents.Players;
 
@@ -13,17 +14,19 @@ public partial class Player : CharacterBody2D
     public static readonly StringName LeftArrowAction = "left";
     public static readonly StringName RightArrowAction = "right";
     public static readonly StringName AttackAction = "attack";
+    public static readonly StringName SlowMotionAction = "slow_motion";
 
     [ExportGroup("Attributes")]
     [Export] public float Speed { get; set; }
-    [Export] public float MaxHealth { get; set; }
+    [Export] public float MaxHealth { get; set; }    
 
     [ExportGroup("Dependencies")]
     [Export] private CollisionShape2D CollisionShape2D { get; set; } = null!;
     [Export] private WeaponComponent WeaponComponent { get; set; } = null!;
     [Export] private HealthComponent HealthComponent { get; set; } = null!;
-    [Export] private ProgressBar HealthBar { get; set; } = null!;
+    [Export] private ProgressBar HealthBar { get; set; } = null!;    
     [Export] private Label AmmunitionLabel { get; set; } = null!;
+    [Export] private SlowMotionComponent SlowMotionComponent { get; set; } = null!;
 
     [Export] private Resource[] BulletUpgrades { get; set; } = [];
     [Export] private AnimatedSprite2D AnimatedSprite2D { get; set; } = null!;
@@ -59,7 +62,7 @@ public partial class Player : CharacterBody2D
         GameEvents.Instance.WeaponUpgradePickedUp += OnWeaponUpgradePickedUp;
 
         AddInitialUpgrades();
-    }
+    }    
 
     private void OnDamageTaken()
     {
@@ -115,6 +118,21 @@ public partial class Player : CharacterBody2D
         Velocity = velocity;
         MoveAndSlide();
     }
+
+    public override void _Input(InputEvent @event)
+    {
+        base._Input(@event);
+
+        if (@event.IsActionPressed(SlowMotionAction))
+        {
+            SlowMotionComponent.EnableSlowMotion();
+        }
+        if (@event.IsActionReleased(SlowMotionAction))
+        {
+            SlowMotionComponent.DisableSlowMotion();
+        }
+    }
+
 
     private void CalculateScreenBounds()
     {
