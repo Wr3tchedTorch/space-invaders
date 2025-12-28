@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://d3t653fjkinha"]
+[gd_scene load_steps=33 format=3 uid="uid://d3t653fjkinha"]
 
 [ext_resource type="PackedScene" uid="uid://4oqb4vuw77as" path="res://scenes/agents/players/player.tscn" id="1_72ix8"]
 [ext_resource type="Script" uid="uid://6v7o1xtk0slm" path="res://scenes/levels/GameWorld.cs" id="1_j4d2a"]
@@ -117,6 +117,34 @@ _data = {
 &"intro_scene": SubResource("Animation_y56qp")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3dybv"]
+bg_color = Color(0.066529, 0.00423945, 0.00715077, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xx3rh"]
+bg_color = Color(0.963069, 0.185891, 0.195599, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fw6af"]
+bg_color = Color(0, 0, 0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebcsm"]
+bg_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_7exfm"]
+default_font_size = 8
+PlayerHealthBar/base_type = &"ProgressBar"
+PlayerHealthBar/styles/background = SubResource("StyleBoxFlat_3dybv")
+PlayerHealthBar/styles/fill = SubResource("StyleBoxFlat_xx3rh")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_fw6af")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_ebcsm")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qgoyv"]
+bg_color = Color(0.028055372, 0.12125424, 0.17598441, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_px1c8"]
+bg_color = Color(0.26289415, 0.49377835, 0.694034, 1)
+
 [node name="Main" type="Node"]
 
 [node name="GameWorld" type="Node2D" parent="."]
@@ -174,11 +202,11 @@ collision_mask = 2
 script = ExtResource("3_rssyh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/Walls/BottomWall"]
-position = Vector2(128, 200.5)
+position = Vector2(132, 200)
 shape = SubResource("RectangleShape2D_rssyh")
 
 [node name="Floor" type="StaticBody2D" parent="GameWorld/Walls"]
-position = Vector2(10, 215)
+position = Vector2(9, 211)
 collision_layer = 128
 collision_mask = 8
 
@@ -198,12 +226,12 @@ MovementTimer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="GameWorld/EnemiesNavigator"]
 
-[node name="Player" parent="GameWorld" node_paths=PackedStringArray("HealthBar", "AmmunitionLabel") instance=ExtResource("1_72ix8")]
-position = Vector2(125, 199)
+[node name="Player" parent="GameWorld" node_paths=PackedStringArray("HealthBar", "TimeBreakBar", "AmmunitionLabel") instance=ExtResource("1_72ix8")]
+position = Vector2(120, 192)
 motion_mode = 1
 Speed = 120.0
-SlowMotionTimeScale = 0.25
-HealthBar = NodePath("../../Gui/CanvasLayer/HBoxContainer/PlayerHealthBar")
+HealthBar = NodePath("../../Gui/CanvasLayer/HBoxContainer/VBoxContainer2/TimeBreakBar")
+TimeBreakBar = NodePath("../../Gui/CanvasLayer/HBoxContainer/VBoxContainer2/TimeBreakBar")
 AmmunitionLabel = NodePath("../../Gui/CanvasLayer/HBoxContainer/VBoxContainer/PlayerAmmunitionLabel")
 
 [node name="Camera2D" type="Camera2D" parent="GameWorld"]
@@ -237,19 +265,35 @@ anchors_preset = -1
 anchor_top = 0.87100005
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 3.895996
+offset_top = 0.8959961
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
 theme_override_constants/separation = 80
 alignment = 1
 
-[node name="PlayerHealthBar" type="ProgressBar" parent="Gui/CanvasLayer/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Gui/CanvasLayer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="TimeBreakBar" type="ProgressBar" parent="Gui/CanvasLayer/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(80, 10)
+layout_mode = 2
+size_flags_vertical = 4
+theme = SubResource("Theme_7exfm")
+theme_type_variation = &"PlayerHealthBar"
+theme_override_styles/background = SubResource("StyleBoxFlat_qgoyv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_px1c8")
+value = 50.0
+
+[node name="PlayerHealthBar2" type="ProgressBar" parent="Gui/CanvasLayer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(76.975, 8)
 layout_mode = 2
 size_flags_vertical = 4
 theme = ExtResource("9_7lrji")
 theme_type_variation = &"PlayerHealthBar"
+theme_override_font_sizes/font_size = 1
 value = 50.0
 show_percentage = false
 
@@ -287,10 +331,12 @@ offset_right = 36.0
 offset_bottom = 25.0
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="Gui"]
+visible = false
 
 [node name="GameOver" parent="Gui/CanvasLayer2" instance=ExtResource("14_6ui35")]
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="Gui"]
+visible = false
 
 [node name="DialogueBox" parent="Gui/CanvasLayer3" instance=ExtResource("18_qgoyv")]
 

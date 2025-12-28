@@ -15,6 +15,7 @@ bg_color = Color(1, 1, 1, 1)
 anti_aliasing = false
 
 [resource]
+default_font_size = 8
 PlayerHealthBar/base_type = &"ProgressBar"
 PlayerHealthBar/styles/background = SubResource("StyleBoxFlat_3dybv")
 PlayerHealthBar/styles/fill = SubResource("StyleBoxFlat_xx3rh")

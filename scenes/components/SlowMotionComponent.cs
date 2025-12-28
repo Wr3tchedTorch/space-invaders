@@ -1,59 +1,96 @@
 using Godot;
+using SpaceInvaders.Scenes.Levels;
 using System;
 
 public partial class SlowMotionComponent : Node
 {
     private const float DefaultTimeScale = 1f;
 
-    [Export] private ProgressBar SlowMotionbar { get; set; } = null!;
+    [Export] public ProgressBar TimeBreakingBar { get; set; } = null!;
     [Export] public float SlowMotionTimeScale { get; set; } = 0.5f;
-    [Export] public float MaxSlowMotionDuration { get; set; } = 2f;
+    [Export] public float MaxTimeBreakingAmount { get; set; } = 2f;
 
-    private float currentSlowMotionDuration;
+    private float currentTimeBreakingAmount;
     private bool doingSlowMotion = false;
 
-    public override void _Ready() 
+    private bool isTimeBroken = false;
+
+    public override void _Ready()
     {
         base._Ready();
 
-        currentSlowMotionDuration = MaxSlowMotionDuration;
-        SlowMotionbar.Value = MaxSlowMotionDuration;
-        SlowMotionbar.MaxValue = MaxSlowMotionDuration;
-    }    
+        Callable.From(() =>
+        {
+            currentTimeBreakingAmount = MaxTimeBreakingAmount;
+            TimeBreakingBar.Value = 0;
+            TimeBreakingBar.MaxValue = MaxTimeBreakingAmount;
+        }).CallDeferred();
+    }
 
-    public override void _Process(double delta) 
+    public override void _Process(double delta)
     {
         base._Process(delta);
 
-        if (!doingSlowMotion && currentSlowMotionDuration < MaxSlowMotionDuration)
+        if (isTimeBroken && currentTimeBreakingAmount == 0)
         {
-            AddDuration(delta/(Engine.TimeScale*5));
+            isTimeBroken = false;
+            Engine.TimeScale = DefaultTimeScale;
+        }
+
+        DecreaseTimeBreakingAmount(delta);
+
+        IncreaseTimeBreakingAmount(delta);
+    }
+
+    private void IncreaseTimeBreakingAmount(double delta)
+    {
+        if (!doingSlowMotion)
+        {
             return;
         }
-        if (doingSlowMotion)
+        AddDuration(delta / Engine.TimeScale);
+
+        if (currentTimeBreakingAmount == MaxTimeBreakingAmount)
         {
-            AddDuration(-(delta/Engine.TimeScale));
-            
-            if (currentSlowMotionDuration <= 0)
-            {
-                DisableSlowMotion();
-            }
+            BreakTime();
         }
+    }
+
+    private void DecreaseTimeBreakingAmount(double delta)
+    {
+        if (doingSlowMotion || currentTimeBreakingAmount == 0)
+        {
+            return;
+        }
+        double multiplier = isTimeBroken ? 1.5 : 5;
+        AddDuration(-(delta / (Engine.TimeScale * multiplier)));
+    }
+
+
+    private void BreakTime()
+    {
+        isTimeBroken = true;
+        doingSlowMotion = false;
+        Engine.TimeScale = DefaultTimeScale * 2;
     }
 
     public void EnableSlowMotion()
     {
-        if (currentSlowMotionDuration <= 0)
+        CalculateOddsForTimeBreak();
+        if (isTimeBroken)
         {
             return;
         }
         doingSlowMotion = true;
-        
         Engine.TimeScale = SlowMotionTimeScale;
     }
 
     public void DisableSlowMotion()
     {
+        if (isTimeBroken)
+        {
+            return;
+        }
         doingSlowMotion = false;
 
         Engine.TimeScale = DefaultTimeScale;
@@ -61,8 +98,25 @@ public partial class SlowMotionComponent : Node
 
     private void AddDuration(double delta)
     {
-        currentSlowMotionDuration = Mathf.Min(MaxSlowMotionDuration, currentSlowMotionDuration + (float)delta);
-        currentSlowMotionDuration = Mathf.Max(0, currentSlowMotionDuration);
-        SlowMotionbar.Value = currentSlowMotionDuration;
+        currentTimeBreakingAmount = Mathf.Min(MaxTimeBreakingAmount, currentTimeBreakingAmount + (float)delta);
+        currentTimeBreakingAmount = Mathf.Max(0, currentTimeBreakingAmount);
+        TimeBreakingBar.Value = currentTimeBreakingAmount;
+    }
+
+    private void CalculateOddsForTimeBreak()
+    {
+        if (currentTimeBreakingAmount == 0)
+        {
+            return;
+        }
+        float max = currentTimeBreakingAmount / MaxTimeBreakingAmount * 100;
+        double odds = GameWorld.Rng.NextDouble() * 100;
+
+        if (odds < max)
+        {
+            return;
+        }
+
+        BreakTime();
     }
 }

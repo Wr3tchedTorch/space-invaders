@@ -25,6 +25,7 @@ public partial class Player : CharacterBody2D
     [Export] private WeaponComponent WeaponComponent { get; set; } = null!;
     [Export] private HealthComponent HealthComponent { get; set; } = null!;
     [Export] private ProgressBar HealthBar { get; set; } = null!;    
+    [Export] private ProgressBar TimeBreakBar { get; set; } = null!;
     [Export] private Label AmmunitionLabel { get; set; } = null!;
     [Export] private SlowMotionComponent SlowMotionComponent { get; set; } = null!;
 
@@ -45,6 +46,8 @@ public partial class Player : CharacterBody2D
     public override void _Ready()
     {
         AnimatedSprite2D.Play(DefaultAnimationName);        
+
+        SlowMotionComponent.TimeBreakingBar = TimeBreakBar;
 
         HealthComponent.Died += OnDied;
         HealthComponent.DamageTaken += OnDamageTaken;

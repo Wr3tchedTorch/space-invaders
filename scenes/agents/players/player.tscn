@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://4oqb4vuw77as"]
+[gd_scene load_steps=16 format=3 uid="uid://4oqb4vuw77as"]
 
 [ext_resource type="Script" uid="uid://bi4t7f2cuoenm" path="res://scenes/agents/players/Player.cs" id="1_y3jks"]
 [ext_resource type="Texture2D" uid="uid://bmxl3pgpljhj0" path="res://assets/sprites/player/player.png" id="2_fovvg"]
@@ -44,12 +44,6 @@ size = Vector2(13, 5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vjyvw"]
 size = Vector2(13, 5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w6byd"]
-bg_color = Color(0.06115471, 0.17997134, 0.24173665, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yiiiv"]
-bg_color = Color(0.2569214, 0.50000525, 0.6700964, 1)
-
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CollisionShape2D", "WeaponComponent", "HealthComponent", "SlowMotionComponent", "AnimatedSprite2D")]
 collision_mask = 0
 script = ExtResource("1_y3jks")
@@ -78,10 +72,8 @@ InvincibilityTimer = NodePath("Timer")
 wait_time = 0.6
 one_shot = true
 
-[node name="SlowMotionComponent" parent="." node_paths=PackedStringArray("SlowMotionbar") instance=ExtResource("5_w6byd")]
-SlowMotionbar = NodePath("../ProgressBar")
+[node name="SlowMotionComponent" parent="." instance=ExtResource("5_w6byd")]
 SlowMotionTimeScale = 0.25
-MaxSlowMotionDuration = 1.0
 
 [node name="MarkerManager" parent="." node_paths=PackedStringArray("CenterMarker", "MarkersParent") instance=ExtResource("5_mws0h")]
 MarkersCount = 1
@@ -113,16 +105,6 @@ offset_left = 8.0
 offset_top = -25.0
 offset_right = 8.0
 offset_bottom = -25.0
-
-[node name="ProgressBar" type="ProgressBar" parent="."]
-offset_left = -31.0
-offset_top = -20.0
-offset_right = -9.0
-offset_bottom = -14.0
-theme_override_styles/background = SubResource("StyleBoxFlat_w6byd")
-theme_override_styles/fill = SubResource("StyleBoxFlat_yiiiv")
-value = 50.0
-show_percentage = false
 
 [connection signal="CannonAdded" from="WeaponComponent" to="MarkerManager" method="OnMarkerAdded"]
 [connection signal="MarkersSpawned" from="MarkerManager" to="WeaponComponent" method="ChangeBulletSpawnMarkers"]
